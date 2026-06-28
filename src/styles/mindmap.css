@@ -113,7 +113,7 @@
 }
 .node.is-dim {
   opacity: 0.28;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 /* Noeud central : bulle ronde avec photo + nom a l'interieur */
