@@ -69,6 +69,10 @@ export const branches = [
         title: 'Chef de projets communication · CDD',
         org: 'Mulhouse Alsace Agglomération (m2A) — Mulhouse',
         period: "Oct. 2024 – Aujourd'hui",
+        theme: {
+          background: 'assets/m2a-bg.jpg',
+          accentColor: '#d92e84',
+        },
         kpis: [
           { value: '360°', label: 'plans médias' },
           { value: '1000+', label: 'visiteurs / événement' },
@@ -87,6 +91,10 @@ export const branches = [
         title: 'Gérant — Entrepreneur',
         org: 'GR Stratégie (SARL, activité propre, vendue en 2025)',
         period: '2018 – 2025',
+        theme: {
+          background: 'assets/gr-strategie-bg.png',
+          accentColor: '#e8453c',
+        },
         summary:
           "Création et gestion intégrale d'une structure commerciale pendant 7 ans, en parallèle de mon activité salariée.",
         kpis: [
@@ -105,6 +113,10 @@ export const branches = [
         title: 'Responsable communication multi-sites',
         org: 'Hyper U Sierentz & Super U Huningue',
         period: 'Janv. 2016 – Sept. 2024',
+        theme: {
+          background: 'assets/hyper-u-bg.jpg',
+          accentColor: '#e3201e',
+        },
         kpis: [
           { value: '+30%', label: 'ventes (réseaux sociaux)' },
           { value: '40 000', label: 'catalogues diffusés' },
@@ -128,6 +140,10 @@ export const branches = [
         title: 'Responsable marchandising Grand-Est',
         org: 'Système U Centrale Est',
         period: 'Sept. 2013 – Déc. 2015',
+        theme: {
+          background: 'assets/systeme-u-bg.jpg',
+          accentColor: '#1c8fa3',
+        },
         kpis: [{ value: 'Grand Est', label: 'déploiement régional' }],
         bullets: [
           'Conception de concepts merchandising et de supports de communication pour les points de vente.',

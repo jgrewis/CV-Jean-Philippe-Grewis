@@ -36,6 +36,25 @@
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   backdrop-filter: blur(24px) saturate(150%);
 }
+/* Univers thematique : chaque experience peut imposer son propre habillage
+   visuel (image de marque de l'entreprise + couleur d'accent) au panneau de
+   detail, pour ancrer le contenu dans l'identite de l'employeur. */
+.detail-panel--themed {
+  background-image: linear-gradient(rgba(8, 8, 14, 0.55), rgba(8, 8, 14, 0.82)), var(--theme-bg);
+  background-size: cover;
+  background-position: center;
+}
+.detail-panel--themed .detail-panel__eyebrow,
+.detail-panel--themed .kpi.glass--accent .kpi__value {
+  color: var(--theme-accent);
+}
+.detail-panel--themed .detail-list li::before {
+  background: var(--theme-accent);
+}
+.detail-panel--themed .link-chip {
+  border-color: var(--theme-accent);
+}
+
 .detail-overlay.is-open .detail-panel {
   transform: scale(1);
   opacity: 1;

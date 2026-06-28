@@ -133,10 +133,23 @@ export class DetailPanel {
 
   openLeaf(branchLabel, leaf) {
     this._open(renderLeaf(branchLabel, leaf), leaf.title);
+    this._applyTheme(leaf.theme);
+  }
+
+  _applyTheme(theme) {
+    this.panel.classList.toggle('detail-panel--themed', Boolean(theme));
+    if (theme) {
+      this.panel.style.setProperty('--theme-bg', `url('${theme.background}')`);
+      this.panel.style.setProperty('--theme-accent', theme.accentColor);
+    } else {
+      this.panel.style.removeProperty('--theme-bg');
+      this.panel.style.removeProperty('--theme-accent');
+    }
   }
 
   openContact() {
     this._open(renderContact(), 'Me contacter');
+    this._applyTheme(null);
   }
 
   close() {
