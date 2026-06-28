@@ -1,0 +1,18 @@
+{
+  "name": "cv-jp-grewis",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "CV web interactif de Jean-Philippe Grewis — carte mentale liquid glass",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1"
+  },
+  "overrides": {
+    "esbuild": "^0.25.0"
+  }
+}

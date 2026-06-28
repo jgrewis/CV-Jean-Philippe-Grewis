@@ -1,0 +1,81 @@
+/* Design tokens : fond sombre, verre liquide renforce, accents.
+   Toute valeur reutilisee est definie ici une seule fois. */
+:root {
+  /* Fond sombre */
+  --bg-0: #07080d;
+  --bg-1: #0c0e16;
+  --bg-2: #11141f;
+
+  /* Halos de couleur ambiants (derriere le verre, pour le faire vibrer) */
+  --glow-indigo: rgba(96, 79, 214, 0.42);
+  --glow-cyan: rgba(31, 142, 178, 0.32);
+  --glow-warm: rgba(193, 120, 86, 0.26);
+
+  /* Texte sur fond sombre */
+  --text-on-dark: rgba(255, 255, 255, 0.95);
+  --text-on-dark-muted: rgba(255, 255, 255, 0.62);
+  --text-on-dark-faint: rgba(255, 255, 255, 0.40);
+
+  /* Inscription de fond */
+  --inscription: rgba(255, 255, 255, 0.07);
+
+  /* Accent ponctuel (focus, petits points) */
+  --accent: #8b7bff;
+  --line: rgba(255, 255, 255, 0.20);
+
+  /* Degrade dynamique (lisere Experiences) */
+  --grad-1: #7b5cff;
+  --grad-2: #00d2ff;
+  --grad-3: #ff5c8a;
+  --grad-4: #ffd166;
+
+  /* Verre liquide (liquid glass) — fond totalement transparent : la presence
+     du verre est portee par la refraction (filtre SVG), le lion lumineux du
+     bord et le reflet specular mouvant, pas par une teinte de fond. */
+  --glass-bg: transparent;
+  --glass-bg-strong: rgba(255, 255, 255, 0.04); /* leger corps pour la bulle centrale (lisibilite du nom) */
+  --glass-border: rgba(255, 255, 255, 0.28);
+  --glass-border-strong: rgba(255, 255, 255, 0.42);
+  --glass-blur: 7px;
+  --glass-blur-strong: 9px;
+  --glass-accent-bg: transparent;
+  --glass-accent-border: rgba(139, 123, 255, 0.5);
+
+  /* Rayons & espacements */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+  --space-xs: 6px;
+  --space-sm: 10px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Ombres (flottement) */
+  --shadow-glass: 0 14px 40px rgba(0, 0, 0, 0.45);
+  --shadow-panel: 0 30px 80px rgba(0, 0, 0, 0.6);
+  /* Bord lumineux du verre : lisere clair en haut, halo doux interieur, ombre
+     basse subtile => relief de lentille meme avec un fond transparent. */
+  --highlight-inset: inset 0 1.5px 1px rgba(255, 255, 255, 0.55),
+    inset 0 0 14px rgba(255, 255, 255, 0.08),
+    inset 0 -10px 22px rgba(255, 255, 255, 0.05),
+    inset 0 -1.5px 1px rgba(0, 0, 0, 0.18);
+
+  /* Mouvement */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 380ms;
+  --dur-slow: 680ms;
+
+  /* Typo */
+  --font-sans: 'Calibri', 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Z-index */
+  --z-inscription: 0;
+  --z-connections: 1;
+  --z-nodes: 2;
+  --z-panel: 10;
+  --z-chrome: 20;
+}

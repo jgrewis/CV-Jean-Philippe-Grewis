@@ -1,0 +1,98 @@
+/* Layout global, fond sombre + halos ambiants, habillage */
+body {
+  font-family: var(--font-sans);
+  color: var(--text-on-dark);
+  background-color: var(--bg-0);
+  overflow: hidden; /* la carte gere son propre pan/zoom */
+}
+
+/* Halos de couleur ambiants derriere toute la scene */
+body::before {
+  content: '';
+  position: fixed;
+  inset: -10%;
+  z-index: -1;
+  background:
+    radial-gradient(38vw 38vw at 22% 26%, var(--glow-indigo) 0%, transparent 60%),
+    radial-gradient(34vw 34vw at 82% 30%, var(--glow-cyan) 0%, transparent 62%),
+    radial-gradient(40vw 40vw at 60% 88%, var(--glow-warm) 0%, transparent 60%),
+    linear-gradient(160deg, var(--bg-1) 0%, var(--bg-0) 55%, var(--bg-2) 100%);
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Bandeau de marque discret en haut a gauche */
+.brand-tag {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-lg);
+  z-index: var(--z-chrome);
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+  font-weight: 600;
+  pointer-events: none;
+}
+
+/* Aide a la navigation, en bas */
+.hint {
+  position: absolute;
+  bottom: var(--space-md);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-chrome);
+  font-size: 13px;
+  color: var(--text-on-dark-faint);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.hint .icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Bouton retour (visible une fois entre dans une branche) */
+.back-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-lg);
+  z-index: var(--z-chrome);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-on-dark);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  backdrop-filter: blur(var(--glass-blur));
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+.back-btn.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-btn:hover {
+  background: var(--glass-bg-strong);
+}
+.back-btn .icon {
+  width: 16px;
+  height: 16px;
+}

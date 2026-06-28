@@ -1,0 +1,87 @@
+/* Effet "liquid glass" ultra-realiste : verre totalement transparent, refraction
+   (filtre SVG #liquid-glass qui deforme l'arriere-plan comme une lentille) et
+   reflet specular mouvant qui balaye la surface. Inspire des recreations de
+   l'effet Apple "Liquid Glass" (feTurbulence + feDisplacementMap). */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  /* Base universelle (Safari/Firefox) : simple flou + saturation. */
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  box-shadow: var(--shadow-glass), var(--highlight-inset);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* La ou le filtre SVG en backdrop-filter est supporte (Chromium), on ajoute la
+   refraction : la lentille deforme l'inscription de fond et les halos. */
+@supports (backdrop-filter: url("#liquid-glass")) or (-webkit-backdrop-filter: url("#liquid-glass")) {
+  .glass {
+    -webkit-backdrop-filter: url("#liquid-glass") blur(2px) saturate(160%) brightness(1.05);
+    backdrop-filter: url("#liquid-glass") blur(2px) saturate(160%) brightness(1.05);
+  }
+}
+
+/* Reflet specular MOUVANT : une bande lumineuse oblique balaye lentement la
+   surface, comme la lumiere qui glisse sur du verre. */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    100deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.08) 42%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.08) 58%,
+    transparent 72%
+  );
+  background-size: 300% 300%;
+  background-position: 120% 50%;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  animation: glass-sheen 8.5s var(--ease-in-out) infinite;
+}
+@keyframes glass-sheen {
+  0% {
+    background-position: 130% 50%;
+  }
+  100% {
+    background-position: -30% 50%;
+  }
+}
+
+.glass--strong {
+  background: var(--glass-bg-strong);
+  border-color: var(--glass-border-strong);
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong)) saturate(155%);
+  backdrop-filter: blur(var(--glass-blur-strong)) saturate(155%);
+}
+@supports (backdrop-filter: url("#liquid-glass")) or (-webkit-backdrop-filter: url("#liquid-glass")) {
+  .glass--strong {
+    -webkit-backdrop-filter: url("#liquid-glass") blur(3px) saturate(160%) brightness(1.05);
+    backdrop-filter: url("#liquid-glass") blur(3px) saturate(160%) brightness(1.05);
+  }
+}
+
+.glass--accent {
+  background: var(--glass-accent-bg);
+  border-color: var(--glass-accent-border);
+}
+
+/* Repli si backdrop-filter non supporte : fond plus opaque pour garder la lisibilite */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgba(22, 26, 40, 0.82);
+  }
+  .glass--strong {
+    background: rgba(22, 26, 40, 0.9);
+  }
+  .glass--accent {
+    background: rgba(70, 60, 130, 0.82);
+  }
+}
