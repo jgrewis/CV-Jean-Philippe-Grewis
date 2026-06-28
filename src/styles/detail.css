@@ -29,6 +29,12 @@
   transform: scale(0.82);
   opacity: 0;
   transition: transform var(--dur-base) var(--ease-out), opacity var(--dur-base) var(--ease-out);
+  /* Dernier niveau a s'ouvrir : fond quasi opaque pour que les bulles et
+     l'anneau colore en dessous ne genent pas la lecture. On neutralise la
+     refraction liquid-glass (qui laissait transparaitre le fond). */
+  background: rgba(10, 12, 20, 0.97);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  backdrop-filter: blur(24px) saturate(150%);
 }
 .detail-overlay.is-open .detail-panel {
   transform: scale(1);
