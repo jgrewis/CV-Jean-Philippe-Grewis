@@ -4,6 +4,7 @@ import { profile, branches } from '../data/cv.js';
 import { wordPath, wordViewBox } from '../data/wordPath.js';
 import { computeLayout, getViewport } from '../utils/layout.js';
 import { icon } from '../utils/icons.js';
+import { escapeHtml } from '../utils/escapeHtml.js';
 import { Camera } from '../utils/zoom.js';
 import { Connections } from './Connections.js';
 import { DetailPanel } from './DetailPanel.js';
@@ -44,7 +45,7 @@ export class MindMap {
     // Le dernier mot du titre ("Communication") est rendu en filigrane, comme un
     // contour vectoriel sobre en fond de scene.
     this.inscription.innerHTML = `
-      <span class="inscription__head">${head}</span>
+      <span class="inscription__head">${escapeHtml(head)}</span>
       <svg class="inscription__word" viewBox="${wordViewBox}" role="presentation"
            aria-hidden="true" preserveAspectRatio="xMidYMid meet">
         <path class="elec-fill" d="${wordPath}" />
@@ -139,6 +140,12 @@ export class MindMap {
     });
 
     this.backBtn.addEventListener('click', () => this.goOverview());
+
+    document.addEventListener('keydown', (e) => {
+      // Echap referme le panneau de detail (gere par DetailPanel) ou, a defaut,
+      // ramene a la vue d'ensemble depuis une branche deployee.
+      if (e.key === 'Escape' && this.activeBranch && !this.panel.isOpen) this.goOverview();
+    });
 
     let resizeTimer;
     window.addEventListener('resize', () => {

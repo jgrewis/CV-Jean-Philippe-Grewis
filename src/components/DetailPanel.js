@@ -3,10 +3,7 @@
 import { icon } from '../utils/icons.js';
 import { contact } from '../data/cv.js';
 import { createFocusTrap } from '../utils/a11y.js';
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-}
+import { escapeHtml } from '../utils/escapeHtml.js';
 
 function renderKpis(kpis) {
   if (!kpis || !kpis.length) return '';

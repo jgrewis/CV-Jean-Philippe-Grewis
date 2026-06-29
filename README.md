@@ -2,7 +2,7 @@
 
 CV web qui sort de l'ordinaire : une **carte mentale** avec un nœud central
 (toi) et cinq branches (Profil, Expériences, Compétences, Formation, Contact).
-Design **liquid glass** (verre dépoli) sur fond bleu marine, et **zoom moderne**
+Design **liquid glass** (verre dépoli) sur fond sombre avec halos ambiants, et **zoom moderne**
 au clic qui ouvre un panneau de détail enrichi (KPIs chiffrés, visuels, liens).
 
 Stack : **Vanilla JS + Vite**, zéro framework lourd, aucune dépendance runtime.
