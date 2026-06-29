@@ -187,7 +187,7 @@ export const branches = [
   },
   {
     id: 'formation',
-    label: 'Formation',
+    label: 'Formations',
     icon: 'school',
     leaves: [
       {
