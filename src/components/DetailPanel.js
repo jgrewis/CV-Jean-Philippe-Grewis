@@ -136,7 +136,11 @@ export class DetailPanel {
   _applyTheme(theme) {
     this.panel.classList.toggle('detail-panel--themed', Boolean(theme));
     if (theme) {
-      this.panel.style.setProperty('--theme-bg', `url('${theme.background}')`);
+      // Resoudre en URL absolue : un url() relatif pose dans une custom property
+      // se resout par rapport a la feuille de style qui la consomme (assets/*.css
+      // une fois buildee), pas par rapport au document => 404 en production.
+      const bgUrl = new URL(theme.background, document.baseURI).href;
+      this.panel.style.setProperty('--theme-bg', `url('${bgUrl}')`);
       this.panel.style.setProperty('--theme-accent', theme.accentColor);
     } else {
       this.panel.style.removeProperty('--theme-bg');
