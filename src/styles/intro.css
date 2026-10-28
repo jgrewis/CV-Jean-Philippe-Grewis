@@ -1,0 +1,222 @@
+/* Intro d'ouverture : calque sombre plein ecran, trait effile, ouverture en octogone.
+   Les phases sont posees par Intro.js sur le calque :
+     data-phase   = phase courante (lines, logo, name, slit, open)
+     data-reached = phases deja atteintes, separees par des espaces (selecteur ~=)
+   Les durees arrivent de Intro.js en variables --intro-*-dur.
+
+   La decoupe : le calque est troue par un clip-path polygon(evenodd). Le polygone
+   trace d'abord le rectangle de l'ecran, rejoint le bord gauche du trou par un pont
+   sur la ligne mediane, fait le tour du trou (octogone a 8 sommets) puis revient.
+   En evenodd, l'interieur du trou est exclu : on y voit la vraie page. Le pont
+   (surface nulle) longe la ligne d'horizon, ou un eventuel lisere d'anticrenelage
+   se confond avec le filet. Les 16 points sont presents a chaque image cle pour
+   que l'interpolation fonctionne. */
+
+.intro {
+  /* Geometrie de la decoupe */
+  --intro-slit-half: 1.5px; /* demi-epaisseur du trait (3px au total) */
+  --intro-slit-inset: 4%; /* marge laissee au filet d'horizon de chaque cote du trait */
+  --intro-taper: 22%; /* longueur des pointes effilees du fuseau */
+  --intro-chamfer: 32px; /* chanfreins a 45 degres de l'octogone */
+
+  /* Courbe de l'ouverture : cubic-bezier(0.75, 0, 0.2, 1), lente puis tres rapide.
+     Elle est coupee en deux a l'image cle intermediaire (44.6 % du temps, 35.2 %
+     de la course) ou les pointes du fuseau deviennent des chanfreins a 45 degres :
+     les deux demi-courbes ci-dessous reproduisent exactement la courbe globale. */
+  --intro-open-ease-a: cubic-bezier(0.673, 0, 0.88, 0.455);
+  --intro-open-ease-b: cubic-bezier(0.145, 0.444, 0.134, 1);
+  --intro-open-p: 0.352;
+
+  /* Bords de l'octogone a l'image cle intermediaire (interpolation lineaire entre
+     le trait fini et le plein ecran, a la progression --intro-open-p). */
+  --intro-k-left: calc(var(--intro-slit-inset) - var(--intro-open-p) * (var(--intro-slit-inset) + var(--intro-chamfer)));
+  --intro-k-right: calc(100% - var(--intro-slit-inset) + var(--intro-open-p) * (var(--intro-slit-inset) + var(--intro-chamfer)));
+  --intro-k-top: calc(50% - var(--intro-slit-half) - var(--intro-open-p) * (50% + var(--intro-chamfer) - var(--intro-slit-half)));
+  --intro-k-bottom: calc(50% + var(--intro-slit-half) + var(--intro-open-p) * (50% + var(--intro-chamfer) - var(--intro-slit-half)));
+
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-intro);
+  overflow: hidden;
+  background-color: var(--bg-0);
+  color: var(--text-on-dark);
+  font-family: var(--font-sans);
+  user-select: none;
+}
+
+/* Le trait s'etire, puis l'octogone s'ouvre. Pas de clip-path avant : le pont du
+   polygone ne doit pas risquer de rayer le logo pendant qu'il est seul a l'ecran. */
+.intro[data-phase='slit'] {
+  will-change: clip-path;
+  animation: intro-slit var(--intro-slit-dur) var(--ease-out) forwards;
+}
+.intro[data-phase='open'] {
+  will-change: clip-path;
+  animation: intro-open var(--intro-open-dur) linear forwards;
+}
+
+.intro__lines,
+.intro__logo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.intro__logo {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: var(--space-sm);
+  padding-inline: var(--space-md);
+  text-align: center;
+}
+
+/* Filet d'horizon : prolonge le trait jusqu'aux bords de l'ecran. Il est peint sur
+   le calque, donc masque la ou le trou s'ouvre. Il part du centre un peu plus vite
+   que le trait pour le devancer, comme une ligne qui se trace. */
+.intro__horizon {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: calc(50% - 0.5px);
+  block-size: 1px;
+  background-color: var(--line);
+  opacity: 0;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+.intro[data-reached~='slit'] .intro__horizon {
+  animation: intro-horizon var(--intro-slit-dur) var(--ease-out) forwards;
+}
+
+/* Bouton "Passer l'intro" : discret, mais lisible (contraste > 4.5:1), cible de
+   44 px et focus visible (anneau global :focus-visible de reset.css). */
+.intro__skip {
+  position: absolute;
+  inset-block-end: var(--space-lg);
+  inset-inline-end: var(--space-lg);
+  min-inline-size: 44px;
+  min-block-size: 44px;
+  padding: var(--space-sm) var(--space-md);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.intro__skip:hover,
+.intro__skip:focus-visible {
+  color: var(--text-on-dark);
+  border-color: var(--glass-border);
+}
+
+@keyframes intro-horizon {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  60% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Fuseau : jaillit du centre (largeur nulle) jusqu'a presque toute la largeur.
+   Ordre du trou : milieu gauche, haut-gauche, chanfrein haut-gauche, chanfrein
+   haut-droit, haut-droite, bas-droite, chanfrein bas-droit, chanfrein bas-gauche,
+   bas-gauche, milieu gauche. */
+@keyframes intro-slit {
+  from {
+    clip-path: polygon(
+      evenodd,
+      0 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 50%,
+      50% 50%,
+      50% 50%,
+      50% calc(50% - var(--intro-slit-half)),
+      50% calc(50% - var(--intro-slit-half)),
+      50% 50%,
+      50% 50%,
+      50% calc(50% + var(--intro-slit-half)),
+      50% calc(50% + var(--intro-slit-half)),
+      50% 50%,
+      50% 50%
+    );
+  }
+  to {
+    clip-path: polygon(
+      evenodd,
+      0 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 50%,
+      var(--intro-slit-inset) 50%,
+      var(--intro-slit-inset) 50%,
+      calc(var(--intro-slit-inset) + var(--intro-taper)) calc(50% - var(--intro-slit-half)),
+      calc(100% - var(--intro-slit-inset) - var(--intro-taper)) calc(50% - var(--intro-slit-half)),
+      calc(100% - var(--intro-slit-inset)) 50%,
+      calc(100% - var(--intro-slit-inset)) 50%,
+      calc(100% - var(--intro-slit-inset) - var(--intro-taper)) calc(50% + var(--intro-slit-half)),
+      calc(var(--intro-slit-inset) + var(--intro-taper)) calc(50% + var(--intro-slit-half)),
+      var(--intro-slit-inset) 50%,
+      var(--intro-slit-inset) 50%
+    );
+  }
+}
+
+/* Ouverture : le fuseau devient un octogone a chanfreins constants (image cle
+   intermediaire) puis grandit au-dela des bords. Seule la decoupe bouge. */
+@keyframes intro-open {
+  0% {
+    animation-timing-function: var(--intro-open-ease-a);
+    clip-path: polygon(
+      evenodd,
+      0 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 50%,
+      var(--intro-slit-inset) 50%,
+      var(--intro-slit-inset) 50%,
+      calc(var(--intro-slit-inset) + var(--intro-taper)) calc(50% - var(--intro-slit-half)),
+      calc(100% - var(--intro-slit-inset) - var(--intro-taper)) calc(50% - var(--intro-slit-half)),
+      calc(100% - var(--intro-slit-inset)) 50%,
+      calc(100% - var(--intro-slit-inset)) 50%,
+      calc(100% - var(--intro-slit-inset) - var(--intro-taper)) calc(50% + var(--intro-slit-half)),
+      calc(var(--intro-slit-inset) + var(--intro-taper)) calc(50% + var(--intro-slit-half)),
+      var(--intro-slit-inset) 50%,
+      var(--intro-slit-inset) 50%
+    );
+  }
+  44.6% {
+    animation-timing-function: var(--intro-open-ease-b);
+    clip-path: polygon(
+      evenodd,
+      0 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 50%,
+      var(--intro-k-left) 50%,
+      var(--intro-k-left) calc(var(--intro-k-top) + var(--intro-chamfer)),
+      calc(var(--intro-k-left) + var(--intro-chamfer)) var(--intro-k-top),
+      calc(var(--intro-k-right) - var(--intro-chamfer)) var(--intro-k-top),
+      var(--intro-k-right) calc(var(--intro-k-top) + var(--intro-chamfer)),
+      var(--intro-k-right) calc(var(--intro-k-bottom) - var(--intro-chamfer)),
+      calc(var(--intro-k-right) - var(--intro-chamfer)) var(--intro-k-bottom),
+      calc(var(--intro-k-left) + var(--intro-chamfer)) var(--intro-k-bottom),
+      var(--intro-k-left) calc(var(--intro-k-bottom) - var(--intro-chamfer)),
+      var(--intro-k-left) 50%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      evenodd,
+      0 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 50%,
+      calc(0% - var(--intro-chamfer)) 50%,
+      calc(0% - var(--intro-chamfer)) 0%,
+      0% calc(0% - var(--intro-chamfer)),
+      100% calc(0% - var(--intro-chamfer)),
+      calc(100% + var(--intro-chamfer)) 0%,
+      calc(100% + var(--intro-chamfer)) 100%,
+      100% calc(100% + var(--intro-chamfer)),
+      0% calc(100% + var(--intro-chamfer)),
+      calc(0% - var(--intro-chamfer)) 100%,
+      calc(0% - var(--intro-chamfer)) 50%
+    );
+  }
+}

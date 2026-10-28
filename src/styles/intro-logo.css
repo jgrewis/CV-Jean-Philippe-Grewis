@@ -1,0 +1,348 @@
+/* Logo de l'intro (tache T2) : monogramme JPG a 0,3 s puis glitch pixel du nom
+   entre 0,8 et 1,05 s. Contrat : voir src/utils/introLogo.js.
+   Declencheurs : .intro[data-phase="..."] et .intro[data-reached~="..."] ;
+   duree du glitch : var(--intro-glitch-dur).
+
+   Le glitch est decoupe en 15 images (250 ms a 60 i/s). Toutes ses animations sont
+   en step-end : chaque image cle tient jusqu'a la suivante, sans interpolation.
+   C'est ce qui donne l'aspect "pixel" (des etats qui sautent) plutot qu'un fondu.
+   Reperes : 1 image = 6.67 %, 2 = 13.33 %, 3 = 20 %, 4 = 26.67 %, 5 = 33.33 %,
+   6 = 40 %, 7 = 46.67 %, 8 = 53.33 %, 9 = 60 %.
+   Seuls transform, opacity et clip-path sont animes. Aucun flash plein ecran : ce
+   sont de petits blocs, pendant un seul eclat de 250 ms. */
+
+.intro__lockup {
+  /* Tout le logo se dimensionne sur la taille du nom : les proportions restent
+     identiques de 375 a 1920 px, et le lockup tient toujours sur une ligne. */
+  --intro-name-size: clamp(16px, 2vw, 22px);
+  --intro-mono-h: calc(var(--intro-name-size) * 1.55);
+  --intro-mono-w: calc(var(--intro-mono-h) * 30 / 18); /* proportions du cadre (viewBox 30 x 18) */
+  /* Ecart a combler pour que le monogramme seul soit au centre : le decalage est en %
+     de la largeur de la rangee (nom compris), moins la demi-largeur du monogramme. */
+  --intro-solo-shift: calc(50% - var(--intro-mono-w) / 2);
+  --intro-ease-in: cubic-bezier(0.55, 0, 1, 0.45); /* acceleration : le logo est aspire */
+
+  color: var(--text-on-dark);
+}
+
+.intro__track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  /* Tant que le nom est cache, la rangee est decalee pour centrer le monogramme. */
+  transform: translateX(var(--intro-solo-shift));
+}
+
+/* ---------- Monogramme ---------- */
+
+.intro__monogram {
+  position: relative;
+  flex: none;
+  inline-size: var(--intro-mono-w);
+  block-size: var(--intro-mono-h);
+  opacity: 0;
+}
+.intro[data-reached~='logo'] .intro__monogram {
+  opacity: 1;
+}
+
+.intro__mono-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.intro__mono-svg {
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+  overflow: visible;
+}
+/* Le JPG nu occupe toute la largeur de la boite : sa hauteur suit (viewBox 22 x 10). */
+.intro__mono-svg--bare {
+  block-size: auto;
+}
+
+.intro__mono-layer--ghost {
+  color: var(--text-on-dark-faint);
+  opacity: 0;
+}
+.intro__mono-layer--framed {
+  opacity: 0;
+}
+
+/* Apparition du monogramme seul : il s'ouvre depuis la ligne mediane, en 4 paliers.
+   Il sortira par cette meme ligne (phase slit), avalee par le trait. */
+.intro[data-reached~='logo'] .intro__mono-layer--bare {
+  animation: intro-mono-in var(--dur-fast) steps(4, end) both;
+}
+
+/* Glitch : le JPG nu se defait en tranches decalees, un fantome se decale en sens
+   inverse, puis la version encadree se reforme par blocs. Ces regles viennent
+   apres celle de l'apparition : a la phase name, elles la remplacent. */
+.intro[data-reached~='name'] .intro__mono-layer--bare {
+  animation: intro-mono-bare-out var(--intro-glitch-dur) step-end both;
+}
+.intro[data-reached~='name'] .intro__mono-layer--ghost {
+  animation: intro-mono-ghost var(--intro-glitch-dur) step-end both;
+}
+.intro[data-reached~='name'] .intro__mono-layer--framed {
+  animation: intro-mono-framed-in var(--intro-glitch-dur) step-end both;
+}
+
+/* La rangee saute du centrage "monogramme seul" au centrage "lockup", en deux
+   sauts, pendant que le monogramme est en morceaux : le deplacement se lit comme
+   un decrochage du signal, pas comme une glissade. */
+.intro[data-reached~='name'] .intro__track {
+  animation: intro-track-settle var(--intro-glitch-dur) step-end both;
+}
+
+/* ---------- Nom ---------- */
+
+.intro__name {
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: var(--intro-name-size);
+  font-weight: 700;
+  /* Interligne assez grand pour que la boite de chaque lettre contienne ses
+     jambages (le "p") : le clip-path du glitch ne les rogne pas. */
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  white-space: pre; /* garde l'espace, qui est une lettre-span comme les autres */
+}
+
+.intro__char {
+  display: inline-block;
+  opacity: 0;
+}
+.intro[data-reached~='name'] .intro__char {
+  animation: intro-char-in calc(var(--intro-glitch-dur) * 0.4) step-end both;
+  animation-delay: calc(var(--intro-glitch-dur) * var(--intro-char-delay, 0));
+}
+
+/* Tranches parasites : des blocs pleins qui sautent sur 2 a 3 images, du bout du
+   nom vers son milieu, en devancant les lettres. Le pseudo-element couvre tout le
+   nom ; le clip-path ne laisse voir que le bloc. */
+.intro__name::before,
+.intro__name::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+.intro__name::after {
+  background-color: var(--text-on-dark-faint);
+}
+.intro[data-reached~='name'] .intro__name::before {
+  animation: intro-shard-a var(--intro-glitch-dur) step-end both;
+}
+.intro[data-reached~='name'] .intro__name::after {
+  animation: intro-shard-b var(--intro-glitch-dur) step-end both;
+}
+
+/* ---------- Sortie : avale par le trait ---------- */
+
+/* Le lockup est centre pile sur la ligne des 50 % : en s'ecrasant verticalement
+   sur son propre centre, il rentre dans le trait qui s'ouvre. */
+.intro[data-reached~='slit'] .intro__lockup {
+  animation: intro-logo-swallow var(--dur-fast) var(--intro-ease-in) both;
+}
+
+/* ---------- Images cles ---------- */
+
+@keyframes intro-mono-in {
+  from {
+    clip-path: inset(50% 0 50% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes intro-mono-bare-out {
+  0% {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: none;
+  }
+  6.67% {
+    clip-path: inset(0 0 46% 0);
+    transform: translateX(6%);
+  }
+  13.33% {
+    clip-path: inset(38% 0 0 0);
+    transform: translateX(-8%);
+  }
+  20% {
+    clip-path: inset(0 30% 58% 0);
+    transform: translateX(-3%);
+  }
+  26.67% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-mono-ghost {
+  0% {
+    opacity: 0;
+  }
+  6.67% {
+    opacity: 1;
+    clip-path: inset(50% 0 18% 0);
+    transform: translateX(-10%);
+  }
+  13.33% {
+    clip-path: inset(8% 0 64% 0);
+    transform: translateX(9%);
+  }
+  20% {
+    clip-path: inset(60% 0 6% 34%);
+    transform: translateX(14%);
+  }
+  26.67% {
+    clip-path: inset(26% 0 44% 0);
+    transform: translateX(-6%);
+  }
+  33.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-mono-framed-in {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+    clip-path: inset(0 54% 0 0);
+    transform: translateX(-5%);
+  }
+  26.67% {
+    clip-path: inset(0 0 52% 0);
+    transform: translateX(4%);
+  }
+  33.33% {
+    clip-path: inset(34% 0 0 20%);
+    transform: translateX(-2%);
+  }
+  40% {
+    clip-path: inset(0);
+    transform: translateX(2%);
+  }
+  46.67% {
+    clip-path: inset(0);
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0);
+    transform: none;
+  }
+}
+
+@keyframes intro-track-settle {
+  0% {
+    transform: translateX(var(--intro-solo-shift));
+  }
+  13.33% {
+    transform: translateX(calc(var(--intro-solo-shift) / 2));
+  }
+  26.67% {
+    transform: none;
+  }
+  100% {
+    transform: none;
+  }
+}
+
+/* Une lettre : rien, une tranche basse decalee, une tranche haute decalee dans
+   l'autre sens, la lettre entiere a peine decalee, puis la lettre en place. */
+@keyframes intro-char-in {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+    clip-path: inset(52% 0 0 0);
+    transform: translateX(calc(-0.14em * var(--intro-char-flip, 1)));
+  }
+  50% {
+    clip-path: inset(0 0 46% 0);
+    transform: translateX(calc(0.1em * var(--intro-char-flip, 1)));
+  }
+  75% {
+    clip-path: inset(0);
+    transform: translateX(calc(-0.04em * var(--intro-char-flip, 1)));
+  }
+  100% {
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+  }
+}
+
+@keyframes intro-shard-a {
+  0% {
+    opacity: 0;
+  }
+  6.67% {
+    opacity: 1;
+    clip-path: inset(36% 2% 46% 88%);
+  }
+  13.33% {
+    clip-path: inset(58% 14% 24% 70%);
+  }
+  26.67% {
+    clip-path: inset(24% 46% 60% 36%);
+  }
+  33.33% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-shard-b {
+  0% {
+    opacity: 0;
+  }
+  13.33% {
+    opacity: 1;
+    clip-path: inset(22% 0 62% 76%);
+  }
+  20% {
+    clip-path: inset(48% 28% 34% 48%);
+  }
+  33.33% {
+    clip-path: inset(62% 62% 20% 14%);
+  }
+  40% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-logo-swallow {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+}

@@ -78,4 +78,5 @@
   --z-nodes: 2;
   --z-panel: 10;
   --z-chrome: 20;
+  --z-intro: 30; /* calque d'intro : au-dessus de tout, retire du DOM a la fin */
 }

@@ -1,0 +1,59 @@
+/* Lignes de fond de l'intro : courbes fines, a peine plus claires que le fond,
+   qui glissent en place (translation + fondu) et se dessinent en meme temps.
+   Declenchement : data-reached~="lines" sur .intro (pose des l'insertion du calque,
+   donc a t = 0). Duree : --intro-lines-dur, fournie par Intro.js.
+   N'animent que transform, opacity et stroke-dashoffset. */
+
+.intro__lines-svg {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+  /* Etat de depart : decale vers le haut de 6 % de l'ecran, glisse vers le bas. */
+  transform: translateY(-6%);
+}
+
+.intro__line,
+.intro__node {
+  fill: none;
+  stroke: var(--inscription);
+  stroke-width: 1;
+  opacity: 0;
+}
+
+.intro__line {
+  stroke-linecap: round;
+  stroke-dasharray: var(--len, 1200);
+  stroke-dashoffset: var(--len, 1200);
+}
+
+.intro[data-reached~='lines'] .intro__lines-svg {
+  animation: intro-lines-slide var(--intro-lines-dur) var(--ease-out) forwards;
+}
+.intro[data-reached~='lines'] .intro__line {
+  animation:
+    intro-lines-fade var(--intro-lines-dur) var(--ease-out) forwards,
+    intro-lines-draw var(--intro-lines-dur) var(--ease-out) forwards;
+}
+/* Les noeuds apparaissent un peu apres le debut du trace, quand la branche arrive. */
+.intro[data-reached~='lines'] .intro__node {
+  animation: intro-lines-fade calc(var(--intro-lines-dur) * 0.6) var(--ease-out)
+    calc(var(--intro-lines-dur) * 0.4) forwards;
+}
+
+@keyframes intro-lines-slide {
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes intro-lines-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes intro-lines-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
