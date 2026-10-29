@@ -1,0 +1,208 @@
+/* Section #realisations (components/Realisations.js) : une rangee par support,
+   preuves disseminees sur une grille editoriale de 12 colonnes a partir de 48em,
+   une seule colonne en dessous. Positions, ratio et largeur reelle de chaque image
+   arrivent en variables (--row, --col-start, --col-span, --ratio, --natural-w).
+
+   Contrastes sur le fond alterne (#E3E0D8, voir tokens.css) : legendes en encre
+   douce 5.45:1, titres en encre 13.97:1, compte en accent 4.64:1 (AA). */
+
+.realisations {
+  /* Ecart vertical entre deux rangees de preuves. Le JS le lit pour borner
+     l'effet de profondeur a 40 % de cet ecart par image : jamais de chevauchement. */
+  --realisations-row-gap: clamp(var(--space-xl), 5vw, var(--space-2xl));
+  /* Hauteur maximale d'une image : un drapeau de 484 x 1600 reste lisible en
+     entier sans faire defiler un ecran et demi. Ramenee de 80 a 60svh pour que
+     les 26 preuves ne demandent pas 16 ecrans de defilement. */
+  --realisations-frame-max: 60svh;
+}
+
+.realisations__wrap {
+  display: grid;
+  gap: var(--section-space);
+}
+
+/* ---------- En-tete : titre, chapo, mention m2A ---------- */
+
+.realisations__head {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.realisations__intro {
+  display: grid;
+  gap: var(--space-md);
+  max-inline-size: var(--measure-narrow);
+}
+
+.realisations__lead {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-lead);
+  letter-spacing: var(--tracking-heading);
+}
+
+/* Mention de droits : en encre pleine et soulignee d'un filet accent, pour
+   qu'elle se lise comme une information et pas comme un detail. */
+.realisations__credit {
+  justify-self: start;
+  padding-block-start: var(--space-xs);
+  color: var(--color-ink);
+  border-block-start: var(--focus-ring) solid var(--color-accent);
+}
+
+/* ---------- Rangees par support ---------- */
+
+.realisations__groups {
+  display: grid;
+  gap: var(--section-space);
+}
+
+/* L'ecart titre -> premiere rangee vaut l'ecart entre rangees : la premiere
+   image, meme decalee par la profondeur, ne touche jamais le titre. */
+.realisations__group {
+  display: grid;
+  gap: var(--realisations-row-gap);
+}
+
+.realisations__group-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs) var(--space-md);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--border-thin) solid var(--color-line-strong);
+}
+
+.realisations__group-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+}
+
+.realisations__count {
+  font-size: var(--text-xl);
+  line-height: var(--leading-heading);
+}
+
+.realisations__grid {
+  display: grid;
+  row-gap: var(--realisations-row-gap);
+}
+
+/* ---------- Preuve : legende au-dessus, image dessous ---------- */
+
+.realisations__figure {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-xs);
+}
+
+.realisations__caption {
+  display: grid;
+  gap: var(--space-3xs);
+  max-inline-size: var(--measure);
+}
+
+.realisations__title {
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+}
+
+/* Cadre au ratio exact de l'image : place reservee avant le chargement. Sa
+   largeur est bornee par la colonne, par la largeur reelle du fichier (pas
+   d'agrandissement) et par la hauteur maximale (largeur = hauteur x ratio). */
+.realisations__frame {
+  inline-size: 100%;
+  max-inline-size: min(100%, var(--natural-w), calc(var(--ratio) * var(--realisations-frame-max)));
+  aspect-ratio: var(--ratio);
+  overflow: hidden;
+  background-color: var(--color-line);
+}
+
+.realisations__img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Mouvement (classe posee par le JS si les animations sont permises) ---------- */
+
+/* Devoilement de bas en haut, l'image se pose en meme temps (leger zoom arriere). */
+.realisations--motion .realisations__frame {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--dur-reveal) var(--ease-out);
+}
+.realisations--motion .realisations__frame.is-entered {
+  clip-path: inset(0);
+}
+
+/* Noir et blanc tant que l'image n'est pas bien visible, puis couleur. Le filtre
+   n'est anime qu'une fois, a l'entree : jamais pendant le defilement. */
+.realisations--motion .realisations__img {
+  filter: grayscale(1);
+  transform: scale(1.06);
+  transition:
+    transform var(--dur-reveal) var(--ease-out),
+    filter calc(2 * var(--dur-slow)) var(--ease-in-out);
+}
+.realisations--motion .is-entered .realisations__img {
+  transform: none;
+}
+.realisations--motion .is-colored .realisations__img {
+  filter: grayscale(0);
+}
+
+/* Filet de securite si la preference change avant que le JS ne retire la classe. */
+@media (prefers-reduced-motion: reduce) {
+  .realisations--motion .realisations__frame {
+    clip-path: none;
+  }
+  .realisations--motion .realisations__img {
+    filter: none;
+    transform: none;
+  }
+}
+
+/* ---------- Grille editoriale (tablette et plus) ---------- */
+
+@media (min-width: 48em) {
+  .realisations__grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-md);
+    align-items: start;
+  }
+
+  /* Position calculee par le JS : rangee explicite, sinon le placement
+     automatique ferait remonter une image seule a cote de la precedente. */
+  .realisations__item {
+    grid-row: var(--row);
+    grid-column: var(--col-start) / span var(--col-span);
+  }
+
+  /* Une image sur deux d'une meme rangee descend d'un cran. */
+  .realisations__item--drop {
+    padding-block-start: var(--space-xl);
+  }
+
+  /* Image ancree a droite : legende et cadre s'alignent sur le bord droit. */
+  .realisations__item--end .realisations__figure {
+    justify-items: end;
+  }
+}
+
+@media (min-width: 56em) {
+  /* Chapo et mention decales a droite, comme le manifeste : le titre geant garde
+     toute la largeur et n'est jamais coupe. */
+  .realisations__intro {
+    justify-self: end;
+  }
+}
+
+@media (min-width: 64em) {
+  .realisations__grid {
+    column-gap: var(--space-lg);
+  }
+}

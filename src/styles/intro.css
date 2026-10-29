@@ -1,4 +1,6 @@
-/* Intro d'ouverture : calque sombre plein ecran, trait effile, ouverture en octogone.
+/* Intro d'ouverture : calque clair plein ecran, trait effile, ouverture en octogone.
+   Seules les couleurs passent par les tokens de la charte claire (tokens.css) :
+   fond = --color-bg, encre = --color-ink, filet = --color-line-strong.
    Les phases sont posees par Intro.js sur le calque :
      data-phase   = phase courante (lines, logo, name, slit, open)
      data-reached = phases deja atteintes, separees par des espaces (selecteur ~=)
@@ -38,8 +40,8 @@
   inset: 0;
   z-index: var(--z-intro);
   overflow: hidden;
-  background-color: var(--bg-0);
-  color: var(--text-on-dark);
+  background-color: var(--color-bg);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   user-select: none;
 }
@@ -65,8 +67,8 @@
   display: grid;
   place-items: center;
   align-content: center;
-  gap: var(--space-sm);
-  padding-inline: var(--space-md);
+  gap: var(--space-xs);
+  padding-inline: var(--space-sm);
   text-align: center;
 }
 
@@ -78,7 +80,7 @@
   inset-inline: 0;
   inset-block-start: calc(50% - 0.5px);
   block-size: 1px;
-  background-color: var(--line);
+  background-color: var(--color-line-strong);
   opacity: 0;
   transform: scaleX(0);
   pointer-events: none;
@@ -87,19 +89,19 @@
   animation: intro-horizon var(--intro-slit-dur) var(--ease-out) forwards;
 }
 
-/* Bouton "Passer l'intro" : discret, mais lisible (contraste > 4.5:1), cible de
-   44 px et focus visible (anneau global :focus-visible de reset.css). */
+/* Bouton "Passer l'intro" : discret, mais lisible (encre douce 6.04:1 sur le fond
+   clair), cible de 44 px et focus visible (anneau global :focus-visible de reset.css). */
 .intro__skip {
   position: absolute;
-  inset-block-end: var(--space-lg);
-  inset-inline-end: var(--space-lg);
+  inset-block-end: var(--space-md);
+  inset-inline-end: var(--space-md);
   min-inline-size: 44px;
   min-block-size: 44px;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
   font: inherit;
   font-size: 13px;
   letter-spacing: 0.04em;
-  color: var(--text-on-dark-muted);
+  color: var(--color-ink-muted);
   background: transparent;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
@@ -108,8 +110,8 @@
 }
 .intro__skip:hover,
 .intro__skip:focus-visible {
-  color: var(--text-on-dark);
-  border-color: var(--glass-border);
+  color: var(--color-ink);
+  border-color: var(--color-line-strong);
 }
 
 @keyframes intro-horizon {

@@ -1,4 +1,4 @@
-/* Lignes de fond de l'intro : courbes fines, a peine plus claires que le fond,
+/* Lignes de fond de l'intro : courbes fines, a l'encre tres diluee (~8 %),
    qui glissent en place (translation + fondu) et se dessinent en meme temps.
    Declenchement : data-reached~="lines" sur .intro (pose des l'insertion du calque,
    donc a t = 0). Duree : --intro-lines-dur, fournie par Intro.js.
@@ -17,7 +17,7 @@
 .intro__line,
 .intro__node {
   fill: none;
-  stroke: var(--inscription);
+  stroke: var(--color-topo);
   stroke-width: 1;
   opacity: 0;
 }

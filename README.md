@@ -1,11 +1,11 @@
 # CV interactif — Jean-Philippe Grewis
 
-CV web qui sort de l'ordinaire : une **carte mentale** avec un nœud central
-(toi) et cinq branches (Profil, Expériences, Compétences, Formation, Contact).
-Design **liquid glass** (verre dépoli) sur fond sombre avec halos ambiants, et **zoom moderne**
-au clic qui ouvre un panneau de détail enrichi (KPIs chiffrés, visuels, liens).
+CV web en **page éditoriale claire qui défile** : intro animée (monogramme,
+glitch, ouverture en octogone), visage en plein écran, manifeste, parcours,
+réalisations, compétences et formations, puis grand pied de page Contact.
+Polices libres auto-hébergées (Inter Tight, Instrument Serif via Fontsource).
 
-Stack : **Vanilla JS + Vite**, zéro framework lourd, aucune dépendance runtime.
+Stack : **Vanilla JS + Vite**, zéro framework, aucune bibliothèque JavaScript à l’exécution (seules dépendances : deux paquets de polices Fontsource).
 
 ## Prérequis
 
@@ -49,9 +49,10 @@ siteCV/
 └── src/
     ├── main.js               # point d'entrée
     ├── data/cv.js            # SOURCE UNIQUE de tout le contenu du CV
-    ├── styles/               # tokens, reset, base, glass, mindmap, detail, responsive
-    ├── components/           # MindMap, Node, Connections, DetailPanel
-    └── utils/                # layout (positions), zoom (caméra), a11y, icons
+    ├── data/manifeste.js     # mots-clés mis en avant dans le manifeste
+    ├── styles/               # tokens (charte), fonts, reset, base, page, sections, hero, realisations, intro*
+    ├── components/           # Page, Hero, Realisations, Intro, sections/ (Bar, Manifesto, Parcours, Competences, Contact)
+    └── utils/                # reveal (apparitions), tone (teinte du fond), topo (lignes de fond), dom, svg, monogram
 ```
 
 ## Mettre le CV à jour
@@ -62,16 +63,38 @@ fichier, l'interface se met à jour automatiquement.
 
 ### Ajouter des visuels de réalisations
 
-1. Place les images dans `public/assets/realisations/`.
-2. Dans `src/data/cv.js`, renseigne le champ `media` de la feuille concernée :
+La section « Réalisations » lit [`src/data/realisations.js`](src/data/realisations.js),
+pas `cv.js`.
+
+1. Dépose l'image dans `public/assets/realisations/` (WebP de 1600 px de large
+   au plus, nom en minuscules sans accents, préfixé par le support :
+   `print-…`, `web-…`).
+2. Relève ses dimensions réelles en pixels (`sips -g pixelWidth -g pixelHeight fichier.webp`
+   sur Mac).
+3. Ajoute une entrée dans le tableau `realisations` :
 
 ```js
-media: [
-  { src: 'assets/realisations/catalogue.jpg', caption: 'Catalogue promotionnel' },
-],
+{
+  src: 'assets/realisations/print-catalogue-2026.webp', width: 1131, height: 1600,
+  support: 'print', theme: 'Sport',
+  title: 'Catalogue des activités sportives 2026',
+  alt: 'Ce que montre l’image, en une ou deux phrases, pour qui ne la voit pas.',
+},
 ```
 
-Sans `src`, un emplacement élégant « Visuel à venir » s'affiche.
+- `src` : chemin relatif, sans `/` au début (le site peut vivre dans un sous-dossier).
+- `width` / `height` : dimensions **réelles** du fichier. Elles réservent la place
+  avant le chargement et fixent la largeur de l'image dans la grille (un portrait
+  reste étroit, un panoramique s'étale).
+- `support` : l'`id` d'une entrée de `supports` (une rangée par support, dans
+  l'ordre de ce tableau). Pour une nouvelle rangée, ajoute d'abord le support.
+- `theme`, `title` : la micro-légende « SUPPORT · THÈME » et le titre affichés
+  au-dessus de l'image.
+- `alt` : obligatoire, décrit l'image.
+
+L'ordre des entrées est l'ordre d'affichage dans la rangée ; la disposition
+gauche / droite se recalcule seule. La mention `credit` reste affichée : ne
+publier que des supports déjà diffusés (voir `PLAN-visage-et-realisations.md` §5).
 
 ## Déploiement
 

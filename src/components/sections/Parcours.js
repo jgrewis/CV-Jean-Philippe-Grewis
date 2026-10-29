@@ -1,0 +1,102 @@
+// Section #parcours : les experiences (branche "experiences" de cv.js) en grands
+// blocs editoriaux. Le visuel de chaque bloc (theme.background) alterne a gauche
+// et a droite, a des hauteurs decalees, avec une micro-legende en capitales.
+import { getBranch } from '../../data/selectors.js';
+import { createEl } from '../../utils/dom.js';
+import { createSectionHead } from './sectionHead.js';
+
+const BRANCH_ID = 'experiences';
+const EYEBROW = 'Parcours';
+const MEDIA_LABEL = 'Supports réalisés';
+
+function createFigure(leaf) {
+  const background = leaf.theme?.background;
+  if (!background) return null;
+  // Image d'ambiance de l'entreprise : decorative (alt vide), la legende nomme
+  // l'entreprise. Recadree en CSS (aspect-ratio + object-fit) : la place est
+  // reservee avant le chargement, aucun saut de mise en page.
+  const img = createEl('img', {
+    className: 'xp__img',
+    attrs: { src: background, alt: '', loading: 'lazy', decoding: 'async' },
+  });
+  const caption = leaf.org ? createEl('figcaption', { className: 'caption xp__caption', text: leaf.org }) : null;
+  return createEl('figure', {
+    className: 'xp__figure',
+    attrs: { 'data-reveal': '' },
+    children: [createEl('div', { className: 'xp__frame', children: [img] }), caption],
+  });
+}
+
+function createKpis(kpis) {
+  if (!kpis?.length) return null;
+  const list = createEl('ul', { className: 'xp__kpis' });
+  kpis.forEach(({ value, label }) => {
+    list.append(
+      createEl('li', {
+        className: 'xp__kpi',
+        children: [
+          createEl('span', { className: 'xp__kpi-value', text: value }),
+          createEl('span', { className: 'xp__kpi-label caption', text: label }),
+        ],
+      }),
+    );
+  });
+  return list;
+}
+
+function createList(items, className) {
+  if (!items?.length) return null;
+  return createEl('ul', {
+    className,
+    children: items.map((item) => createEl('li', { text: item })),
+  });
+}
+
+function createMedia(media) {
+  if (!media?.length) return null;
+  return createEl('div', {
+    className: 'xp__media',
+    children: [
+      createEl('p', { className: 'caption', text: MEDIA_LABEL }),
+      createList(media.map((item) => item.caption).filter(Boolean), 'tags'),
+    ],
+  });
+}
+
+function createExperience(leaf, index) {
+  const body = createEl('div', {
+    className: 'xp__body',
+    attrs: { 'data-reveal': '', 'data-reveal-delay': 1 },
+    children: [
+      leaf.period ? createEl('p', { className: 'caption xp__period', text: leaf.period }) : null,
+      createEl('h3', { className: 'xp__title', text: leaf.title }),
+      leaf.summary ? createEl('p', { className: 'xp__summary', text: leaf.summary }) : null,
+      createKpis(leaf.kpis),
+      createList(leaf.bullets, 'bullets xp__bullets'),
+      createMedia(leaf.media),
+    ],
+  });
+
+  // Alternance gauche / droite portee par une classe : le CSS n'a pas a
+  // connaitre la position de l'element dans la liste.
+  const side = index % 2 === 0 ? 'xp--media-start' : 'xp--media-end';
+  const article = createEl('article', {
+    className: `xp ${side}`,
+    children: [createFigure(leaf), body],
+  });
+  if (leaf.theme?.accentColor) article.style.setProperty('--xp-accent', leaf.theme.accentColor);
+  return createEl('li', { className: 'parcours__item', children: [article] });
+}
+
+export function mountParcours(section) {
+  section.classList.add('section', 'parcours');
+  const branch = getBranch(BRANCH_ID);
+  const leaves = branch?.leaves ?? [];
+
+  const list = createEl('ol', { className: 'parcours__list' });
+  leaves.forEach((leaf, index) => list.append(createExperience(leaf, index)));
+
+  const wrap = createEl('div', { className: 'wrap parcours__wrap' });
+  wrap.append(createSectionHead(section, { eyebrow: EYEBROW, title: branch?.label ?? EYEBROW }), list);
+  section.replaceChildren(wrap);
+}

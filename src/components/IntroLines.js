@@ -10,7 +10,7 @@
 // cercles restent ronds et que le trait de 1 px reste net, sans etirement ni
 // recadrage "slice" qui pousserait des traces dans la zone du logo en portrait.
 
-const SVG_NS = 'http://www.w3.org/2000/svg';
+import { createSvgElement } from '../utils/svg.js';
 
 // Les points des courbes sont exprimes en fractions de l'ecran (0 = bord gauche /
 // haut, 1 = bord droit / bas), puis convertis en pixels. Les departs depassent
@@ -45,12 +45,6 @@ const LENGTH_SAMPLES = 24;
 // Marge sur la longueur estimee, pour que le trait soit entierement masque
 // au depart du dessin malgre l'approximation.
 const LENGTH_MARGIN = 1.05;
-
-function createSvgElement(tag, attributes) {
-  const el = document.createElementNS(SVG_NS, tag);
-  Object.entries(attributes).forEach(([name, value]) => el.setAttribute(name, value));
-  return el;
-}
 
 function toPixels(point, width, height) {
   return [point[0] * width, point[1] * height];

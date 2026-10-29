@@ -1,0 +1,332 @@
+/* Sections editoriales : manifeste, parcours, competences et formations, contact.
+   Mobile d'abord : une colonne, puis grilles a partir de 48em / 56em. */
+
+/* ---------- Manifeste ---------- */
+
+.manifesto__wrap {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.manifesto__statement {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+/* La serif italique a un oeil plus petit que les capitales grasses : on la
+   remonte un peu pour que le mot-cle ne paraisse pas en retrait. */
+.manifesto__statement .keyword {
+  font-size: 1.12em;
+}
+
+.manifesto__lead {
+  max-inline-size: var(--measure-narrow);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-lead);
+  letter-spacing: var(--tracking-heading);
+}
+
+@media (min-width: 56em) {
+  /* Chapo decale a droite : la page respire comme une double page de magazine. */
+  .manifesto__lead {
+    justify-self: end;
+  }
+}
+
+/* ---------- Parcours ---------- */
+
+.parcours__wrap {
+  display: grid;
+  gap: var(--space-3xl);
+}
+
+.parcours__list {
+  display: grid;
+  gap: clamp(var(--space-3xl), 10vw, var(--space-4xl));
+}
+
+.xp {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.xp__figure {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+/* Cadre recadre : la place est reservee par l'aspect-ratio avant le chargement
+   de l'image (pas de saut de mise en page), l'image remplit le cadre. */
+.xp__frame {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-line);
+}
+.xp__img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.xp__body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-md);
+}
+
+/* Petite pastille a la couleur de l'entreprise (theme.accentColor de cv.js). */
+.xp__period {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+.xp__period::before {
+  content: '';
+  inline-size: var(--space-2xs);
+  block-size: var(--space-2xs);
+  flex: none;
+  border-radius: 50%;
+  background-color: var(--xp-accent, var(--color-accent));
+}
+
+.xp__title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+}
+
+.xp__summary {
+  max-inline-size: var(--measure);
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+}
+
+.xp__kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md) var(--space-xl);
+  padding-block: var(--space-sm);
+}
+
+.xp__kpi {
+  display: grid;
+  gap: var(--space-3xs);
+}
+
+.xp__kpi-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.xp__media {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+@media (min-width: 56em) {
+  /* Grille de 12 colonnes : visuel sur 5, texte sur 6, une colonne d'air entre
+     les deux. Le visuel alterne de cote et descend d'un cran sur deux blocs. */
+  .xp {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: var(--space-lg);
+    align-items: start;
+  }
+  .xp__figure,
+  .xp__body {
+    grid-row: 1;
+  }
+  .xp--media-start .xp__figure {
+    grid-column: 1 / span 5;
+  }
+  .xp--media-start .xp__body {
+    grid-column: 7 / span 6;
+    padding-block-start: var(--space-3xl);
+  }
+  .xp--media-end .xp__figure {
+    grid-column: 8 / span 5;
+    padding-block-start: var(--space-4xl);
+  }
+  .xp--media-end .xp__body {
+    grid-column: 1 / span 6;
+  }
+}
+
+/* ---------- Competences & formations ---------- */
+
+.skills__wrap {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+.skills__list {
+  display: grid;
+  border-block-start: var(--border-thin) solid var(--color-line-strong);
+}
+
+.skills__row {
+  display: grid;
+  gap: var(--space-md);
+  padding-block: var(--space-lg);
+  border-block-end: var(--border-thin) solid var(--color-line-strong);
+}
+
+.skills__label {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+}
+
+.skills__content {
+  display: grid;
+  align-content: start;
+  gap: var(--space-md);
+}
+
+.skills__sub {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.degrees {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.degree {
+  display: grid;
+  gap: var(--space-3xs);
+}
+
+.degree__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+.degree__org,
+.degree__summary {
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 48em) {
+  .skills__row {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: var(--space-lg);
+  }
+}
+
+/* ---------- Contact (pied de page, fond encre) ---------- */
+
+.contact {
+  position: relative;
+  z-index: var(--z-content);
+  padding-block: var(--section-space) var(--space-lg);
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+}
+
+/* Sur fond encre, l'accent et le texte attenue passent a leurs variantes claires
+   (contrastes : voir tokens.css). */
+.contact .caption {
+  color: var(--color-paper-muted);
+}
+.contact :focus-visible {
+  outline-color: var(--color-accent-on-ink);
+}
+.contact ::selection {
+  color: var(--color-ink);
+  background-color: var(--color-accent-on-ink);
+}
+
+.contact__wrap {
+  display: grid;
+  gap: var(--space-2xl);
+}
+
+.contact__name {
+  display: grid;
+  /* Calibre comme le nom du hero : "JEAN-PHILIPPE" tient sur une ligne. */
+  font-size: clamp(2rem, 12.6vw, 15rem);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.contact__list {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.contact__entry {
+  display: grid;
+  align-content: start;
+  gap: var(--space-3xs);
+}
+
+.contact__detail {
+  font-size: var(--text-lg);
+}
+
+.contact__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-paper-muted);
+  text-decoration-thickness: var(--border-thin);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+.contact__link:hover {
+  text-decoration-color: var(--color-accent-on-ink);
+}
+
+.contact__link--main {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-heading);
+  overflow-wrap: anywhere;
+}
+
+.contact__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding-block-start: var(--space-lg);
+  border-block-start: var(--border-thin) solid var(--color-line-on-ink);
+}
+
+.contact__top {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  text-decoration: none;
+}
+.contact__top:hover {
+  color: var(--color-bg);
+}
+
+@media (min-width: 48em) {
+  .contact__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-lg);
+  }
+  .contact__entry:first-child {
+    grid-column: 1 / -1;
+  }
+}

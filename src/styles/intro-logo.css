@@ -22,13 +22,13 @@
   --intro-solo-shift: calc(50% - var(--intro-mono-w) / 2);
   --intro-ease-in: cubic-bezier(0.55, 0, 1, 0.45); /* acceleration : le logo est aspire */
 
-  color: var(--text-on-dark);
+  color: var(--color-ink);
 }
 
 .intro__track {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   /* Tant que le nom est cache, la rangee est decalee pour centrer le monogramme. */
   transform: translateX(var(--intro-solo-shift));
 }
@@ -64,7 +64,7 @@
 }
 
 .intro__mono-layer--ghost {
-  color: var(--text-on-dark-faint);
+  color: var(--color-ink-faint);
   opacity: 0;
 }
 .intro__mono-layer--framed {
@@ -133,7 +133,7 @@
   pointer-events: none;
 }
 .intro__name::after {
-  background-color: var(--text-on-dark-faint);
+  background-color: var(--color-ink-faint);
 }
 .intro[data-reached~='name'] .intro__name::before {
   animation: intro-shard-a var(--intro-glitch-dur) step-end both;

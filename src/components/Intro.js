@@ -1,11 +1,14 @@
-// Intro d'ouverture du CV : calque plein ecran sombre (lignes de fond, monogramme,
-// nom en glitch) puis un trait effile qui s'ouvre en octogone et devoile la carte.
+// Intro d'ouverture du CV : calque plein ecran clair (lignes de fond, monogramme,
+// nom en glitch) puis un trait effile qui s'ouvre en octogone et devoile le haut
+// de la page (#hero).
 //
 // Mecanique de la decoupe : le calque est AU-DESSUS de la page et c'est lui qu'on
 // troue (clip-path polygon evenodd, voir intro.css). La page en dessous reste
-// intacte : #app ne recoit aucun clip-path, donc ni la camera (zoom.js) ni le
-// backdrop-filter du verre ne sont perturbes, et le fond a halos du body se voit
-// a travers la decoupe.
+// intacte : #app ne recoit aucun clip-path, elle est montee sous le calque a la
+// phase "slit" et se voit a travers la decoupe.
+//
+// Pendant l'intro, le defilement du document est bloque (classe is-intro-playing
+// sur <html>, voir base.css) ; il est rendu a la fin comme au saut.
 //
 // Chronologie pilotee par une table de phases et un minuteur unique : chaque phase
 // pose data-phase (phase courante) et data-reached (phases deja atteintes) sur le
@@ -36,13 +39,14 @@ const PHASES = [
   { name: 'done', at: DONE_AT },
 ];
 
-// Phase a laquelle la carte est montee : son animation d'entree (draw-line) se
-// joue ainsi pendant l'ouverture, et non cachee sous le calque.
+// Phase a laquelle la page est montee : ses apparitions (reveal) se jouent ainsi
+// pendant l'ouverture, et non cachees sous le calque.
 const REVEAL_PHASE = 'slit';
 
 const STORAGE_KEY = 'cv-intro-seen';
 const SKIP_KEYS = new Set(['Enter', 'Escape', ' ', 'Spacebar']);
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+const SCROLL_LOCK_CLASS = 'is-intro-playing';
 
 function prefersReducedMotion() {
   return Boolean(window.matchMedia && window.matchMedia(REDUCED_MOTION_QUERY).matches);
@@ -120,6 +124,7 @@ export class Intro {
     this._unbind();
     this._reveal();
     if (this._page) this._page.inert = false;
+    document.documentElement.classList.remove(SCROLL_LOCK_CLASS);
 
     const layer = this._layer;
     this._layer = null;
@@ -164,6 +169,8 @@ export class Intro {
     // En tete du body : le bouton "Passer l'intro" est le premier arret de tabulation.
     document.body.prepend(layer);
     if (this._page) this._page.inert = true;
+    // L'ouverture doit devoiler le haut de la page : pas de defilement d'ici la fin.
+    document.documentElement.classList.add(SCROLL_LOCK_CLASS);
     this._layer = layer;
   }
 
@@ -212,7 +219,7 @@ export class Intro {
       this.finish();
       return;
     }
-    // Montage AVANT de lancer le trait : le cout du calcul de la carte tombe
+    // Montage AVANT de lancer le trait : le cout du montage de la page tombe
     // sur l'image figee du nom, pas sur la premiere image de l'animation.
     if (name === REVEAL_PHASE) this._reveal();
     this._reached.push(name);

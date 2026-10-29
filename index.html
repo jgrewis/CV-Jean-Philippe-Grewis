@@ -10,11 +10,12 @@
     <title>Jean-Philippe Grewis — Chef de projet & Responsable communication</title>
     <meta
       name="description"
-      content="CV interactif de Jean-Philippe Grewis, chef de projet et responsable communication : 10+ ans en communication 360°, pilotage de projets, automatisation et IA."
+      content="CV en ligne de Jean-Philippe Grewis, chef de projet et responsable communication : 10+ ans en communication 360°, pilotage de projets, automatisation et IA."
     />
     <meta name="author" content="Jean-Philippe Grewis" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta name="theme-color" content="#07080d" />
+    <meta name="theme-color" content="#edebe6" />
+    <meta name="color-scheme" content="light" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
 
     <!-- Open Graph / partage reseaux sociaux -->
@@ -22,31 +23,19 @@
     <meta property="og:title" content="Jean-Philippe Grewis — Chef de projet & Responsable communication" />
     <meta
       property="og:description"
-      content="CV interactif en carte mentale : expériences, compétences, automatisation et IA."
+      content="CV en ligne : parcours, réalisations, compétences, automatisation et IA."
     />
     <meta property="og:image" content="./og-image.png" />
     <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
-    <!-- Filtre SVG de refraction "liquid glass" : feTurbulence -> feDisplacementMap
-         deforme ce qui est peint derriere le verre (effet de lentille realiste).
-         Reference en backdrop-filter: url(#liquid-glass) dans glass.css. -->
-    <svg class="liquid-defs" aria-hidden="true" focusable="false" width="0" height="0">
-      <defs>
-        <filter id="liquid-glass" x="-35%" y="-35%" width="170%" height="170%" color-interpolation-filters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.011 0.014" numOctaves="2" seed="7" result="noise" />
-          <feGaussianBlur in="noise" stdDeviation="1.1" result="softNoise" />
-          <feDisplacementMap in="SourceGraphic" in2="softNoise" scale="16" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </defs>
-    </svg>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
 
-    <a class="skip-link" href="#cv-content">Aller au contenu</a>
-
-    <main id="app" aria-label="CV interactif de Jean-Philippe Grewis"></main>
+    <!-- Page montee par src/components/Page.js (barre, <main id="contenu">, sections, pied de page). -->
+    <div class="page" id="app"></div>
 
     <noscript>
-      <section id="cv-content" style="max-width: 720px; margin: 2rem auto; padding: 1rem; font-family: system-ui, sans-serif; color: #1a3f6f;">
+      <main class="noscript" id="contenu">
         <h1>Jean-Philippe Grewis</h1>
         <p>Chef de projet — Responsable communication</p>
         <p>
@@ -54,12 +43,26 @@
           multi-formats (print, digital, événementiel), pilotage d'agences et déploiement de chartes
           graphiques multi-enseignes.
         </p>
+        <h2>Parcours</h2>
+        <ul>
+          <li>Chef de projets communication — Mulhouse Alsace Agglomération (m2A), oct. 2024 – aujourd'hui</li>
+          <li>Gérant — GR Stratégie (SARL), 2018 – 2025</li>
+          <li>Responsable communication multi-sites — Hyper U Sierentz &amp; Super U Huningue, 2016 – 2024</li>
+          <li>Responsable marchandising Grand-Est — Système U Centrale Est, 2013 – 2015</li>
+        </ul>
+        <h2>Formations</h2>
+        <ul>
+          <li>BAC+5 — Manager stratégie commerciale, ESGM Mulhouse, 2014 – 2016</li>
+          <li>BAC+3 — Développement marketing, ESGM Mulhouse, 2012 – 2014</li>
+        </ul>
+        <h2>Contact</h2>
         <p>
-          Contact : <a href="mailto:grewis.jp@gmail.com">grewis.jp@gmail.com</a> ·
-          <a href="tel:+33785465497">07 85 46 54 97</a> · Burnhaupt-le-Bas (68520)
+          <a href="mailto:grewis.jp@gmail.com">grewis.jp@gmail.com</a> ·
+          <a href="tel:+33785465497">07 85 46 54 97</a> · Burnhaupt-le-Bas (68520) ·
+          <a href="https://www.linkedin.com/in/grewis/" rel="noopener noreferrer">LinkedIn</a>
         </p>
-        <p>Ce CV interactif nécessite JavaScript pour afficher la carte mentale animée.</p>
-      </section>
+        <p>La version complète et animée de ce CV nécessite JavaScript.</p>
+      </main>
     </noscript>
 
     <script type="module" src="src/main.js"></script>

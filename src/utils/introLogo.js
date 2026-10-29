@@ -14,7 +14,7 @@
 //   Avant 0,3 s (data-phase="lines") le logo doit etre invisible.
 // - Retour facultatif : une fonction de nettoyage, appelee juste avant le retrait du calque.
 //   Rien a nettoyer ici (ni ecouteur ni minuteur : tout est en CSS), donc pas de retour.
-// - Pas d'innerHTML : le SVG est construit avec createElementNS et le nom en textContent.
+// - Pas d'innerHTML : le SVG est construit avec createSvgElement et le nom en textContent.
 //
 // Structure produite (lockup sur UNE ligne, centre a 50 % de la hauteur pour que
 // le trait de la phase slit le raye en son milieu) :
@@ -27,23 +27,12 @@
 //         --framed            JPG dans un cadre octogonal (etat final)
 //       .intro__name          une span par lettre, revelees de droite a gauche
 
-const SVG_NS = 'http://www.w3.org/2000/svg';
+import { createSvgElement } from './svg.js';
+import { GLYPHS_VIEWBOX, appendGlyphs } from './monogram.js';
+
 const FULL_NAME = 'Jean-Philippe Grewis';
 
-// Monogramme dessine sur une grille de 22 x 10 unites : futs de 2 unites, lettres
-// separees de 2 unites. Les coins exterieurs des courbes sont "arrondis" par une
-// marche d'une unite (une demi-epaisseur), comme un pixel retire : c'est ce qui
-// donne le caractere pixel sans perdre la lisibilite. Traces orthogonaux d'un seul
-// tenant (pas de rectangles juxtaposes) : aucune couture d'anticrenelage.
-const GLYPHS_VIEWBOX = '0 0 22 10';
-const GLYPH_PATHS = [
-  // J : fut a droite, crochet en bas, ergot a gauche.
-  'M3 0H5V9H4V10H1V9H0V6H2V8H3Z',
-  // P : fut + panse de 6 x 6, contre-forme de 2 x 2 (evenodd).
-  'M7 0H12V1H13V5H12V6H9V10H7Z M9 2V4H11V2Z',
-  // G : barre haute, fut gauche, barre basse, fut droit et eperon a mi-hauteur.
-  'M16 0H22V2H17V8H20V6H19V4H22V9H21V10H16V9H15V1H16Z',
-];
+// Glyphes du monogramme : voir monogram.js (partages avec la barre de la page).
 
 // Version encadree : memes lettres, centrees dans un cadre de 30 x 18 unites
 // (3 unites d'air tout autour). Le cadre a des chanfreins a 45 degres : c'est un
@@ -66,21 +55,7 @@ const CHAR_DELAY_CURVE = 1.3; // > 1 : les lettres de droite se suivent de pres
 const CHAR_JITTER_FRAMES = [0, 1, -1, 0, 1, -1, 0];
 
 function createSvg(viewBox, className) {
-  const svg = document.createElementNS(SVG_NS, 'svg');
-  svg.setAttribute('viewBox', viewBox);
-  svg.setAttribute('class', className);
-  svg.setAttribute('focusable', 'false');
-  return svg;
-}
-
-function appendGlyphs(parent) {
-  GLYPH_PATHS.forEach((d) => {
-    const path = document.createElementNS(SVG_NS, 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('fill', 'currentColor');
-    path.setAttribute('fill-rule', 'evenodd');
-    parent.append(path);
-  });
+  return createSvgElement('svg', { viewBox, class: className, focusable: 'false' });
 }
 
 function createLayer(modifier) {
@@ -101,14 +76,14 @@ function createFramedLayer() {
   const layer = createLayer('framed');
   const svg = createSvg(FRAMED_VIEWBOX, 'intro__mono-svg');
 
-  const frame = document.createElementNS(SVG_NS, 'path');
-  frame.setAttribute('d', FRAME_PATH);
-  frame.setAttribute('fill', 'none');
-  frame.setAttribute('stroke', 'currentColor');
-  frame.setAttribute('stroke-width', FRAME_STROKE);
+  const frame = createSvgElement('path', {
+    d: FRAME_PATH,
+    fill: 'none',
+    stroke: 'currentColor',
+    'stroke-width': FRAME_STROKE,
+  });
 
-  const glyphs = document.createElementNS(SVG_NS, 'g');
-  glyphs.setAttribute('transform', FRAMED_GLYPHS_OFFSET);
+  const glyphs = createSvgElement('g', { transform: FRAMED_GLYPHS_OFFSET });
   appendGlyphs(glyphs);
 
   svg.append(frame, glyphs);

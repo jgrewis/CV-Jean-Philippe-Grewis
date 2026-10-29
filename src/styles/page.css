@@ -1,0 +1,252 @@
+/* Ossature de la page qui defile : calque de fond, barre fixe, gabarit des
+   sections et motifs typographiques partages (micro-legendes, mots-cles,
+   etiquettes, puces), apparition au defilement. */
+
+/* ---------- Calque de fond : teinte + lignes topographiques ---------- */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-backdrop);
+  pointer-events: none;
+}
+
+/* La teinte alternee est un calque pose sur le fond de base : seule son opacite
+   change (utils/tone.js pose html[data-tone]), jamais une couleur animee. */
+.backdrop__tone {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-bg-alt);
+  opacity: 0;
+  transition: opacity var(--dur-slow) var(--ease-in-out);
+}
+:root[data-tone='alt'] .backdrop__tone,
+:root.is-intro-playing .backdrop__tone {
+  opacity: 1;
+}
+/* Pendant l'intro, la page montee sous le calque prend la teinte alternee : sur
+   fond clair, c'est ce leger ecart de teinte qui dessine le trait puis l'octogone
+   qui s'ouvre (le calque et la page auraient sinon exactement la meme couleur).
+   La teinte revient au fond de base en fondu des que l'intro se termine. */
+
+.backdrop__topo {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+  fill: none;
+  stroke: var(--color-topo);
+  stroke-width: 1;
+}
+
+/* ---------- Page ---------- */
+
+.page {
+  position: relative;
+}
+
+.page__main {
+  position: relative;
+  z-index: var(--z-content);
+}
+/* Cible du lien d'evitement : recoit le focus par programme, sans anneau sur
+   toute la page (ce n'est pas un element interactif). */
+.page__main:focus {
+  outline: none;
+}
+
+.wrap {
+  inline-size: 100%;
+  max-inline-size: var(--content-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-space);
+}
+
+.section-head {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.section-title {
+  /* Plafond en vw : un mot long en capitales ("PROFESSIONNELLES") ne se coupe pas
+     et elargissait la page a 320 px. La cesure reste un filet de securite. */
+  font-size: min(var(--text-3xl), 10.5vw);
+  hyphens: auto;
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+/* ---------- Barre fixe ---------- */
+
+.bar {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: var(--z-bar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  block-size: var(--bar-height);
+  padding-inline: var(--gutter);
+  /* La barre elle-meme laisse passer les clics : seules les pastilles en captent. */
+  pointer-events: none;
+}
+
+.bar__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-block-size: var(--touch-target);
+  padding-inline: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.01em;
+  color: var(--color-ink);
+  text-decoration: none;
+  background-color: var(--color-bg-veil);
+  border: var(--border-thin) solid var(--color-line);
+  border-radius: var(--radius-pill);
+  pointer-events: auto;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.bar__chip:hover {
+  border-color: var(--color-ink);
+}
+
+.bar__mono {
+  inline-size: auto;
+  block-size: var(--space-sm);
+  flex: none;
+}
+
+/* Le nom ne s'affiche qu'a partir de la tablette ; sur mobile, le monogramme
+   suffit et le nom reste le nom accessible du lien. */
+.bar__name {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (min-width: 40em) {
+  .bar__name {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    overflow: visible;
+    clip-path: none;
+  }
+}
+
+/* ---------- Motifs typographiques partages ---------- */
+
+/* Micro-legende en capitales espacees (periodes, legendes de photos, intitules). */
+.caption {
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Mot-cle : serif italique couleur accent, en bas de casse meme dans un titre en
+   capitales (le contraste de casse fait partie de l'effet). */
+.keyword {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-accent);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+
+.tag,
+.tags > li {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3xs) var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  border: var(--border-thin) solid var(--color-line);
+  border-radius: var(--radius-pill);
+}
+.tags--large > li {
+  padding: var(--space-2xs) var(--space-md);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  border-color: var(--color-line-strong);
+}
+
+.bullets {
+  display: grid;
+  gap: var(--space-xs);
+  max-inline-size: var(--measure);
+}
+.bullets > li {
+  position: relative;
+  padding-inline-start: var(--space-md);
+}
+/* Tiret fin en guise de puce : plus editorial qu'un disque. */
+.bullets > li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.8em;
+  inline-size: var(--space-xs);
+  block-size: var(--border-thin);
+  background-color: currentColor;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  font-weight: var(--weight-medium);
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: var(--border-thin);
+  text-underline-offset: 0.2em;
+}
+.text-link:hover {
+  text-decoration-thickness: var(--focus-ring);
+}
+
+/* ---------- Apparition au defilement (utils/reveal.js) ---------- */
+
+/* L'etat cache n'existe que sous html.has-reveal, pose par reveal.js quand le
+   mouvement est autorise : sans JS ni IntersectionObserver, tout reste visible. */
+.has-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance));
+  transition:
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
+  transition-delay: calc(var(--reveal-index, 0) * var(--reveal-stagger));
+}
+.has-reveal [data-reveal='fade'] {
+  transform: none;
+}
+.has-reveal [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}

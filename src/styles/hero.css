@@ -1,0 +1,199 @@
+/* Section #hero : le visage interactif (components/Hero.js, data/hero.js).
+   Plein ecran (100svh), la barre fixe passe par-dessus le haut de la section.
+
+   Gabarit : le portrait occupe toute la hauteur laissee libre par le nom, la
+   legende et les commandes. Mobile et ecrans en hauteur : nom sur deux lignes
+   pleine largeur. Ecrans en largeur : nom sur UNE ligne, sinon ses deux lignes
+   mangeraient la moitie de la hauteur et le portrait deviendrait minuscule. */
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: minmax(0, 1fr) auto auto auto;
+  grid-template-areas:
+    'stage stage'
+    'controls controls'
+    'title cue'
+    'name name';
+  gap: var(--space-sm);
+  /* Hauteur FIXE (et non minimale) : la rangee du portrait (1fr) se resout ainsi,
+     et le portrait se cale sur la place restante. Plancher pour les ecrans tres
+     bas (telephone en paysage) : la section depasse alors et defile. */
+  block-size: 100vh; /* repli des navigateurs sans unite svh */
+  block-size: 100svh;
+  min-block-size: 36rem;
+  padding-block: calc(var(--bar-height) + var(--space-sm)) var(--space-lg);
+  padding-inline: var(--gutter);
+}
+
+/* ---------- Portrait ---------- */
+
+/* Conteneur de taille : le cadre se dimensionne en unites cq pour tenir dans
+   la place disponible, en largeur ET en hauteur, au ratio exact du portrait. */
+.hero__stage {
+  grid-area: stage;
+  display: grid;
+  place-items: end center;
+  min-block-size: 0;
+  container-type: size;
+}
+
+/* Le cadre a exactement la taille de l'image affichee : canvas et calques s'y
+   superposent sans calcul d'object-fit. --hero-ratio et --hero-max viennent de
+   data/hero.js (poses par Hero.js). */
+.hero__frame {
+  position: relative;
+  inline-size: min(100%, var(--hero-max, 100%));
+  inline-size: min(100cqi, 100cqb * var(--hero-ratio, 1), var(--hero-max, 100cqi));
+  aspect-ratio: var(--hero-ratio, 1);
+  /* Le doigt revele le portrait sans bloquer le defilement vertical de la page. */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hero__portrait,
+.hero__accessory,
+.hero__trail {
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: none;
+}
+
+.hero__accessory,
+.hero__trail {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Calque entier : cache, revele d'un coup par le bouton (aucune transition :
+   la revelation au clavier est instantanee). */
+.hero__accessory {
+  opacity: 0;
+}
+.hero__accessory.is-shown {
+  opacity: 1;
+}
+
+/* ---------- Commandes : consigne + bouton ---------- */
+
+.hero__controls {
+  grid-area: controls;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs) var(--space-md);
+}
+
+.hero__hint {
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
+}
+.hero__hint.is-dismissed {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.hero__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-block-size: var(--touch-target);
+  padding-inline: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+  border: var(--border-thin) solid var(--color-line-strong);
+  border-radius: var(--radius-pill);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast) var(--ease-out);
+}
+.hero__toggle:hover {
+  border-color: var(--color-ink);
+}
+.hero__toggle[aria-pressed='true'] {
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+/* Temoin d'etat : anneau vide au repos, plein (accent) une fois le calque
+   revele. L'etat est aussi expose par aria-pressed, pas par la seule couleur. */
+.hero__toggle-mark {
+  inline-size: var(--space-2xs);
+  aspect-ratio: 1;
+  border: var(--focus-ring) solid currentColor;
+  border-radius: 50%;
+}
+.hero__toggle[aria-pressed='true'] .hero__toggle-mark {
+  background-color: var(--color-accent-on-ink);
+  border-color: var(--color-accent-on-ink);
+}
+
+/* ---------- Legende, nom, lien de defilement ---------- */
+
+.hero__title {
+  grid-area: title;
+  align-self: center;
+}
+
+.hero__cue {
+  grid-area: cue;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.hero__cue:hover {
+  text-decoration: underline;
+}
+
+.hero__name {
+  grid-area: name;
+  /* Calibre pour que "JEAN-PHILIPPE" (6.8 em de large en Inter Tight 800) occupe
+     toute la largeur utile, sur une ligne, de 320 a 1920 px. */
+  font-size: clamp(2rem, 12.6vw, 15rem);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.hero__line {
+  display: block;
+}
+
+/* ---------- Ecrans en largeur : nom sur une ligne ---------- */
+
+@media (min-width: 48em) and (min-aspect-ratio: 5/4) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-areas:
+      'stage stage stage'
+      'title controls cue'
+      'name name name';
+  }
+
+  .hero__name {
+    /* "JEAN-PHILIPPE GREWIS" mesure 10.64 em (mesure au navigateur) : 8.3vw le
+       fait tenir dans la largeur utile, gouttieres (4vw x 2) et barre de
+       defilement comprises, de 768 a 1920 px. */
+    font-size: clamp(2rem, 8.3vw, 11rem);
+    white-space: nowrap;
+  }
+
+  /* En ligne, mais en bloc pour que l'apparition (transform) s'applique. */
+  .hero__line {
+    display: inline-block;
+  }
+}
