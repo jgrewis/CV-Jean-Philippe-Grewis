@@ -69,9 +69,16 @@ function experienceHtml(xp) {
     : '';
   const bullets = xp.bullets?.length ? `<ul class="bullets">${xp.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : '';
   const summary = xp.summary ? `<p class="summary">${esc(xp.summary)}</p>` : '';
+  // Liens « Sources » (Hyper U) dans le bloc parcours. Les communiques m2A restent
+  // regroupes en pied de PDF pour eviter de les dupliquer ici.
+  const sources = xp.links?.length && xp.linksLabel === 'Sources'
+    ? `<p class="proofs">${esc(xp.linksLabel)} : ${xp.links
+        .map((l) => `<a href="${esc(l.url)}">${esc(l.label)}</a>`)
+        .join(' · ')}</p>`
+    : '';
   return `<article class="xp">
     <header><h3>${esc(xp.title)}</h3><span class="period">${esc(xp.period)}</span></header>
-    <p class="org">${esc(xp.org)}</p>${summary}${kpis}${results}${bullets}</article>`;
+    <p class="org">${esc(xp.org)}</p>${summary}${kpis}${results}${bullets}${sources}</article>`;
 }
 
 function cvHtml() {

@@ -143,28 +143,38 @@ export const branches = [
       {
         id: 'hyper-u',
         title: 'Responsable communication multi-sites',
-        org: 'Hyper U Sierentz & Super U Huningue',
+        org: 'Hyper U Sierentz · Super U Huningue',
         period: 'Janv. 2016 – Sept. 2024',
         theme: {
           background: 'assets/hyper-u-bg.jpg',
           accentColor: '#e3201e',
         },
-        kpis: [
-          { value: '20 000+', label: 'personnes, page Hyper U Sierentz' },
-          { value: '40 000', label: 'catalogues diffusés' },
+        // Contenu valide par JP le 11/11/2026. Chiffres non confirmes retires.
+        // Pas de flashmob, concert ni dedicaces isolees. Pas d'images Facebook/presse.
+        summary:
+          "J'ai mené la communication commerciale de deux magasins : réseaux sociaux, catalogues et promotions, signalétique et écrans en magasin, opérations et événements.",
+        resultsLabel: 'Opérations que j’ai menées',
+        results: [
+          {
+            title: 'Ouverture du Super U Huningue, octobre 2021',
+            text: "Communication de lancement, de l'annonce à l'offre du jour d'ouverture.",
+          },
+          {
+            title: 'Salon du livre',
+            text: 'Créé en 2016, cinq éditions jusqu’en 2019, jusqu’à 32 auteurs régionaux, avec des retombées dans L’Alsace et les DNA.',
+          },
+          {
+            title: 'Noël « Hyper Shopping », 2016',
+            text: 'Un chéquier monté avec les commerçants de la galerie pour faire venir du monde.',
+          },
         ],
-        bullets: [
-          'Élaboration des plans de communication et plans médias annuels (affichage, presse, digital, événementiel).',
-          'Conception intégrale et diffusion de catalogues promotionnels, jusqu\'à 40 000 exemplaires.',
-          'Community management et stratégie réseaux sociaux : gestion de la page Hyper U Sierentz (plus de 20 000 personnes).',
-          'Rédaction de contenus et conception de supports print & digital : PAO (InDesign, Illustrator, Photoshop), vidéo (Première Pro), Canva.',
-          "Application de la charte graphique et de l'identité visuelle des enseignes.",
-          'Coordination des prestataires et animation des partenariats (agences, imprimeurs, médias).',
-          "Formation et encadrement d'apprentis.",
-        ],
-        media: [
-          { caption: 'Catalogues promotionnels' },
-          { caption: 'Supports événementiels' },
+        linksLabel: 'Sources',
+        links: [
+          { label: 'L’Alsace, salon du livre 2016', url: 'https://www.lalsace.fr/haut-rhin/2016/09/30/un-salon-du-livre-a-l-hyper-u', icon: 'external' },
+          { label: 'Facebook, salon du livre 2018', url: 'https://www.facebook.com/hyperusierentz/posts/pfbid028dJ7GE7wpGmRi2p4JZVudgVqTfXzEE4tftF42tmbRzLNjx629onLKUQuUopMiZRxl', icon: 'external' },
+          { label: 'L’Alsace, ouverture Super U Huningue', url: 'https://www.lalsace.fr/economie/2021/10/15/le-super-u-de-huningue-accueille-(enfin)-ses-premiers-clients', icon: 'external' },
+          { label: 'Facebook, annonce d’ouverture', url: 'https://www.facebook.com/superuhuningue/posts/pfbid02fvaxEyKoBBvCTWcMPwfuvcJdGm8kCwdstx78MTtpE7z2V1TYcNKYs5ZtovkHnBNsl', icon: 'external' },
+          { label: 'Facebook, Noël Hyper Shopping', url: 'https://www.facebook.com/photo?fbid=1153185604758402&set=a.1074816353846891', icon: 'external' },
         ],
       },
       {
