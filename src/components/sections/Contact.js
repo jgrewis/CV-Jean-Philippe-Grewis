@@ -53,6 +53,18 @@ export function mountContact(footer) {
       createEntry('Téléphone', createEl('a', { className: 'contact__link', text: contact.phone, attrs: { href: toTelHref(contact.phone) } })),
     );
   }
+  if (contact.pdf) {
+    entries.push(
+      createEntry(
+        'CV',
+        createEl('a', {
+          className: 'contact__link contact__link--pdf',
+          text: contact.pdf.label,
+          attrs: { href: contact.pdf.url, download: '', type: 'application/pdf' },
+        }),
+      ),
+    );
+  }
   if (contact.location) entries.push(createEntry('Localisation', document.createTextNode(contact.location)));
   if (contact.driving) entries.push(createEntry('Mobilité', document.createTextNode(contact.driving)));
   if (contact.links?.length) {

@@ -39,6 +39,25 @@
 //   Si les deux images ne se superposent pas exactement, le contour de la tache
 //   laisse voir un decalage : les recaler avant de les deposer.
 
+// Interrupteur de l'effet au pointeur (calque accessoire + consigne + bouton).
+// Desactive tant que le portrait HD et les visuels IA superposables (PLAN §9)
+// ne sont pas livres : le dessin SVG provisoire n'est ni monte ni charge.
+// Pour reactiver : passer `enabled` a true (rien d'autre a toucher).
+export const effect = {
+  enabled: false,
+};
+
+// Accroche et chiffres cles affiches sous le nom, dans le premier ecran.
+// Chiffres m2A valides (communiques de presse officiels, voir cv.js).
+export const pitch = {
+  text: 'Chef de projet communication · Disponible · Mulhouse / Colmar',
+  kpis: [
+    { value: '1 125', label: 'participants au Challenge Vélo m2A 2026' },
+    { value: '160 427 km', label: 'parcourus au Challenge Vélo 2026' },
+    { value: '236 384', label: 'entrées dans les piscines m2A, été 2026' },
+  ],
+};
+
 export const portrait = {
   // Provisoire : la photo actuelle du CV (246 x 245, detouree en rond), en WebP
   // sans perte. Remplacee par le portrait HD genere avec ChatGPT.
@@ -46,9 +65,10 @@ export const portrait = {
   width: 246,
   height: 245,
   alt: 'Portrait de Jean-Philippe Grewis, souriant, lunettes et polo sombre.',
-  // Largeur d'affichage maximale en px CSS : 1,3 fois la taille reelle, limite
-  // au-dela de laquelle la photo provisoire deviendrait floue.
-  maxDisplayWidth: 320,
+  // Largeur d'affichage maximale en px CSS. Photo provisoire de 246 px : on reste
+  // sous sa taille reelle pour qu'elle reste nette (320 avant, visiblement flou).
+  // A remonter (ou supprimer) avec le portrait HD.
+  maxDisplayWidth: 200,
 };
 
 export const accessories = [

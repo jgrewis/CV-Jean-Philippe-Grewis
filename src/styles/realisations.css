@@ -13,7 +13,7 @@
   /* Hauteur maximale d'une image : un drapeau de 484 x 1600 reste lisible en
      entier sans faire defiler un ecran et demi. Ramenee de 80 a 60svh pour que
      les 26 preuves ne demandent pas 16 ecrans de defilement. */
-  --realisations-frame-max: 60svh;
+  --realisations-frame-max: 50svh; /* 11/11 : 60 -> 50svh, page plus courte */
 }
 
 .realisations__wrap {
@@ -205,4 +205,48 @@
   .realisations__grid {
     column-gap: var(--space-lg);
   }
+}
+
+/* ---------- Mention © sous chaque legende ---------- */
+
+.realisations__copyright {
+  margin-block-start: var(--space-3xs);
+}
+
+/* ---------- Bouton « Voir plus de realisations » ---------- */
+
+.realisations__more {
+  display: flex;
+  justify-content: center;
+  margin-block: var(--space-2xl) 0;
+}
+
+.realisations__more-btn {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  padding-inline: var(--space-md);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-ink);
+  background: transparent;
+  border: var(--border-thin) solid var(--color-ink);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+.realisations__more-btn:hover,
+.realisations__more-btn[aria-expanded='true'] {
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+}
+
+.realisations__groups--more {
+  margin-block-start: var(--space-2xl);
+}
+.realisations__groups--more[hidden] {
+  display: none;
 }

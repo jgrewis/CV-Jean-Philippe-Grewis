@@ -7,10 +7,17 @@
 // Arbitrages JP du 29/10 : pictogrammes d'enfant acceptes (aucun enfant reel),
 // signaletique publique du CSRA acceptee, programmes de patinoire, affiches non
 // encore diffusees et application Compte Mobilite retires.
-// La mention `credit` doit rester affichee avec la section.
+// La mention `credit` doit rester affichee avec la section, et `copyright` sous
+// chaque legende.
+// `featured: true` : piece mise en avant (8 a 12), le reste est derriere le bouton
+// « Voir plus de realisations ». Choix du 11/11 : supports concus par JP, sans
+// personne identifiable, un support et un theme varies. Reversible : deplacer le
+// drapeau d'une entree a l'autre.
+// Retiree le 11/11 : signaletique du CSRA (athlete paralympique identifiable).
 // width / height : dimensions reelles des fichiers, pour reserver la place a l'affichage.
 
 export const credit = 'Réalisations pour Mulhouse Alsace Agglomération';
+export const copyright = '© m2A';
 
 export const supports = [
   { id: 'affichage', label: 'Affichage urbain & grand format' },
@@ -35,6 +42,7 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/affichage-toile-terre-de-tous-les-sports.webp', width: 1600, height: 1238,
+    featured: true,
     support: 'affichage', theme: 'Sport',
     title: 'Toile tendue « Terre de tous les sports », Palais des sports',
     alt: 'Toile tendue magenta et violette aux motifs de pistes concentriques, avec le slogan « Terre de tous les sports » et le logo Mulhouse Alsace Agglomération.',
@@ -47,6 +55,7 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/print-edition-terre-de-champions.webp', width: 992, height: 1403,
+    featured: true,
     support: 'print', theme: 'Sport',
     title: 'Couverture « m2A Terre de champions »',
     alt: 'Couverture d\'édition « m2A Terre de champions » : silhouette d\'un sprinteur au départ, dans une lumière dorée de coucher de soleil.',
@@ -59,12 +68,14 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/print-fiche-rando-circuit-igeltal.webp', width: 1403, height: 992,
+    featured: true,
     support: 'print', theme: 'Territoire',
     title: 'Fiche randonnée « Circuit de l\'Igeltal à Brunstatt »',
     alt: 'Fiche de randonnée du Club Vosgien et de m2A : photo d\'une église fleurie en couverture, parcours de 4,8 km et étapes commentées.',
   },
   {
     src: 'assets/realisations/print-trophee-challenge-velo.webp', width: 1061, height: 1500,
+    featured: true,
     support: 'print', theme: 'Mobilité',
     title: 'Trophée du Challenge vélo m2A',
     alt: 'Trophée découpé du Challenge vélo m2A aux tons bois, avec un plateau de vélo et la mention « Catégorie 250 salariés et plus ».',
@@ -83,12 +94,14 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/signaletique-habillage-bravo-a-nos-clubs.webp', width: 1600, height: 1473,
+    featured: true,
     support: 'signaletique', theme: 'Sport',
     title: 'Habillage « Bravo à nos clubs », hall du Palais des sports',
     alt: 'Habillage mural du hall d\'accueil du Palais des sports : « Bravo à nos clubs » avec les logos du volley, du basket et du badminton mulhousiens.',
   },
   {
     src: 'assets/realisations/signaletique-baches-patinoire-m2a-le-mag.webp', width: 1600, height: 993,
+    featured: true,
     support: 'signaletique', theme: 'Territoire',
     title: 'Bâches « m2A Le Mag », Patinoire olympique',
     alt: 'Bâche de la Patinoire olympique annonçant m2A Le Mag, « toutes les sorties et événements dans l\'agglo », en lettrage blanc sur dégradé magenta.',
@@ -113,6 +126,7 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/signaletique-panneau-transition-energetique.webp', width: 1600, height: 1600,
+    featured: true,
     support: 'signaletique', theme: 'Territoire',
     title: 'Panneau « m2A s\'engage pour la transition énergétique »',
     alt: 'Panneau carré du Palais des sports présentant l\'éclairage LED financé par le Fonds vert, avec le coût du projet et la répartition entre l\'État et m2A.',
@@ -125,6 +139,7 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/signaletique-stickage-velocite-challenge-velo.webp', width: 1600, height: 809,
+    featured: true,
     support: 'signaletique', theme: 'Mobilité',
     title: 'Stickage des vélos Vélocité, Challenge vélo 2026',
     alt: 'Autocollant à découpe libre pour les vélos en libre-service Vélocité, aux couleurs du Challenge vélo m2A 2026, avec QR code d\'inscription.',
@@ -136,12 +151,6 @@ export const realisations = [
     alt: 'Drapeau magenta et violet associant la signature « #ADN Sport » et le logo Mulhouse Alsace Agglomération.',
   },
   {
-    src: 'assets/realisations/signaletique-csra-medaille-paralympique.webp', width: 836, height: 1600,
-    support: 'signaletique', theme: 'Sport',
-    title: 'Signalétique du Centre sportif régional Alsace, médaillé paralympique',
-    alt: 'Panneau vertical de signalétique sur fond violet à cercles roses : un athlète de l\'équipe de France sourit en montrant sa médaille paralympique de Paris 2024, photo en noir et blanc.',
-  },
-  {
     src: 'assets/realisations/web-instagram-covoiturage.webp', width: 1600, height: 1600,
     support: 'web', theme: 'Mobilité',
     title: 'Visuel Instagram « Covoiturez à moindre coût avec m2A »',
@@ -149,18 +158,21 @@ export const realisations = [
   },
   {
     src: 'assets/realisations/web-post-baigneurs-ouvrez-l-oeil.webp', width: 1081, height: 1081,
+    featured: true,
     support: 'web', theme: 'Sport',
     title: 'Post carré « Baigneurs, ouvrez l’œil », réseaux sociaux',
     alt: 'Visuel carré pour les réseaux sociaux : un grand œil dont l\'iris est une bouée rose et orange, pictogramme d\'un adulte tenant un enfant par la main, message « Un enfant dans l\'eau = un adulte attentif ».',
   },
   {
     src: 'assets/realisations/situation-bus-solea-plan-climat.webp', width: 1600, height: 1066,
+    featured: true,
     support: 'terrain', theme: 'Mobilité',
     title: 'Bus Soléa habillé « m2A s\'engage pour le climat »',
     alt: 'Photo d\'un bus Soléa jaune et rouge au dépôt, habillé aux messages « m2A s\'engage pour le climat », « Plan climat » et « 100 % biogaz ».',
   },
   {
     src: 'assets/realisations/situation-facade-csra.webp', width: 1600, height: 899,
+    featured: true,
     support: 'terrain', theme: 'Sport',
     title: 'Façade habillée du Centre sportif régional Alsace',
     alt: 'Photo de l\'entrée du Centre sportif régional Alsace : fronton et portes habillés en magenta, vitrophanie « #ADN Sport » sur la passerelle.',

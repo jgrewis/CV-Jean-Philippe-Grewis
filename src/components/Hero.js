@@ -26,7 +26,7 @@
 //   Un canvas comme mask-image CSS aurait exige element() (Firefox seul) ou un
 //   toDataURL par image : trop couteux.
 import { profile } from '../data/cv.js';
-import { portrait, accessories } from '../data/hero.js';
+import { portrait, accessories, effect, pitch } from '../data/hero.js';
 import { createEl } from '../utils/dom.js';
 import { createSvgElement } from '../utils/svg.js';
 
@@ -355,11 +355,38 @@ function createPortraitImage() {
   });
 }
 
+// Accroche + 3 chiffres cles sous le nom (data/hero.js, objet pitch) : ce qu'un
+// recruteur doit lire en 10 secondes (poste vise, disponibilite, resultats).
+function createPitch() {
+  if (!pitch?.text && !pitch?.kpis?.length) return null;
+  const kpis = pitch.kpis?.length
+    ? createEl('ul', {
+        className: 'hero__kpis',
+        children: pitch.kpis.map(({ value, label }) =>
+          createEl('li', {
+            className: 'hero__kpi',
+            children: [
+              createEl('span', { className: 'hero__kpi-value', text: value }),
+              createEl('span', { className: 'hero__kpi-label caption', text: label }),
+            ],
+          }),
+        ),
+      })
+    : null;
+  return createEl('div', {
+    className: 'hero__pitch',
+    attrs: { 'data-reveal': '', 'data-reveal-delay': 1 },
+    children: [pitch.text ? createEl('p', { className: 'hero__tagline', text: pitch.text }) : null, kpis],
+  });
+}
+
 export function mountHero(section) {
   section.classList.add('hero');
   section.setAttribute('aria-labelledby', 'hero-title');
 
-  const accessory = pickAccessory(accessories);
+  // Effet au pointeur coupe par l'interrupteur de data/hero.js : on passe alors
+  // par le meme chemin que "aucun accessoire" (portrait seul, rien a charger).
+  const accessory = effect.enabled ? pickAccessory(accessories) : null;
   const reducedMotion = window.matchMedia ? window.matchMedia(REDUCED_MOTION_QUERY) : null;
 
   const frame = createEl('div', { className: 'hero__frame', children: [createPortraitImage()] });
@@ -367,11 +394,13 @@ export function mountHero(section) {
   if (portrait.maxDisplayWidth) frame.style.setProperty('--hero-max', `${portrait.maxDisplayWidth}px`);
 
   const stage = createEl('div', { className: 'hero__stage', attrs: { 'data-reveal': 'fade' }, children: [frame] });
-  const title = createEl('p', { className: 'hero__title caption', text: profile.title });
+  // L'accroche (pitch) reprend deja l'intitule du poste : on n'affiche pas les deux.
+  const title = pitch?.text ? null : createEl('p', { className: 'hero__title caption', text: profile.title });
+  const pitchBlock = createPitch();
   const cue = createEl('a', { className: 'hero__cue caption', text: 'Défiler', attrs: { href: NEXT_SECTION } });
 
   if (!accessory) {
-    section.replaceChildren(createName(), title, stage, cue);
+    section.replaceChildren(...[createName(), title, stage, cue, pitchBlock].filter(Boolean));
     return () => {};
   }
 
@@ -403,7 +432,7 @@ export function mountHero(section) {
     children: [hint, toggle],
   });
 
-  section.replaceChildren(createName(), title, stage, controls, cue);
+  section.replaceChildren(...[createName(), title, stage, controls, cue, pitchBlock].filter(Boolean));
 
   // ---------- Etat ----------
   let pinned = false;

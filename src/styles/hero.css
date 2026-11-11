@@ -10,12 +10,13 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-rows: minmax(0, 1fr) auto auto auto;
+  grid-template-rows: minmax(0, 1fr) auto auto auto auto;
   grid-template-areas:
     'stage stage'
     'controls controls'
     'title cue'
-    'name name';
+    'name name'
+    'pitch pitch';
   gap: var(--space-sm);
   /* Hauteur FIXE (et non minimale) : la rangee du portrait (1fr) se resout ainsi,
      et le portrait se cale sur la place restante. Plancher pour les ecrans tres
@@ -177,11 +178,12 @@
 @media (min-width: 48em) and (min-aspect-ratio: 5/4) {
   .hero {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto auto;
+    grid-template-rows: minmax(0, 1fr) auto auto auto;
     grid-template-areas:
       'stage stage stage'
       'title controls cue'
-      'name name name';
+      'name name name'
+      'pitch pitch pitch';
   }
 
   .hero__name {
@@ -195,5 +197,59 @@
   /* En ligne, mais en bloc pour que l'apparition (transform) s'applique. */
   .hero__line {
     display: inline-block;
+  }
+}
+
+/* ---------- Accroche + chiffres cles (sous le nom) ---------- */
+
+.hero__pitch {
+  grid-area: pitch;
+  display: grid;
+  gap: var(--space-sm);
+  padding-block-start: var(--space-xs);
+  border-block-start: var(--border-thin) solid var(--color-line-strong);
+}
+
+.hero__tagline {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+.hero__kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero__kpi {
+  display: grid;
+  gap: var(--space-3xs);
+  align-content: start;
+}
+
+.hero__kpi-value {
+  /* Plafonne en vw : sur 390 px, les trois chiffres tiennent cote a cote. */
+  font-size: min(var(--text-xl), 4.6vw);
+  font-weight: var(--weight-black);
+  line-height: 1;
+  letter-spacing: var(--tracking-heading);
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.hero__kpi-label {
+  color: var(--color-ink-muted);
+}
+
+@media (min-width: 48em) and (min-aspect-ratio: 5/4) {
+  .hero__pitch {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+    align-items: center;
+    gap: var(--space-lg);
   }
 }

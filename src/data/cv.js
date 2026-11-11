@@ -15,13 +15,15 @@ export const contact = {
   email: 'grewis.jp@gmail.com',
   location: 'Burnhaupt-le-Bas, 68520',
   driving: 'Permis B & Véhiculé',
+  // CV imprimable (public/), regenere par scripts/generer-pdf-og.mjs.
+  pdf: { url: 'CV-Jean-Philippe-Grewis.pdf', label: 'Télécharger mon CV (PDF)', shortLabel: 'CV (PDF)' },
   links: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/grewis/', icon: 'linkedin' },
     { label: 'Sites web — jgrewis.github.io', url: 'https://jgrewis.github.io/', icon: 'world' },
   ],
 };
 
-// Arbre de la carte mentale : 5 branches principales autour du noeud central.
+// Contenu par branche (id stables, lus par src/data/selectors.js).
 // Chaque feuille (leaf) peut porter : summary, bullets, kpis, tags, media, links.
 export const branches = [
   {
@@ -50,7 +52,6 @@ export const branches = [
         title: "Centres d'intérêt",
         tags: [
           'Veille tech & IA',
-          'Montage de PC sur mesure',
           'Lecture',
           'Musculation',
           'Méditation et yoga',
@@ -68,16 +69,26 @@ export const branches = [
         id: 'm2a',
         title: 'Chef de projets communication · CDD',
         org: 'Mulhouse Alsace Agglomération (m2A) — Mulhouse',
-        period: "Oct. 2024 – Aujourd'hui",
+        period: 'Oct. 2024 – Oct. 2026',
         theme: {
           background: 'assets/m2a-bg.jpg',
           accentColor: '#d92e84',
         },
+        summary:
+          "J'ai piloté la communication des opérations Sport, Mobilité et Enfance ci-dessous. Les chiffres sont ceux publiés dans les communiqués de presse officiels de m2A (liens ci-dessous).",
         kpis: [
-          { value: '360°', label: 'plans médias' },
-          { value: '1000+', label: 'visiteurs / événement' },
+          { value: '1 125', label: 'participants au Challenge Vélo 2026 (893 en 2024)' },
+          { value: '160 427 km', label: 'parcourus en 2026 (104 807 km en 2024)' },
+          { value: '2 700+', label: 'élèves aux Olympiades scolaires 2024' },
+          { value: '1 200', label: 'élèves, Semaine olympique et paralympique 2024' },
+          { value: '135+', label: "athlètes de 31 pays, camp d'entraînement Paris 2024" },
+          { value: '236 384', label: 'usagers des piscines, été 2026 (près de +17 %)' },
         ],
         bullets: [
+          "Pilotage de la communication du Challenge Vélo m2A sur trois éditions : de 893 participants et 104 807 km (2024) à 1 125 participants, 148 structures et 160 427 km (2026), avec 71 classes engagées en 2026.",
+          "Pilotage de la communication des Olympiades scolaires m2A (jusqu'à plus de 2 700 élèves en 2024) et de la Semaine olympique et paralympique (1 200 élèves en 2024).",
+          "Pilotage de la communication du camp d'entraînement pré-JO Paris 2024 : plus de 135 athlètes de 31 pays à l'ouverture.",
+          "Pilotage de la communication des bilans des piscines et du Plan d'eau, jusqu'au record de l'été 2026 : 236 384 usagers.",
           'Élaboration de plans de communication et plans médias 360° (print, digital, affichage, web, événementiel).',
           'Gestion de budgets et pilotage de nombreux projets simultanés.',
           'Rédaction des briefs créatifs et cahiers des charges à destination des agences et prestataires.',
@@ -85,26 +96,38 @@ export const branches = [
           'Reporting régulier : suivi des indicateurs de performance (KPIs) et tableaux de bord.',
           'Pilotage de prestataires et agences de communication (agences, photographes, vidéastes).',
         ],
+        // Preuves : communiques de presse officiels de m2A (contenus (c) m2A).
+        links: [
+          { label: 'CP Challenge Vélo 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2026.pdf', icon: 'external' },
+          { label: 'CP Challenge Vélo 2025 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2025/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2025-Fete-du-Velo-m2A.pdf', icon: 'external' },
+          { label: 'CP Challenge Vélo 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/06/CP-m2A-Resultats-du-Challenge-Velo-2024_.pdf', icon: 'external' },
+          { label: 'CP Olympiades scolaires 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/05/CP-m2A-Olympiades-m2A.pdf', icon: 'external' },
+          { label: 'CP Semaine olympique et paralympique 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/03/CP-m2A-Semaine-Olympique-et-Paralympique-du-02-au-09-avril-2024.pdf', icon: 'external' },
+          { label: "CP Camp d'entraînement Paris 2024 · © m2A", url: 'https://www.m2a.fr/wp-content/uploads/2024/07/CP-m2A-Des-medailles-olympiques-mondiaux-et-panamericains-se-preparent-aux-Jeux-de-Paris-2024-au-Camp-dentrainement-de-PSO-m2A.pdf', icon: 'external' },
+          { label: 'CP Bilan estival piscines 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/09/CP-m2A-Bilan-estival-Nouveau-record-daffluence-pour-les-piscines-et-le-Plan-deau-de-m2A.pdf', icon: 'external' },
+          { label: 'CP Fête du Vélo 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/06/CP-m2A-2e-edition-de-la-Fete-du-Velo-m2A-dimanche-16-juin-2024.pdf', icon: 'external' },
+          { label: 'Espace presse m2A', url: 'https://www.m2a.fr/outils/espace-presse/', icon: 'world' },
+        ],
       },
       {
         id: 'gr-strategie',
-        title: 'Gérant — Entrepreneur',
-        org: 'GR Stratégie (SARL, activité propre, vendue en 2025)',
-        period: '2018 – 2025',
+        title: 'Gérant',
+        org: 'GR Stratégie (SARL) — entreprise cédée en 2024',
+        period: '2018 – 2024',
         theme: {
           background: 'assets/gr-strategie-bg.png',
           accentColor: '#e8453c',
         },
         summary:
-          "Création et gestion intégrale d'une structure commerciale pendant 7 ans, en parallèle de mon activité salariée.",
+          "Création et gestion d'une structure pendant 6 ans, en parallèle de mon activité salariée, jusqu'à sa cession en 2024.",
         kpis: [
-          { value: '7 ans', label: "d'activité" },
-          { value: '2025', label: 'structure cédée' },
+          { value: '6 ans', label: "d'activité" },
+          { value: '2024', label: 'entreprise cédée' },
         ],
         bullets: [
-          'Contact B2B et prospection.',
-          'Négociation commerciale.',
-          'Automatisation de processus avancés (n8n).',
+          'Conception de la communication de plusieurs marques clientes, création de leurs sites internet et d\'outils sur mesure.',
+          'Intégration de contenus optimisés pour le référencement naturel (SEO) sur les sites clients.',
+          'Automatisation de processus métier (production, gestion client) avec n8n.',
           "Développement d'un système informatique complet de diffusion et d'administration d'écrans dynamiques en réseau.",
         ],
       },
@@ -118,15 +141,15 @@ export const branches = [
           accentColor: '#e3201e',
         },
         kpis: [
-          { value: '+30%', label: 'ventes (réseaux sociaux)' },
+          { value: '20 000+', label: 'personnes, page Hyper U Sierentz' },
           { value: '40 000', label: 'catalogues diffusés' },
         ],
         bullets: [
           'Élaboration des plans de communication et plans médias annuels (affichage, presse, digital, événementiel).',
-          'Création et diffusion de catalogues promotionnels, jusqu\'à 40 000 exemplaires.',
-          'Community management et stratégie réseaux sociaux : impact mesuré sur les ventes jusqu\'à +30 %.',
+          'Conception intégrale et diffusion de catalogues promotionnels, jusqu\'à 40 000 exemplaires.',
+          'Community management et stratégie réseaux sociaux : gestion de la page Hyper U Sierentz (plus de 20 000 personnes).',
           'Rédaction de contenus et conception de supports print & digital : PAO (InDesign, Illustrator, Photoshop), vidéo (Première Pro), Canva.',
-          "Définition et application de la charte graphique et de l'identité visuelle des enseignes.",
+          "Application de la charte graphique et de l'identité visuelle des enseignes.",
           'Coordination des prestataires et animation des partenariats (agences, imprimeurs, médias).',
           "Formation et encadrement d'apprentis.",
         ],
@@ -137,9 +160,9 @@ export const branches = [
       },
       {
         id: 'systeme-u',
-        title: 'Responsable marchandising Grand-Est',
-        org: 'Système U Centrale Est',
-        period: 'Sept. 2013 – Déc. 2015',
+        title: 'Merchandiseur Grand-Est · Alternance',
+        org: 'Coopérative U Centrale Est',
+        period: '2014 – Déc. 2015',
         theme: {
           background: 'assets/systeme-u-bg.jpg',
           accentColor: '#1c8fa3',
@@ -192,18 +215,21 @@ export const branches = [
     leaves: [
       {
         id: 'bac5',
-        title: 'BAC+5 — Manager stratégie commerciale',
-        org: 'ESGM Mulhouse · Marketing',
-        period: '2014 – 2016',
-        summary: 'Alternance Système U Centrale Est.',
+        title: 'BAC+5 — Manager de la stratégie et de la politique commerciale',
+        org: 'ESGM Mulhouse',
+        period: '2015',
+        summary: 'Alternance Coopérative U Centrale Est.',
       },
       {
         id: 'bac3',
-        title: 'BAC+3 — Développement marketing',
+        title: 'BAC+3 — Chargé(e) de développement marketing et vente',
         org: 'ESGM Mulhouse',
-        period: '2012 – 2014',
+        period: '2013',
         summary: 'Alternance Super U Riedisheim.',
       },
+      // Choix reversible (11/11/2026) : le Bachelor RH (Studi, en cours, fin dec. 2026)
+      // est retire du site, axe communication. Pour le remettre, decommenter :
+      // { id: 'bachelor-rh', title: 'Bachelor droit social, RH et paie', org: 'Studi', period: 'En cours · fin décembre 2026' },
       {
         id: 'certifications',
         title: 'Certifications',

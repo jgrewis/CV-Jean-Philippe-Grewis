@@ -27,7 +27,7 @@
 //   - Profondeur : chaque preuve glisse un peu plus ou moins vite que la page.
 //     Un seul requestAnimationFrame par evenement scroll, limite aux preuves
 //     visibles ; toutes les lectures de position, puis toutes les ecritures.
-import { credit, supports, realisations } from '../data/realisations.js';
+import { credit, copyright, supports, realisations } from '../data/realisations.js';
 import { createEl } from '../utils/dom.js';
 import { createSectionHead } from './sections/sectionHead.js';
 
@@ -36,6 +36,9 @@ const EYEBROW = 'Preuves de travail';
 const INTRO =
   'Une sélection de supports publiés, de l’affiche de 4 × 3 m au post pour les réseaux sociaux, classés par support.';
 const META_SEPARATOR = ' · ';
+const MORE_ID = 'realisations-plus';
+const MORE_LABEL = 'Voir plus de réalisations';
+const LESS_LABEL = 'Masquer les réalisations supplémentaires';
 
 // ---------- Grille ----------
 
@@ -150,6 +153,7 @@ function createFigure(proof, supportLabel) {
     children: [
       createEl('p', { className: 'caption realisations__meta', text: meta }),
       createEl('p', { className: 'realisations__title', text: proof.title }),
+      copyright ? createEl('p', { className: 'caption realisations__copyright', text: copyright }) : null,
     ],
   });
 
@@ -332,27 +336,85 @@ function startMotion(section, grid, entries) {
 
 // ---------- Montage ----------
 
+function buildGroups(proofs, entries) {
+  return supports
+    .map((support) => ({ support, proofs: proofs.filter((proof) => proof.support === support.id) }))
+    .filter((group) => group.proofs.length > 0)
+    .map(({ support, proofs: list }) => createGroup(support, list, entries));
+}
+
+// Bouton « Voir plus » : un vrai <button> (clavier, lecteurs d'ecran) qui pilote
+// le bloc replie via aria-expanded / aria-controls / hidden. A l'ouverture, le
+// focus va au premier titre du bloc pour que la lecture continue la ou le
+// contenu apparait.
+function createMoreToggle(panel, count) {
+  const button = createEl('button', {
+    className: 'realisations__more-btn',
+    text: `${MORE_LABEL} (${count})`,
+    attrs: { type: 'button', 'aria-expanded': 'false', 'aria-controls': MORE_ID },
+  });
+  const onClick = () => {
+    const open = button.getAttribute('aria-expanded') !== 'true';
+    button.setAttribute('aria-expanded', String(open));
+    button.textContent = open ? LESS_LABEL : `${MORE_LABEL} (${count})`;
+    panel.hidden = !open;
+    if (open) {
+      const firstTitle = panel.querySelector('h3');
+      if (firstTitle) {
+        firstTitle.setAttribute('tabindex', '-1');
+        firstTitle.focus({ preventScroll: false });
+      }
+    } else {
+      button.focus();
+    }
+  };
+  button.addEventListener('click', onClick);
+  return {
+    element: createEl('div', { className: 'realisations__more', children: [button] }),
+    cleanup: () => button.removeEventListener('click', onClick),
+  };
+}
+
 export function mountRealisations(section) {
   section.classList.add('section', 'realisations');
 
+  // Pieces mises en avant d'abord ; sans aucun drapeau `featured`, tout s'affiche.
+  const hasFeatured = realisations.some((proof) => proof.featured);
+  const featured = hasFeatured ? realisations.filter((proof) => proof.featured) : realisations;
+  const others = hasFeatured ? realisations.filter((proof) => !proof.featured) : [];
+
   const entries = [];
-  const groups = supports
-    .map((support) => ({ support, proofs: realisations.filter((proof) => proof.support === support.id) }))
-    .filter(({ proofs }) => proofs.length > 0)
-    .map(({ support, proofs }) => createGroup(support, proofs, entries));
+  const groups = buildGroups(featured, entries);
+  const moreGroups = buildGroups(others, entries);
 
-  const wrap = createEl('div', {
-    className: 'wrap realisations__wrap',
-    children: [
-      createEl('div', {
-        className: 'realisations__head',
-        children: [createSectionHead(section, { eyebrow: EYEBROW, title: TITLE }), createIntro()],
-      }),
-      createEl('div', { className: 'realisations__groups', children: groups.map(({ element }) => element) }),
-    ],
-  });
-  section.replaceChildren(wrap);
+  const children = [
+    createEl('div', {
+      className: 'realisations__head',
+      children: [createSectionHead(section, { eyebrow: EYEBROW, title: TITLE }), createIntro()],
+    }),
+    createEl('div', { className: 'realisations__groups', children: groups.map(({ element }) => element) }),
+  ];
 
-  if (!groups.length || !canAnimate()) return undefined;
-  return startMotion(section, groups[0].grid, entries);
+  let moreCleanup = () => {};
+  if (moreGroups.length) {
+    const panel = createEl('div', {
+      className: 'realisations__groups realisations__groups--more',
+      attrs: { id: MORE_ID },
+      children: moreGroups.map(({ element }) => element),
+    });
+    panel.hidden = true;
+    const toggle = createMoreToggle(panel, others.length);
+    moreCleanup = toggle.cleanup;
+    children.push(toggle.element, panel);
+  }
+
+  section.replaceChildren(createEl('div', { className: 'wrap realisations__wrap', children }));
+
+  const allGroups = [...groups, ...moreGroups];
+  if (!allGroups.length || !canAnimate()) return moreCleanup;
+  const stopMotion = startMotion(section, allGroups[0].grid, entries);
+  return () => {
+    stopMotion();
+    moreCleanup();
+  };
 }

@@ -2,12 +2,14 @@
 // blocs editoriaux. Le visuel de chaque bloc (theme.background) alterne a gauche
 // et a droite, a des hauteurs decalees, avec une micro-legende en capitales.
 import { getBranch } from '../../data/selectors.js';
-import { createEl } from '../../utils/dom.js';
+import { createEl, createExternalLink } from '../../utils/dom.js';
 import { createSectionHead } from './sectionHead.js';
 
 const BRANCH_ID = 'experiences';
 const EYEBROW = 'Parcours';
 const MEDIA_LABEL = 'Supports réalisés';
+const LINKS_LABEL = 'Preuves · communiqués de presse officiels';
+const CREDIT_MARK = '© m2A';
 
 function createFigure(leaf) {
   const background = leaf.theme?.background;
@@ -63,6 +65,20 @@ function createMedia(media) {
   });
 }
 
+// Liens de preuve (cv.js, champ links) : communiques officiels. La mention
+// « © m2A » est garantie a l'affichage, meme si un libelle l'omet.
+function createLinks(links) {
+  if (!links?.length) return null;
+  const items = links.map((link) => {
+    const label = link.label.includes(CREDIT_MARK) || !/m2a\.fr.*\.pdf$/i.test(link.url) ? link.label : `${link.label} · ${CREDIT_MARK}`;
+    return createEl('li', { children: [createExternalLink(link.url, label, 'xp__link')] });
+  });
+  return createEl('div', {
+    className: 'xp__links',
+    children: [createEl('p', { className: 'caption', text: LINKS_LABEL }), createEl('ul', { className: 'xp__link-list', children: items })],
+  });
+}
+
 function createExperience(leaf, index) {
   const body = createEl('div', {
     className: 'xp__body',
@@ -74,6 +90,7 @@ function createExperience(leaf, index) {
       createKpis(leaf.kpis),
       createList(leaf.bullets, 'bullets xp__bullets'),
       createMedia(leaf.media),
+      createLinks(leaf.links),
     ],
   });
 

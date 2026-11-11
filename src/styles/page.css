@@ -250,3 +250,33 @@
   opacity: 1;
   transform: none;
 }
+
+/* ---------- Bouton CV (PDF) dans la barre ---------- */
+
+.bar__nav {
+  display: flex;
+  gap: var(--space-2xs);
+}
+
+.bar__link--pdf {
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+.bar__link--pdf:hover {
+  color: var(--color-ink);
+  background-color: var(--color-bg-veil);
+}
+
+/* Libelle court sur mobile, complet a partir de la tablette. */
+.bar__pdf-long {
+  display: none;
+}
+@media (min-width: 48em) {
+  .bar__pdf-long {
+    display: inline;
+  }
+  .bar__pdf-short {
+    display: none;
+  }
+}
