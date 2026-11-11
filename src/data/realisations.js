@@ -17,7 +17,9 @@
 // width / height : dimensions reelles des fichiers, pour reserver la place a l'affichage.
 
 export const credit = 'Réalisations pour Mulhouse Alsace Agglomération';
-export const copyright = '© m2A';
+// Legende de chaque piece : role reel de JP (brief et direction des graphistes),
+// graphisme realise par l'equipe m2A. Ne jamais ecrire « j'ai cree ces visuels ».
+export const copyright = 'Brief et direction : J.-P. Grewis · Graphisme : équipe m2A · © m2A';
 
 export const supports = [
   { id: 'affichage', label: 'Affichage urbain & grand format' },
@@ -71,7 +73,7 @@ export const realisations = [
     featured: true,
     support: 'print', theme: 'Territoire',
     title: 'Fiche randonnée « Circuit de l\'Igeltal à Brunstatt »',
-    alt: 'Fiche de randonnée du Club Vosgien et de m2A : photo d\'une église fleurie en couverture, parcours de 4,8 km et étapes commentées.',
+    alt: 'Fiche de randonnée du Club Vosgien et de m2A : photo d\'une église fleurie en couverture, parcours de 4,8 kilomètres et étapes commentées.',
   },
   {
     src: 'assets/realisations/print-trophee-challenge-velo.webp', width: 1061, height: 1500,

@@ -367,3 +367,207 @@
 .xp__link:hover {
   text-decoration-color: var(--color-accent);
 }
+
+/* ---------- Parcours : resultats contextualises ---------- */
+
+.xp__results {
+  display: grid;
+  gap: var(--space-xs);
+  margin-block: var(--space-md);
+}
+
+.xp__result-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--space-sm) var(--space-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.xp__result {
+  display: grid;
+  gap: var(--space-3xs);
+  padding-inline-start: var(--space-sm);
+  border-inline-start: var(--focus-ring) solid var(--xp-accent, var(--color-accent));
+}
+
+.xp__result-title {
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-heading);
+}
+
+.xp__result-text {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+/* ---------- Section #methode : de la strategie aux resultats ---------- */
+
+.methode__wrap {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.methode__intro {
+  max-inline-size: var(--measure-narrow);
+  font-size: var(--text-lg);
+  line-height: var(--leading-lead);
+}
+
+.methode__steps {
+  display: grid;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-block-start: var(--border-thin) solid var(--color-line-strong);
+}
+
+.methode__step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--space-sm) var(--space-md);
+  padding-block: var(--space-lg);
+  border-block-end: var(--border-thin) solid var(--color-line);
+}
+
+.methode__num {
+  font-size: var(--text-2xl);
+  line-height: 1;
+}
+
+.methode__text,
+.methode__evidence {
+  display: grid;
+  gap: var(--space-xs);
+  align-content: start;
+}
+
+.methode__evidence {
+  grid-column: 2;
+}
+
+.methode__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+}
+
+.methode__role {
+  max-inline-size: var(--measure);
+  line-height: var(--leading-body);
+}
+
+.methode__proofs-wrap {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.methode__proofs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: flex-start;
+}
+
+.methode__proof {
+  display: grid;
+  gap: var(--space-3xs);
+  inline-size: min(100%, 13rem);
+}
+
+.methode__frame {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+}
+
+.methode__img {
+  inline-size: 100%;
+  block-size: 100%;
+  /* contain : la preuve reste entiere (pas de recadrage d'une affiche). */
+  object-fit: contain;
+}
+
+.methode__proof-caption {
+  display: grid;
+  gap: 0;
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+.methode__links {
+  display: grid;
+  gap: var(--space-3xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 64em) {
+  .methode__step {
+    grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: var(--space-lg);
+  }
+  .methode__evidence {
+    grid-column: 3;
+  }
+}
+
+/* Etude de cas : bloc encre, trois temps cote a cote sur grand ecran. */
+.methode__case {
+  display: grid;
+  gap: var(--space-md);
+  padding: clamp(var(--space-md), 4vw, var(--space-2xl));
+  color: var(--color-bg);
+  background-color: var(--color-ink);
+}
+.methode__case .caption {
+  color: var(--color-paper-muted);
+}
+.methode__case .xp__link {
+  color: var(--color-bg);
+  text-decoration-color: var(--color-line-on-ink);
+}
+.methode__case .xp__link::after {
+  color: var(--color-accent-on-ink);
+}
+.methode__case :focus-visible {
+  outline-color: var(--color-accent-on-ink);
+}
+
+.methode__case-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  text-transform: uppercase;
+}
+
+.methode__case-blocks {
+  display: grid;
+  gap: var(--space-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.methode__case-block {
+  display: grid;
+  gap: var(--space-2xs);
+  align-content: start;
+  padding-block-start: var(--space-sm);
+  border-block-start: var(--focus-ring) solid var(--color-accent-on-ink);
+}
+
+.methode__case-text {
+  line-height: var(--leading-body);
+}
+
+@media (min-width: 48em) {
+  .methode__case-blocks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

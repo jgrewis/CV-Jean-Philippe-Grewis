@@ -67,7 +67,28 @@ function createMedia(media) {
 
 // Liens de preuve (cv.js, champ links) : communiques officiels. La mention
 // « © m2A » est garantie a l'affichage, meme si un libelle l'omet.
-function createLinks(links) {
+// Resultats contextualises (cv.js, champ results) : un titre (l'operation) et
+// une phrase (le chiffre, ce qu'il mesure, le lien avec la communication).
+function createResults(leaf) {
+  if (!leaf.results?.length) return null;
+  return createEl('div', {
+    className: 'xp__results',
+    children: [
+      leaf.resultsLabel ? createEl('p', { className: 'caption', text: leaf.resultsLabel }) : null,
+      createEl('ul', {
+        className: 'xp__result-list',
+        children: leaf.results.map(({ title, text }) =>
+          createEl('li', {
+            className: 'xp__result',
+            children: [createEl('p', { className: 'xp__result-title', text: title }), createEl('p', { className: 'xp__result-text', text })],
+          }),
+        ),
+      }),
+    ],
+  });
+}
+
+function createLinks(links, label = LINKS_LABEL) {
   if (!links?.length) return null;
   const items = links.map((link) => {
     const label = link.label.includes(CREDIT_MARK) || !/m2a\.fr.*\.pdf$/i.test(link.url) ? link.label : `${link.label} · ${CREDIT_MARK}`;
@@ -75,7 +96,7 @@ function createLinks(links) {
   });
   return createEl('div', {
     className: 'xp__links',
-    children: [createEl('p', { className: 'caption', text: LINKS_LABEL }), createEl('ul', { className: 'xp__link-list', children: items })],
+    children: [createEl('p', { className: 'caption', text: label }), createEl('ul', { className: 'xp__link-list', children: items })],
   });
 }
 
@@ -88,9 +109,10 @@ function createExperience(leaf, index) {
       createEl('h3', { className: 'xp__title', text: leaf.title }),
       leaf.summary ? createEl('p', { className: 'xp__summary', text: leaf.summary }) : null,
       createKpis(leaf.kpis),
+      createResults(leaf),
       createList(leaf.bullets, 'bullets xp__bullets'),
       createMedia(leaf.media),
-      createLinks(leaf.links),
+      createLinks(leaf.links, leaf.linksLabel),
     ],
   });
 

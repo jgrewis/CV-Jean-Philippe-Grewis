@@ -14,6 +14,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execSync } from 'node:child_process';
 import { profile, contact, branches } from '../src/data/cv.js';
 import { pitch } from '../src/data/hero.js';
+import { methode } from '../src/data/methode.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
@@ -61,11 +62,16 @@ function experienceHtml(xp) {
   const kpis = xp.kpis?.length
     ? `<ul class="kpis">${xp.kpis.map((k) => `<li><b>${esc(k.value)}</b> ${esc(k.label)}</li>`).join('')}</ul>`
     : '';
+  const results = xp.results?.length
+    ? `<p class="res-label">${esc(xp.resultsLabel ?? 'Résultats')}</p><ul class="results">${xp.results
+        .map((r) => `<li><b>${esc(r.title)}</b> : ${esc(r.text)}</li>`)
+        .join('')}</ul>`
+    : '';
   const bullets = xp.bullets?.length ? `<ul class="bullets">${xp.bullets.map((b) => `<li>${esc(b)}</li>`).join('')}</ul>` : '';
-  const summary = xp.summary ? `<p class="summary">${esc(xp.summary.replace(/\s*\(liens ci-dessous\)/, ''))}</p>` : '';
+  const summary = xp.summary ? `<p class="summary">${esc(xp.summary)}</p>` : '';
   return `<article class="xp">
     <header><h3>${esc(xp.title)}</h3><span class="period">${esc(xp.period)}</span></header>
-    <p class="org">${esc(xp.org)}</p>${summary}${kpis}${bullets}</article>`;
+    <p class="org">${esc(xp.org)}</p>${summary}${kpis}${results}${bullets}</article>`;
 }
 
 function cvHtml() {
@@ -116,11 +122,16 @@ h1 { font-size: 25pt; font-weight: 800; letter-spacing: -.03em; text-transform: 
 .tagline em { font-family: 'Instrument Serif', serif; color: ${ACCENT}; font-size: 13pt; }
 .contact { font-size: 8.2pt; color: ${MUTED}; margin-top: 2mm; }
 .sep { margin: 0 1.6mm; color: ${ACCENT}; }
-.hero-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin: 3.5mm 0 1mm; }
-.hero-kpis div { border-left: 2px solid ${ACCENT}; padding-left: 2.5mm; }
-.hero-kpis b { display: block; font-size: 15pt; font-weight: 800; color: ${ACCENT}; letter-spacing: -.02em; line-height: 1.1; }
-.hero-kpis span { font-size: 7.6pt; color: ${MUTED}; text-transform: uppercase; letter-spacing: .06em; }
-.about { margin-top: 3mm; font-size: 9.6pt; }
+.about { margin-top: 2.5mm; font-size: 9pt; color: ${MUTED}; }
+.statement { margin-top: 3mm; font-size: 11pt; font-weight: 500; line-height: 1.35; border-left: 2px solid ${ACCENT}; padding-left: 3mm; }
+.steps { list-style: none; display: grid; gap: .9mm; }
+.steps b { color: ${ACCENT}; font-weight: 700; margin-right: 1mm; }
+.case { margin-top: 2.5mm; padding: 2.5mm 3mm; background: ${BG}; display: grid; gap: .9mm; break-inside: avoid; }
+.case-title { font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 8.6pt; }
+.case-link a { color: ${ACCENT}; }
+.res-label { margin-top: 1.4mm; font-size: 7.8pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: ${MUTED}; }
+.results { margin: .8mm 0 0 3.6mm; }
+.results li { margin-bottom: .5mm; }
 h2 { font-size: 8pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: ${MUTED}; margin: 4.5mm 0 2mm; padding-bottom: 1mm; border-bottom: 1px solid ${LINE}; }
 .xp { margin-bottom: 3.2mm; break-inside: avoid; }
 .xp header { display: flex; justify-content: space-between; gap: 4mm; align-items: baseline; }
@@ -146,7 +157,12 @@ h4 { font-size: 8.8pt; font-weight: 700; }
   <p class="tagline">${esc(pitch.text)}</p>
   <p class="contact">${contactBits}</p>
 </div></header>
-<div class="hero-kpis">${pitch.kpis.map((k) => `<div><b>${esc(k.value)}</b><span>${esc(k.label)}</span></div>`).join('')}</div>
+<p class="statement">${esc(pitch.statement)}</p>
+<h2>${esc(methode.title)}</h2>
+<ol class="steps">${methode.steps.map((st, i) => `<li><b>${String(i + 1).padStart(2, '0')} · ${esc(st.title)}</b> ${esc(st.role)}</li>`).join('')}</ol>
+<div class="case"><p class="case-title">${esc(methode.caseStudy.eyebrow)} · ${esc(methode.caseStudy.title)}</p>
+${methode.caseStudy.blocks.map((b) => `<p><b>${esc(b.label)} :</b> ${esc(b.text)}</p>`).join('')}
+<p class="case-link">Preuve : <a href="${esc(methode.caseStudy.links[0].url)}">${esc(methode.caseStudy.links[0].label)}</a></p></div>
 <p class="about">${esc(about?.summary)}</p>
 <h2>Expériences professionnelles</h2>
 ${leaves('experiences').map(experienceHtml).join('')}
@@ -176,7 +192,7 @@ svg.topo { position: absolute; inset: 0; z-index: 0; }
 h1 { font-size: 92px; font-weight: 800; letter-spacing: -.035em; line-height: .98; text-transform: uppercase; }
 .tag { margin-top: 22px; font-size: 34px; font-weight: 500; letter-spacing: -.01em; }
 .tag em { font-family: 'Instrument Serif', serif; color: ${ACCENT}; font-size: 40px; }
-.kpis { display: flex; gap: 48px; border-top: 2px solid ${INK}; padding-top: 22px; }
+.statement { border-top: 2px solid ${INK}; padding-top: 22px; font-size: 27px; line-height: 1.3; font-weight: 500; max-width: 1000px; }
 .kpis b { display: block; font-size: 40px; font-weight: 800; color: ${ACCENT}; letter-spacing: -.02em; line-height: 1.05; }
 .kpis span { font-size: 16px; letter-spacing: .08em; text-transform: uppercase; color: ${MUTED}; }
 </style></head><body>
@@ -186,7 +202,7 @@ h1 { font-size: 92px; font-weight: 800; letter-spacing: -.035em; line-height: .9
 <p class="eyebrow z">CV en ligne · Communication</p>
 <div class="z"><h1>Jean-Philippe<br>Grewis</h1>
 <p class="tag">Chef de projet communication · <em>Disponible</em> · Mulhouse / Colmar</p></div>
-<div class="kpis z">${pitch.kpis.map((k) => `<div><b>${esc(k.value)}</b><span>${esc(k.label)}</span></div>`).join('')}</div>
+<p class="statement z">${esc(pitch.statement)}</p>
 </body></html>`;
 }
 

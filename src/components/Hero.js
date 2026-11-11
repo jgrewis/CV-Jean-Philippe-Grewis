@@ -355,10 +355,11 @@ function createPortraitImage() {
   });
 }
 
-// Accroche + 3 chiffres cles sous le nom (data/hero.js, objet pitch) : ce qu'un
-// recruteur doit lire en 10 secondes (poste vise, disponibilite, resultats).
+// Accroche + phrase de positionnement sous le nom (data/hero.js, objet pitch) :
+// ce qu'un recruteur doit lire en 10 secondes (poste vise, disponibilite, role).
+// Les chiffres (kpis) restent possibles mais ne sont plus utilises.
 function createPitch() {
-  if (!pitch?.text && !pitch?.kpis?.length) return null;
+  if (!pitch?.text && !pitch?.statement && !pitch?.kpis?.length) return null;
   const kpis = pitch.kpis?.length
     ? createEl('ul', {
         className: 'hero__kpis',
@@ -376,7 +377,11 @@ function createPitch() {
   return createEl('div', {
     className: 'hero__pitch',
     attrs: { 'data-reveal': '', 'data-reveal-delay': 1 },
-    children: [pitch.text ? createEl('p', { className: 'hero__tagline', text: pitch.text }) : null, kpis],
+    children: [
+      pitch.text ? createEl('p', { className: 'hero__tagline', text: pitch.text }) : null,
+      pitch.statement ? createEl('p', { className: 'hero__statement', text: pitch.statement }) : null,
+      kpis,
+    ],
   });
 }
 

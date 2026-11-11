@@ -47,15 +47,13 @@ export const effect = {
   enabled: false,
 };
 
-// Accroche et chiffres cles affiches sous le nom, dans le premier ecran.
-// Chiffres m2A valides (communiques de presse officiels, voir cv.js).
+// Accroche et phrase de positionnement sous le nom (11/11 : plus aucun chiffre
+// dans le premier ecran, un chiffre sans contexte ne dit rien).
 export const pitch = {
   text: 'Chef de projet communication · Disponible · Mulhouse / Colmar',
-  kpis: [
-    { value: '1 125', label: 'participants au Challenge Vélo m2A 2026' },
-    { value: '160 427 km', label: 'parcourus au Challenge Vélo 2026' },
-    { value: '236 384', label: 'entrées dans les piscines m2A, été 2026' },
-  ],
+  statement:
+    'Je mène une communication de A à Z : stratégie, briefs et direction des graphistes, contenus web et réseaux, événements, jusqu’aux résultats.',
+  kpis: [],
 };
 
 export const portrait = {

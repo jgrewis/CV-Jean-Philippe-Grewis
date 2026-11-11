@@ -34,7 +34,7 @@ import { createSectionHead } from './sections/sectionHead.js';
 const TITLE = 'Réalisations';
 const EYEBROW = 'Preuves de travail';
 const INTRO =
-  'Une sélection de supports publiés, de l’affiche de 4 × 3 m au post pour les réseaux sociaux, classés par support.';
+  'Des supports publiés pour m2A, de l’affiche de 4 × 3 m au post pour les réseaux sociaux : j’en ai rédigé le brief et dirigé la création avec les graphistes de l’équipe.';
 const META_SEPARATOR = ' · ';
 const MORE_ID = 'realisations-plus';
 const MORE_LABEL = 'Voir plus de réalisations';

@@ -253,3 +253,19 @@
     gap: var(--space-lg);
   }
 }
+
+.hero__statement {
+  font-size: var(--text-lg);
+  line-height: var(--leading-lead);
+  max-inline-size: 52ch;
+  color: var(--color-ink);
+}
+
+@media (min-width: 48em) and (min-aspect-ratio: 5/4) {
+  .hero__pitch {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+  }
+  .hero__statement {
+    justify-self: end;
+  }
+}

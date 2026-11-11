@@ -75,28 +75,40 @@ export const branches = [
           accentColor: '#d92e84',
         },
         summary:
-          "J'ai piloté la communication des opérations Sport, Mobilité et Enfance ci-dessous. Les chiffres sont ceux publiés dans les communiqués de presse officiels de m2A (liens ci-dessous).",
-        kpis: [
-          { value: '1 125', label: 'participants au Challenge Vélo 2026 (893 en 2024)' },
-          { value: '160 427 km', label: 'parcourus en 2026 (104 807 km en 2024)' },
-          { value: '2 700+', label: 'élèves aux Olympiades scolaires 2024' },
-          { value: '1 200', label: 'élèves, Semaine olympique et paralympique 2024' },
-          { value: '135+', label: "athlètes de 31 pays, camp d'entraînement Paris 2024" },
-          { value: '236 384', label: 'usagers des piscines, été 2026 (près de +17 %)' },
+          "J'ai mené la communication des opérations Sport, Mobilité et Enfance de A à Z : stratégie, briefs et direction des graphistes, contenus web et réseaux, plans d'implantation des événements, puis suivi des résultats.",
+        // Resultats contextualises (remplacent la grille de chiffres, 11/11) : chaque
+        // chiffre dit de quoi il parle et pourquoi c'est une retombee de la com.
+        // Source : communiques de presse officiels de m2A (liens ci-dessous).
+        resultsLabel: 'Retombées de ma communication',
+        results: [
+          {
+            title: 'Challenge Vélo m2A',
+            text: 'De 893 à 1 125 participants (+26 %) et de 136 à 148 structures inscrites entre 2024 et 2026, avec 71 classes engagées en 2026.',
+          },
+          {
+            title: 'Piscines et Plan d’eau, été 2026',
+            text: '236 384 entrées, près de +17 % et un record d’affluence, une saison accompagnée par la campagne de prévention « Baigneurs, ouvrez l’œil ».',
+          },
+          {
+            title: 'Camp d’entraînement Paris 2024',
+            text: 'Plus de 135 athlètes de 31 pays accueillis sur le territoire : j’en ai porté la communication institutionnelle.',
+          },
+          {
+            title: 'Olympiades scolaires et Semaine olympique',
+            text: 'Jusqu’à 2 700 élèves aux Olympiades m2A et 1 200 élèves à la Semaine olympique et paralympique, en 2024.',
+          },
         ],
         bullets: [
-          "Pilotage de la communication du Challenge Vélo m2A sur trois éditions : de 893 participants et 104 807 km (2024) à 1 125 participants, 148 structures et 160 427 km (2026), avec 71 classes engagées en 2026.",
-          "Pilotage de la communication des Olympiades scolaires m2A (jusqu'à plus de 2 700 élèves en 2024) et de la Semaine olympique et paralympique (1 200 élèves en 2024).",
-          "Pilotage de la communication du camp d'entraînement pré-JO Paris 2024 : plus de 135 athlètes de 31 pays à l'ouverture.",
-          "Pilotage de la communication des bilans des piscines et du Plan d'eau, jusqu'au record de l'été 2026 : 236 384 usagers.",
-          'Élaboration de plans de communication et plans médias 360° (print, digital, affichage, web, événementiel).',
-          'Gestion de budgets et pilotage de nombreux projets simultanés.',
-          'Rédaction des briefs créatifs et cahiers des charges à destination des agences et prestataires.',
-          "Organisation d'événements de la dizaine d'invités à plusieurs milliers de visiteurs.",
-          'Reporting régulier : suivi des indicateurs de performance (KPIs) et tableaux de bord.',
-          'Pilotage de prestataires et agences de communication (agences, photographes, vidéastes).',
+          "J'ai défini la stratégie et les plans de communication 360° (affichage, print, digital, web, événementiel), avec leurs budgets, en menant plusieurs projets de front.",
+          "J'ai rédigé les briefs créatifs et dirigé les graphistes jusqu'à la validation de chaque support.",
+          "J'ai écrit les posts des réseaux sociaux et les ai validés avec la community manager, chargée de la modération et de la planification.",
+          "J'ai rédigé entièrement les pages web et sélectionné leurs images.",
+          "J'ai conçu les plans d'implantation des événements, comme la Fête du vélo, et rédigé les briefs des prestataires.",
+          'J’ai piloté les prestataires et agences (imprimeurs, photographes, vidéastes).',
+          'J’ai suivi les résultats et rendu compte : indicateurs, tableaux de bord, bilans.',
         ],
-        // Preuves : communiques de presse officiels de m2A (contenus (c) m2A).
+        // Preuves des resultats : communiques de presse officiels de m2A (contenus (c) m2A).
+        linksLabel: 'Preuves des résultats · communiqués officiels de m2A',
         links: [
           { label: 'CP Challenge Vélo 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2026.pdf', icon: 'external' },
           { label: 'CP Challenge Vélo 2025 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2025/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2025-Fete-du-Velo-m2A.pdf', icon: 'external' },
@@ -120,10 +132,7 @@ export const branches = [
         },
         summary:
           "Création et gestion d'une structure pendant 6 ans, en parallèle de mon activité salariée, jusqu'à sa cession en 2024.",
-        kpis: [
-          { value: '6 ans', label: "d'activité" },
-          { value: '2024', label: 'entreprise cédée' },
-        ],
+        // Chiffres isoles retires (11/11) : le resume dit deja 6 ans et la cession.
         bullets: [
           'Conception de la communication de plusieurs marques clientes, création de leurs sites internet et d\'outils sur mesure.',
           'Intégration de contenus optimisés pour le référencement naturel (SEO) sur les sites clients.',
@@ -167,7 +176,6 @@ export const branches = [
           background: 'assets/systeme-u-bg.jpg',
           accentColor: '#1c8fa3',
         },
-        kpis: [{ value: 'Grand Est', label: 'déploiement régional' }],
         bullets: [
           'Conception de concepts merchandising et de supports de communication pour les points de vente.',
           'Analyse de données produit/vente, préconisations par catégorie de magasin et déploiement terrain sur le Grand Est.',

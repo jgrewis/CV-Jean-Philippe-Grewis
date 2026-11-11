@@ -15,6 +15,7 @@ import { mountRealisations } from './Realisations.js';
 import { mountBar } from './sections/Bar.js';
 import { mountManifesto } from './sections/Manifesto.js';
 import { mountParcours } from './sections/Parcours.js';
+import { mountMethode } from './sections/Methode.js';
 import { mountCompetences } from './sections/Competences.js';
 import { mountContact } from './sections/Contact.js';
 
@@ -25,9 +26,10 @@ const MAIN_ID = 'contenu'; // cible du lien d'evitement (index.html)
 const SECTIONS = [
   { id: 'hero', tone: 'base', mount: mountHero },
   { id: 'manifeste', tone: 'alt', mount: mountManifesto },
-  { id: 'parcours', tone: 'base', mount: mountParcours },
-  { id: 'realisations', tone: 'alt', mount: mountRealisations },
-  { id: 'competences', tone: 'base', mount: mountCompetences },
+  { id: 'methode', tone: 'base', mount: mountMethode },
+  { id: 'parcours', tone: 'alt', mount: mountParcours },
+  { id: 'realisations', tone: 'base', mount: mountRealisations },
+  { id: 'competences', tone: 'alt', mount: mountCompetences },
 ];
 
 function createBackdrop() {
