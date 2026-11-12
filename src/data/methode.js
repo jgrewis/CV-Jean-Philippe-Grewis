@@ -53,8 +53,8 @@ export const methode = {
       id: 'evenementiel',
       title: 'Événementiel',
       role: 'Je conçois les plans d’implantation, par exemple pour la Fête du vélo, et je rédige les briefs des prestataires.',
-      proofs: ['situation-espace-vip-palais-des-sports', 'situation-haut-de-porte-evenements-sportifs'],
-      proofsLabel: 'Signalétique et habillage des espaces d’accueil',
+      // Pas de photo : aucune piece ne montre un evenement (l'habillage du Palais
+      // des sports n'en est pas un ; il reste dans la galerie Realisations).
     },
     {
       id: 'resultats',
