@@ -5,7 +5,8 @@
 // aucune dependance a la taille de l'ecran. Le SVG a un viewBox fixe en
 // preserveAspectRatio "slice" : il couvre toujours la fenetre a l'echelle
 // uniforme (cercles ronds), et vector-effect garde un trait de 1 px net.
-// Il est construit une fois : rien a recalculer au redimensionnement.
+// Il est construit une fois : rien a recalculer au redimensionnement ; seules
+// les courbes sont redessinees a chaque image de l'animation (voir animate).
 import { createSvgElement } from './svg.js';
 
 const VIEW_W = 1600;
@@ -84,7 +85,64 @@ function closedPath(points) {
   return `${d} Z`;
 }
 
-/** SVG decoratif des lignes topographiques (aria-hidden), a placer dans un calque fixe. */
+// Animation permanente, tres lente : la phase de chaque harmonique tourne a sa
+// propre vitesse (rad/s) et le centre de chaque relief decrit une petite
+// boucle (amplitude en unites du viewBox, periode en secondes). Toutes les
+// courbes d'un meme relief partagent la meme phase et le meme decalage : elles
+// ondulent ensemble et ne se croisent donc toujours pas.
+const PHASE_SPEEDS = [0.09, -0.06, 0.11];
+const SWAY = 18;
+const SWAY_PERIOD = 70;
+// 30 images/s suffisent pour un mouvement aussi lent et menagent la batterie.
+const FRAME_INTERVAL = 1000 / 30;
+const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+function reliefPaths(relief, index, t) {
+  const { center, rings, r0, step, harmonics, drift } = relief;
+  const phased = harmonics.map(([amplitude, frequency, phase], h) => [
+    amplitude,
+    frequency,
+    phase + PHASE_SPEEDS[h % PHASE_SPEEDS.length] * t,
+  ]);
+  // Chaque relief part d'un point different de sa boucle.
+  const a = (t / SWAY_PERIOD) * TAU + index * 2.1;
+  const dx = SWAY * Math.sin(a);
+  const dy = SWAY * 0.6 * Math.sin(2 * a);
+  const paths = [];
+  for (let k = 0; k < rings; k += 1) {
+    const cx = center[0] * VIEW_W + drift[0] * k + dx;
+    const cy = center[1] * VIEW_H + drift[1] * k + dy;
+    const growth = 1 + k * RING_WOBBLE_GROWTH;
+    paths.push(closedPath(ringPoints(cx, cy, r0 + step * k, phased, growth)));
+  }
+  return paths;
+}
+
+function animate(pathEls) {
+  const media = window.matchMedia ? window.matchMedia(REDUCED_MOTION_QUERY) : null;
+  let frame = 0;
+  let last = 0;
+  const start = performance.now();
+
+  const tick = (now) => {
+    frame = requestAnimationFrame(tick);
+    if (now - last < FRAME_INTERVAL) return;
+    last = now;
+    const t = (now - start) / 1000;
+    RELIEFS.forEach((relief, i) => {
+      reliefPaths(relief, i, t).forEach((d, k) => pathEls[i][k].setAttribute('d', d));
+    });
+  };
+  const sync = () => {
+    cancelAnimationFrame(frame);
+    if (!media || !media.matches) frame = requestAnimationFrame(tick);
+  };
+  sync();
+  if (media && media.addEventListener) media.addEventListener('change', sync);
+}
+
+/** SVG decoratif des lignes topographiques (aria-hidden), a placer dans un calque fixe.
+    Les courbes ondulent en permanence, sauf si l'utilisateur reduit les animations. */
 export function createTopoSvg(className) {
   const svg = createSvgElement('svg', {
     class: className,
@@ -94,18 +152,13 @@ export function createTopoSvg(className) {
     focusable: 'false',
   });
 
-  RELIEFS.forEach(({ center, rings, r0, step, harmonics, drift }) => {
-    for (let k = 0; k < rings; k += 1) {
-      const cx = center[0] * VIEW_W + drift[0] * k;
-      const cy = center[1] * VIEW_H + drift[1] * k;
-      const growth = 1 + k * RING_WOBBLE_GROWTH;
-      svg.append(
-        createSvgElement('path', {
-          d: closedPath(ringPoints(cx, cy, r0 + step * k, harmonics, growth)),
-          'vector-effect': 'non-scaling-stroke',
-        }),
-      );
-    }
-  });
+  const pathEls = RELIEFS.map((relief, i) =>
+    reliefPaths(relief, i, 0).map((d) => {
+      const path = createSvgElement('path', { d, 'vector-effect': 'non-scaling-stroke' });
+      svg.append(path);
+      return path;
+    }),
+  );
+  animate(pathEls);
   return svg;
 }
