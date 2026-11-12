@@ -43,32 +43,12 @@ const PHASES = [
 // pendant l'ouverture, et non cachees sous le calque.
 const REVEAL_PHASE = 'slit';
 
-const STORAGE_KEY = 'cv-intro-seen';
 const SKIP_KEYS = new Set(['Enter', 'Escape', ' ', 'Spacebar']);
 const REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
 const SCROLL_LOCK_CLASS = 'is-intro-playing';
 
 function prefersReducedMotion() {
   return Boolean(window.matchMedia && window.matchMedia(REDUCED_MOTION_QUERY).matches);
-}
-
-function hasSeenIntro() {
-  try {
-    return window.sessionStorage.getItem(STORAGE_KEY) === '1';
-  } catch {
-    // sessionStorage indisponible (navigation privee, stockage bloque) :
-    // on considere l'intro comme jamais vue et on la joue.
-    return false;
-  }
-}
-
-function markIntroSeen() {
-  try {
-    window.sessionStorage.setItem(STORAGE_KEY, '1');
-  } catch {
-    // Ecriture impossible : sans consequence, l'intro se rejouera simplement
-    // au prochain chargement de l'onglet.
-  }
 }
 
 function createPart(className) {
@@ -101,14 +81,14 @@ export class Intro {
     this._onKeydown = this._onKeydown.bind(this);
     this._onClick = this._onClick.bind(this);
 
-    if (prefersReducedMotion() || hasSeenIntro()) {
+    // Jouee a chaque chargement (bouton, Entree ou Echap pour la passer) ;
+    // seule la preference "reduire les animations" la supprime.
+    if (prefersReducedMotion()) {
       this._finished = true;
       this._reveal();
       return;
     }
 
-    // Marquee des le debut : un rechargement en cours d'intro ne la rejoue pas.
-    markIntroSeen();
     this._build();
     this._bind();
     this._startTime = performance.now();
