@@ -128,9 +128,9 @@
   object-fit: cover;
 }
 
-/* ---------- Video : affiche cliquable vers YouTube ---------- */
+/* ---------- Video : facade avec affiche, lecteur au clic ---------- */
 
-/* Le lien remplit le cadre comme une image. */
+/* La facade remplit le cadre comme une image ; le lecteur la remplace au clic. */
 .realisations__video {
   position: relative;
   display: block;
@@ -140,7 +140,6 @@
   border: 0;
   background: none;
   cursor: pointer;
-  text-decoration: none;
 }
 .realisations__video:focus-visible {
   outline: var(--focus-ring) solid var(--color-accent);
@@ -173,6 +172,13 @@
 .realisations__video:hover .realisations__play::before,
 .realisations__video:focus-visible .realisations__play::before {
   transform: scale(1.08);
+}
+
+.realisations__player {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
 }
 
 /* ---------- Mouvement (classe posee par le JS si les animations sont permises) ---------- */
