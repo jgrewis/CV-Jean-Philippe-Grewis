@@ -1,9 +1,8 @@
 // Section #parcours : les experiences (branche "experiences" de cv.js) en grands
-// blocs editoriaux. Le visuel de chaque bloc (theme.background) alterne a gauche
-// et a droite, a des hauteurs decalees, avec une micro-legende en capitales.
-// L'experience m2A porte aussi la liste compacte des inaugurations, evenements
-// et lancements conduits (data/evenementiel.js) : date et titre, vignette quand
-// une photo conforme existe — plus de section Événementiel à part.
+// blocs d'une seule colonne : banniere plein ecran de l'entreprise, puis texte
+// aligne a gauche. L'experience m2A porte aussi les inaugurations, evenements
+// et lancements conduits (data/evenementiel.js) en galerie de grandes cartes :
+// photo en grand, date et titre dessous — plus de liste compacte a vignettes.
 import { getBranch } from '../../data/selectors.js';
 import { evenementielGroups, photosCredit } from '../../data/evenementiel.js';
 import { createEl, createExternalLink } from '../../utils/dom.js';
@@ -69,9 +68,9 @@ function createMedia(media) {
   });
 }
 
-// Liste compacte des opérations menées chez m2A : date, titre, vignette quand
-// une photo conforme existe. Ni détail ni lien par événement : les sources sont
-// dans le fichier de recherche (cv-audit/evenementiel-m2a-2024-2026.md).
+// Opérations menées chez m2A, en galerie : photo en grand, date et titre
+// dessous. Ni détail ni lien par événement : les sources sont dans le fichier
+// de recherche (cv-audit/evenementiel-m2a-2024-2026.md).
 function createEventItem(event) {
   const thumb = event.img
     ? createEl('figure', {
@@ -170,10 +169,8 @@ function createExperience(leaf) {
     ],
   });
 
-  // Visuel toujours a gauche, texte toujours a gauche dans sa colonne : plus
-  // d'alternance (mise en page du 15/11, façon landonorris).
   const article = createEl('article', {
-    className: 'xp xp--media-start',
+    className: 'xp',
     children: [createFigure(leaf), body],
   });
   if (leaf.theme?.accentColor) article.style.setProperty('--xp-accent', leaf.theme.accentColor);
