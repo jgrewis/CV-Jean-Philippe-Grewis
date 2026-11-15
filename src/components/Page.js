@@ -13,24 +13,21 @@ import { createTopoSvg } from '../utils/topo.js';
 import { mountHero } from './Hero.js';
 import { mountRealisations } from './Realisations.js';
 import { mountBar } from './sections/Bar.js';
-import { mountManifesto } from './sections/Manifesto.js';
 import { mountParcours } from './sections/Parcours.js';
-import { mountEvenementiel } from './sections/Evenementiel.js';
-import { mountMethode } from './sections/Methode.js';
+import { mountEtudeDeCas } from './sections/EtudeDeCas.js';
 import { mountCompetences } from './sections/Competences.js';
 import { mountContact } from './sections/Contact.js';
 
 const MAIN_ID = 'contenu'; // cible du lien d'evitement (index.html)
 
-// Ordre de la page (PLAN §4). tone : teinte du fond quand la section traverse
-// le milieu de l'ecran ; l'alternance donne le rythme "fond qui change".
+// Ordre de la page (reconstruction du 15/11 : chaque chose dite une seule
+// fois). tone : teinte du fond quand la section traverse le milieu de l'ecran ;
+// l'alternance donne le rythme "fond qui change".
 const SECTIONS = [
   { id: 'hero', tone: 'base', mount: mountHero },
-  { id: 'manifeste', tone: 'alt', mount: mountManifesto },
-  { id: 'methode', tone: 'base', mount: mountMethode },
   { id: 'parcours', tone: 'alt', mount: mountParcours },
-  { id: 'realisations', tone: 'base', mount: mountRealisations },
-  { id: 'evenementiel', tone: 'alt', mount: mountEvenementiel },
+  { id: 'etude-de-cas', tone: 'base', mount: mountEtudeDeCas },
+  { id: 'realisations', tone: 'alt', mount: mountRealisations },
   { id: 'competences', tone: 'base', mount: mountCompetences },
 ];
 

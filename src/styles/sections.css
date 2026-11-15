@@ -1,40 +1,5 @@
-/* Sections editoriales : manifeste, parcours, competences et formations, contact.
+/* Sections editoriales : parcours, etude de cas, competences et formations, contact.
    Mobile d'abord : une colonne, puis grilles a partir de 48em / 56em. */
-
-/* ---------- Manifeste ---------- */
-
-.manifesto__wrap {
-  display: grid;
-  gap: var(--space-xl);
-}
-
-.manifesto__statement {
-  font-size: var(--text-3xl);
-  font-weight: var(--weight-black);
-  line-height: var(--leading-display);
-  letter-spacing: var(--tracking-display);
-  text-transform: uppercase;
-}
-/* La serif italique a un oeil plus petit que les capitales grasses : on la
-   remonte un peu pour que le mot-cle ne paraisse pas en retrait. */
-.manifesto__statement .keyword {
-  font-size: 1.12em;
-}
-
-.manifesto__lead {
-  max-inline-size: var(--measure-narrow);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-lead);
-  letter-spacing: var(--tracking-heading);
-}
-
-@media (min-width: 56em) {
-  /* Chapo decale a droite : la page respire comme une double page de magazine. */
-  .manifesto__lead {
-    justify-self: end;
-  }
-}
 
 /* ---------- Parcours ---------- */
 
@@ -402,151 +367,102 @@
   line-height: 1.5;
 }
 
-/* ---------- Section #methode : de la strategie aux resultats ---------- */
+/* ---------- Operations menees (liste compacte, dans l'experience m2A) ---------- */
 
-.methode__wrap {
+.xp__events {
   display: grid;
-  gap: var(--space-xl);
+  gap: var(--space-md);
 }
 
-.methode__intro {
-  max-inline-size: var(--measure-narrow);
-  font-size: var(--text-lg);
-  line-height: var(--leading-lead);
-}
-
-.methode__steps {
-  display: grid;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  border-block-start: var(--border-thin) solid var(--color-line-strong);
-}
-
-.methode__step {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--space-sm) var(--space-md);
-  padding-block: var(--space-lg);
-  border-block-end: var(--border-thin) solid var(--color-line);
-}
-
-.methode__num {
-  font-size: var(--text-2xl);
-  line-height: 1;
-}
-
-.methode__text,
-.methode__evidence {
-  display: grid;
-  gap: var(--space-xs);
-  align-content: start;
-}
-
-.methode__evidence {
-  grid-column: 2;
-}
-
-.methode__title {
+.xp__events-group-title {
   font-size: var(--text-xl);
-  font-weight: var(--weight-black);
+  font-weight: var(--weight-bold);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-heading);
-  text-transform: uppercase;
+  padding-block-end: var(--space-xs);
+  border-block-end: 1px solid var(--color-line-strong);
 }
 
-.methode__role {
-  max-inline-size: var(--measure);
-  line-height: var(--leading-body);
+.xp__events-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.methode__proofs-wrap {
+/* Une operation : vignette a gauche quand une photo existe, date et titre a droite. */
+.xp__event {
   display: grid;
-  gap: var(--space-2xs);
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--space-2xs) var(--space-sm);
+  align-items: start;
+  padding-block: var(--space-sm);
+  border-block-end: 1px solid var(--color-line);
 }
 
-.methode__proofs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  align-items: flex-start;
+.xp__event--text {
+  grid-template-columns: minmax(0, 1fr);
 }
 
-.methode__proof {
-  display: grid;
-  gap: var(--space-3xs);
-  inline-size: min(100%, 13rem);
-}
-
-.methode__frame {
+.xp__event-thumb {
+  margin: 0;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   background-color: var(--color-bg-alt);
 }
 
-.methode__img {
+.xp__event-img {
+  display: block;
   inline-size: 100%;
   block-size: 100%;
-  /* contain : la preuve reste entiere (pas de recadrage d'une affiche). */
-  object-fit: contain;
+  object-fit: cover;
 }
 
-.methode__proof-caption {
+.xp__event-body {
   display: grid;
   gap: 0;
-  font-size: var(--text-sm);
-  line-height: 1.35;
+  align-content: start;
 }
 
-.methode__links {
-  display: grid;
-  gap: var(--space-3xs);
-  list-style: none;
-  padding: 0;
+.xp__event-date {
   margin: 0;
 }
 
-@media (min-width: 64em) {
-  .methode__step {
-    grid-template-columns: 4rem minmax(0, 1fr) minmax(0, 1.15fr);
-    gap: var(--space-lg);
-  }
-  .methode__evidence {
-    grid-column: 3;
-  }
+.xp__event-title {
+  margin: 0;
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-heading);
 }
 
-/* Etude de cas : bloc encre, trois temps cote a cote sur grand ecran. */
-.methode__case {
+/* ---------- Etude de cas : bloc encre, trois temps + visuels ---------- */
+
+.etude__wrap {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+/* Bloc encre, trois temps cote a cote sur grand ecran. */
+.etude__case {
   display: grid;
   gap: var(--space-md);
   padding: clamp(var(--space-md), 4vw, var(--space-2xl));
   color: var(--color-bg);
   background-color: var(--color-ink);
 }
-.methode__case .caption {
+.etude__case .caption {
   color: var(--color-paper-muted);
 }
-.methode__case .xp__link {
+.etude__case .xp__link {
   color: var(--color-bg);
   text-decoration-color: var(--color-line-on-ink);
 }
-.methode__case .xp__link::after {
+.etude__case .xp__link::after {
   color: var(--color-accent-on-ink);
 }
-.methode__case :focus-visible {
+.etude__case :focus-visible {
   outline-color: var(--color-accent-on-ink);
 }
 
-.methode__case-title {
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-black);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  text-transform: uppercase;
-}
-
-.methode__case-blocks {
+.etude__case-blocks {
   display: grid;
   gap: var(--space-md);
   list-style: none;
@@ -554,7 +470,7 @@
   margin: 0;
 }
 
-.methode__case-block {
+.etude__case-block {
   display: grid;
   gap: var(--space-2xs);
   align-content: start;
@@ -562,12 +478,58 @@
   border-block-start: var(--focus-ring) solid var(--color-accent-on-ink);
 }
 
-.methode__case-text {
+.etude__case-text {
   line-height: var(--leading-body);
 }
 
 @media (min-width: 48em) {
-  .methode__case-blocks {
+  .etude__case-blocks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Visuels de l'etude de cas : mockups et trophee, entiers (pas de recadrage). */
+.etude__visuals {
+  display: grid;
+  gap: var(--space-md);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.etude__visual {
+  display: grid;
+  gap: var(--space-2xs);
+}
+
+.etude__frame {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: var(--color-bg-alt);
+}
+
+.etude__img {
+  inline-size: 100%;
+  block-size: 100%;
+  /* contain : le visuel reste entier (pas de recadrage d'une affiche). */
+  object-fit: contain;
+}
+
+.etude__visual-caption {
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+.etude__links {
+  display: grid;
+  gap: var(--space-3xs);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 48em) {
+  .etude__visuals {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

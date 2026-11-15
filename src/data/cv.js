@@ -7,7 +7,6 @@ export const profile = {
   title: 'Chef de projet — Responsable communication',
   photo: 'assets/photo-jp.png',
   linkedin: 'https://www.linkedin.com/in/grewis/',
-  tagline: '10+ ans en communication 360°, pilotage de projets et automatisation par l\'IA.',
 };
 
 export const contact = {
@@ -31,12 +30,6 @@ export const branches = [
     label: 'Profil',
     icon: 'user',
     leaves: [
-      {
-        id: 'apropos',
-        title: 'À propos',
-        summary:
-          "Responsable communication et chef de projet depuis plus de 10 ans, expert en supports multi-formats (print, digital, événementiel), pilotage d'agences et déploiement de chartes graphiques multi-enseignes.",
-      },
       {
         id: 'soft-skills',
         title: 'Soft skills',
@@ -75,16 +68,14 @@ export const branches = [
           accentColor: '#d92e84',
         },
         summary:
-          "J'ai mené la communication des opérations Sport, Mobilité et Enfance de A à Z : stratégie, briefs et direction des graphistes, contenus web et réseaux, plans d'implantation des événements, puis suivi des résultats.",
+          "Communication des opérations Sport, Mobilité et Enfance : 24 inaugurations, événements et lancements conduits entre octobre 2024 et octobre 2026.",
         // Resultats contextualises (remplacent la grille de chiffres, 11/11) : chaque
         // chiffre dit de quoi il parle et pourquoi c'est une retombee de la com.
         // Source : communiques de presse officiels de m2A (liens ci-dessous).
+        // Le Challenge Vélo n'est pas ici : ses chiffres sont dits une seule fois,
+        // dans l'étude de cas (reconstruction du 15/11).
         resultsLabel: 'Retombées de ma communication',
         results: [
-          {
-            title: 'Challenge Vélo m2A',
-            text: 'De 893 à 1 125 participants (+26 %) et de 136 à 148 structures inscrites entre 2024 et 2026, avec 71 classes engagées en 2026.',
-          },
           {
             title: 'Piscines et Plan d’eau, été 2026',
             text: '236 384 entrées, près de +17 % et un record d’affluence, une saison accompagnée par la campagne de prévention « Baigneurs, ouvrez l’œil ».',
@@ -108,16 +99,14 @@ export const branches = [
           'J’ai suivi les résultats et rendu compte : indicateurs, tableaux de bord, bilans.',
         ],
         // Preuves des resultats : communiques de presse officiels de m2A (contenus (c) m2A).
+        // Les communiques du Challenge Vélo ne sont pas ici : ils sont dits une
+        // seule fois, dans l'étude de cas (reconstruction du 15/11).
         linksLabel: 'Preuves des résultats · communiqués officiels de m2A',
         links: [
-          { label: 'CP Challenge Vélo 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2026.pdf', icon: 'external' },
-          { label: 'CP Challenge Vélo 2025 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2025/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2025-Fete-du-Velo-m2A.pdf', icon: 'external' },
-          { label: 'CP Challenge Vélo 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/06/CP-m2A-Resultats-du-Challenge-Velo-2024_.pdf', icon: 'external' },
           { label: 'CP Olympiades scolaires 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/05/CP-m2A-Olympiades-m2A.pdf', icon: 'external' },
           { label: 'CP Semaine olympique et paralympique 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/03/CP-m2A-Semaine-Olympique-et-Paralympique-du-02-au-09-avril-2024.pdf', icon: 'external' },
           { label: "CP Camp d'entraînement Paris 2024 · © m2A", url: 'https://www.m2a.fr/wp-content/uploads/2024/07/CP-m2A-Des-medailles-olympiques-mondiaux-et-panamericains-se-preparent-aux-Jeux-de-Paris-2024-au-Camp-dentrainement-de-PSO-m2A.pdf', icon: 'external' },
           { label: 'CP Bilan estival piscines 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/09/CP-m2A-Bilan-estival-Nouveau-record-daffluence-pour-les-piscines-et-le-Plan-deau-de-m2A.pdf', icon: 'external' },
-          { label: 'CP Fête du Vélo 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/06/CP-m2A-2e-edition-de-la-Fete-du-Velo-m2A-dimanche-16-juin-2024.pdf', icon: 'external' },
           { label: 'Espace presse m2A', url: 'https://www.m2a.fr/outils/espace-presse/', icon: 'world' },
         ],
       },
@@ -201,7 +190,7 @@ export const branches = [
       {
         id: 'outils',
         title: 'Outils',
-        tags: ['InDesign', 'Illustrator', 'Photoshop', 'Première Pro', 'Canva', 'n8n'],
+        tags: ['InDesign', 'Illustrator', 'Photoshop', 'Premiere Pro', 'Canva', 'n8n'],
       },
       {
         id: 'communication',

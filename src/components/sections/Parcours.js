@@ -1,7 +1,11 @@
 // Section #parcours : les experiences (branche "experiences" de cv.js) en grands
 // blocs editoriaux. Le visuel de chaque bloc (theme.background) alterne a gauche
 // et a droite, a des hauteurs decalees, avec une micro-legende en capitales.
+// L'experience m2A porte aussi la liste compacte des inaugurations, evenements
+// et lancements conduits (data/evenementiel.js) : date et titre, vignette quand
+// une photo conforme existe — plus de section Événementiel à part.
 import { getBranch } from '../../data/selectors.js';
+import { evenementielGroups, photosCredit } from '../../data/evenementiel.js';
 import { createEl, createExternalLink } from '../../utils/dom.js';
 import { createSectionHead } from './sectionHead.js';
 
@@ -65,6 +69,55 @@ function createMedia(media) {
   });
 }
 
+// Liste compacte des opérations menées chez m2A : date, titre, vignette quand
+// une photo conforme existe. Ni détail ni lien par événement : les sources sont
+// dans le fichier de recherche (cv-audit/evenementiel-m2a-2024-2026.md).
+function createEventItem(event) {
+  const thumb = event.img
+    ? createEl('figure', {
+        className: 'xp__event-thumb',
+        children: [
+          createEl('img', {
+            className: 'xp__event-img',
+            attrs: { src: event.img, alt: event.alt ?? '', loading: 'lazy', decoding: 'async' },
+          }),
+        ],
+      })
+    : null;
+  return createEl('li', {
+    className: event.img ? 'xp__event' : 'xp__event xp__event--text',
+    children: [
+      thumb,
+      createEl('div', {
+        className: 'xp__event-body',
+        children: [
+          createEl('p', { className: 'caption xp__event-date', text: `${event.date} · ${event.type}` }),
+          createEl('p', { className: 'xp__event-title', text: event.title }),
+        ],
+      }),
+    ],
+  });
+}
+
+function createEvents() {
+  return createEl('div', {
+    className: 'xp__events',
+    children: [
+      createEl('p', { className: 'caption', text: 'Opérations menées · octobre 2024 — octobre 2026' }),
+      ...evenementielGroups.map((group) =>
+        createEl('div', {
+          className: 'xp__events-group',
+          children: [
+            createEl('h4', { className: 'xp__events-group-title', text: `${group.label} · ${group.events.length}` }),
+            createEl('ol', { className: 'xp__events-list', children: group.events.map(createEventItem) }),
+          ],
+        }),
+      ),
+      createEl('p', { className: 'caption', text: photosCredit }),
+    ],
+  });
+}
+
 // Liens de preuve (cv.js, champ links) : communiques officiels. La mention
 // « © m2A » est garantie a l'affichage, meme si un libelle l'omet.
 // Resultats contextualises (cv.js, champ results) : un titre (l'operation) et
@@ -111,6 +164,7 @@ function createExperience(leaf, index) {
       createKpis(leaf.kpis),
       createResults(leaf),
       createList(leaf.bullets, 'bullets xp__bullets'),
+      leaf.id === 'm2a' ? createEvents() : null,
       createMedia(leaf.media),
       createLinks(leaf.links, leaf.linksLabel),
     ],

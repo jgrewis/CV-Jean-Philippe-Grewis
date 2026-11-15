@@ -30,7 +30,7 @@ import { portrait, accessories, effect, pitch } from '../data/hero.js';
 import { createEl } from '../utils/dom.js';
 import { createSvgElement } from '../utils/svg.js';
 
-const NEXT_SECTION = '#manifeste';
+const NEXT_SECTION = '#parcours';
 
 // ---------- Reglages de l'effet ----------
 const SPOT_RADIUS_RATIO = 0.16; // rayon d'une tache, en part de la largeur du portrait

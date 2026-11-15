@@ -7,8 +7,8 @@
 // Arbitrages JP du 29/10 : pictogrammes d'enfant acceptes (aucun enfant reel),
 // signaletique publique du CSRA acceptee, programmes de patinoire, affiches non
 // encore diffusees et application Compte Mobilite retires.
-// La mention `credit` doit rester affichee avec la section, et `copyright` sous
-// chaque legende.
+// La mention `credit` est affichée une seule fois, dans l'intro de la section ;
+// seul un `copyright` propre à une pièce (la vidéo) s'affiche sous sa légende.
 // `featured: true` : piece mise en avant (8 a 12), le reste est derriere le bouton
 // « Voir plus de realisations ». Choix du 11/11 : supports concus par JP, sans
 // personne identifiable, un support et un theme varies. Reversible : deplacer le

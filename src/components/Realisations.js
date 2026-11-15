@@ -27,7 +27,7 @@
 //   - Profondeur : chaque preuve glisse un peu plus ou moins vite que la page.
 //     Un seul requestAnimationFrame par evenement scroll, limite aux preuves
 //     visibles ; toutes les lectures de position, puis toutes les ecritures.
-import { credit, copyright, supports, realisations } from '../data/realisations.js';
+import { credit, supports, realisations } from '../data/realisations.js';
 import { createEl } from '../utils/dom.js';
 import { createSectionHead } from './sections/sectionHead.js';
 
@@ -192,17 +192,22 @@ function createVideoFacade(proof) {
 
 function createFigure(proof, supportLabel) {
   const meta = [supportLabel, proof.theme].filter(Boolean).join(META_SEPARATOR);
+  // Le crédit commun n'est plus répété sous chaque pièce : il est dans l'intro
+  // de la section. Seule la vidéo porte son propre crédit (production, pas
+  // graphisme) : il s'affiche sous sa légende.
+  const captionChildren = [
+    createEl('p', { className: 'caption realisations__meta', text: meta }),
+    createEl('p', { className: 'realisations__title', text: proof.title }),
+  ];
+  if (proof.copyright) {
+    captionChildren.push(
+      createEl('p', { className: 'caption realisations__copyright', text: proof.copyright }),
+    );
+  }
   const caption = createEl('figcaption', {
     className: 'realisations__caption',
     attrs: { 'data-reveal': '' },
-    children: [
-      createEl('p', { className: 'caption realisations__meta', text: meta }),
-      createEl('p', { className: 'realisations__title', text: proof.title }),
-      createEl('p', {
-        className: 'caption realisations__copyright',
-        text: proof.copyright ?? copyright,
-      }),
-    ],
+    children: captionChildren,
   });
 
   // Video : facade avec l'affiche locale, le lecteur YouTube standard
