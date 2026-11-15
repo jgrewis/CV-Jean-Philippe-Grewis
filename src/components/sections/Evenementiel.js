@@ -1,7 +1,7 @@
 // Section #evenementiel : inaugurations, événements et lancements conduits chez
 // m2A, groupés par thématique (evenementiel.js). Une liste compacte : date et
 // type en légende, titre, une phrase de contexte, lien vers la source publique.
-import { evenementielGroups, evenementielIntro } from '../../data/evenementiel.js';
+import { evenementielGroups, evenementielIntro, photosCredit } from '../../data/evenementiel.js';
 import { createEl, createExternalLink } from '../../utils/dom.js';
 import { createSectionHead } from './sectionHead.js';
 
@@ -18,12 +18,28 @@ function createLinks(links) {
   });
 }
 
+function createFigure(event) {
+  if (!event.img) return null;
+  // Vignette : le cadrage (4/3, object-fit) est en CSS, la place est reservee
+  // avant le chargement, aucun saut de mise en page.
+  return createEl('figure', {
+    className: 'evt__figure',
+    children: [
+      createEl('img', {
+        className: 'evt__img',
+        attrs: { src: event.img, alt: event.alt ?? '', loading: 'lazy', decoding: 'async' },
+      }),
+    ],
+  });
+}
+
 function createEvent(event) {
   return createEl('li', {
     className: 'evt',
     attrs: { 'data-reveal': '' },
     children: [
       createEl('p', { className: 'caption evt__date', text: `${event.date} · ${event.type}` }),
+      createFigure(event),
       createEl('div', {
         className: 'evt__body',
         children: [
@@ -61,6 +77,7 @@ export function mountEvenementiel(section) {
       children: [createEl('p', { className: 'evenementiel__lead', text: evenementielIntro })],
     }),
     ...evenementielGroups.map(createGroup),
+    createEl('p', { className: 'caption evenementiel__credit', text: photosCredit }),
   );
   section.replaceChildren(wrap);
 }

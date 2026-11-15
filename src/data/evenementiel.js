@@ -12,10 +12,17 @@
 // Ouvertes m2A 2025 et 2026, le festival Décodage, l'appli MemoFamille, les
 // festivals Groaaar, Crapod'Esch et Kicks Tour, et le périscolaire Mélusine
 // (pas de lui).
+// Images : quand une photo conforme existe (lieu ou équipement, aucune personne
+// identifiable), l'entrée porte `img` (chemin local) et `alt` ; sinon elle reste
+// en texte seul.
 // `type` : Inauguration, Événement, Lancement, Campagne, Opération.
 
 export const evenementielIntro =
   'Inaugurations, événements et lancements conduits chez Mulhouse Alsace Agglomération : organisation, événementiel et communication.';
+
+// Photos des événements : vignettes issues des sources publiques de chaque
+// événement (dossiers de presse et communiqués m2A, articles m2A le mag).
+export const photosCredit = 'Photos : © m2A';
 
 export const evenementielGroups = [
   {
@@ -26,6 +33,8 @@ export const evenementielGroups = [
         date: '26 avril 2025',
         type: 'Inauguration',
         title: 'Deux nouvelles voies vertes de Wittenheim',
+    img: 'assets/evenementiel/voies-vertes-wittenheim.webp',
+    alt: 'Voie verte nouvellement aménagée à Wittenheim, avec son panneau piétons et vélos, le long de la route.',
         detail:
           'Voie verte rue du Dr Albert Schweitzer (300 m, portée par m2A) et rue de Soultz (1,3 km, Ville de Wittenheim).',
         links: [
@@ -39,6 +48,8 @@ export const evenementielGroups = [
         date: '4 juillet 2025',
         type: 'Inauguration',
         title: 'Voie verte Bollwiller – Feldkirch et extension du parking de la gare SNCF',
+    img: 'assets/evenementiel/voie-verte-bollwiller-feldkirch.webp',
+    alt: 'Voie verte entre Bollwiller et Feldkirch, empruntée par un cycliste vu de dos, le long de la voie ferrée.',
         detail:
           '750 m de voie verte dont 500 m en peinture photoluminescente, et 49 places de stationnement supplémentaires.',
         links: [
@@ -52,6 +63,8 @@ export const evenementielGroups = [
         date: '7 février 2026',
         type: 'Inauguration',
         title: 'Passerelle André Erbland, Brunstatt-Didenheim',
+    img: 'assets/evenementiel/passerelle-erbland.webp',
+    alt: 'Passerelle métallique André Erbland enjambant l’Ill à Brunstatt-Didenheim.',
         detail:
           'Passerelle de 40,32 m sur l’Ill ; m2A financeur et pilote de la voie verte attenante.',
         links: [
@@ -65,6 +78,8 @@ export const evenementielGroups = [
         date: '2 avril 2025',
         type: 'Inauguration',
         title: 'Nouveau service VéloCité',
+    img: 'assets/evenementiel/velocite.webp',
+    alt: 'Vélos à assistance électrique VéloCité alignés à une station.',
         detail:
           'Extension intercommunale du vélo en libre-service : 64 stations, 640 vélos à assistance électrique, 8 communes.',
         links: [
@@ -107,6 +122,8 @@ export const evenementielGroups = [
         date: '4 mai – 5 juin 2026',
         type: 'Événement',
         title: 'Challenge Vélo m2A 2026 (6e édition)',
+    img: 'assets/evenementiel/challenge-velo-2026.webp',
+    alt: 'Trophées en bois du Challenge Vélo m2A, gravés du logo de l’événement.',
         detail:
           '160 427 km parcourus, un record ; soirée de remise des prix le 25 juin à la Maison du Territoire, à Sausheim.',
         links: [
@@ -137,6 +154,8 @@ export const evenementielGroups = [
         date: 'Rentrée 2026',
         type: 'Lancement',
         title: '« m2A Mobilités », plateforme numérique des déplacements',
+    img: 'assets/evenementiel/m2a-mobilites.webp',
+    alt: 'Tramway jaune Soléa en circulation dans le centre de Mulhouse.',
         detail:
           'Plateforme des déplacements et paiement sans contact sur toutes les lignes bus, tramway et tram-train.',
         links: [
@@ -162,6 +181,8 @@ export const evenementielGroups = [
         date: '13 février 2025',
         type: 'Campagne',
         title: '« Soléa : tous mobilisés pour la sécurité ! »',
+    img: 'assets/evenementiel/campagne-solea-securite.webp',
+    alt: 'Bus Soléa jaune « 100 % biogaz » stationné au dépôt.',
         detail: 'Campagne d’affichage interactive mensuelle sur le réseau Soléa.',
         links: [
           {
@@ -180,6 +201,8 @@ export const evenementielGroups = [
         date: '12 septembre 2026',
         type: 'Événement',
         title: '20 ans du tram de Mulhouse',
+    img: 'assets/evenementiel/20-ans-tram.webp',
+    alt: 'Rame de tramway Soléa habillée aux couleurs des 20 ans du tram, avec l’inscription "20 ans du tram" sur la vitre.',
         detail:
           'Fête d’anniversaire, Square de la Bourse : bus vintage, musiciens, jeux en famille, exposition photos.',
         links: [
@@ -193,6 +216,8 @@ export const evenementielGroups = [
         date: '4 juillet – 26 septembre 2026',
         type: 'Opération',
         title: 'Réseau Soléa gratuit tous les samedis de l’été',
+    img: 'assets/evenementiel/solea-gratuit-ete-2026.webp',
+    alt: 'Rame de tramway Soléa aux couleurs de l’offre d’été, avec l’inscription "Tous les samedis de l’été gratuits".',
         detail: 'Bus, tram, transport à la demande et parkings-relais offerts chaque samedi.',
         links: [
           {
@@ -205,6 +230,8 @@ export const evenementielGroups = [
         date: 'Septembre 2025 et septembre 2026',
         type: 'Opération',
         title: '« Osons Soléa dans l’agglo ! »',
+    img: 'assets/evenementiel/osons-solea.webp',
+    alt: 'Rampe d’accès déployée à la porte d’un bus jaune Soléa.',
         detail:
           'Opération inclusive : des personnes en situation de handicap découvrent lieux culturels et sportifs en empruntant le réseau Soléa ; plus de 200 personnes en 2026.',
         links: [
@@ -254,6 +281,8 @@ export const evenementielGroups = [
         date: 'Été 2025 et été 2026',
         type: 'Événement',
         title: 'Bilan estival des piscines et du plan d’eau',
+    img: 'assets/evenementiel/bilan-estival-piscines.webp',
+    alt: 'Le Plan d’eau de l’agglomération un jour d’été, avec sa plage, ses parasols et ses baigneurs au loin sous un ciel bleu.',
         detail: 'Nouveau record d’affluence à l’été 2026 pour les piscines et le plan d’eau de l’agglomération.',
         links: [
           {
@@ -266,6 +295,8 @@ export const evenementielGroups = [
         date: '1er – 2 novembre 2024',
         type: 'Événement',
         title: '« Pack Sport Clubs & m2A », week-end sport élite',
+    img: 'assets/evenementiel/pack-sport-clubs.webp',
+    alt: 'Match de volley au Palais des Sports de Mulhouse, les joueuses en action au filet devant des tribunes pleines.',
         detail:
           'Pass unique pour assister aux matchs des clubs élites de l’agglomération sur un même week-end.',
         links: [
@@ -310,6 +341,8 @@ export const evenementielGroups = [
         date: '21 mars 2025',
         type: 'Inauguration',
         title: 'Groupe scolaire et périscolaire Simone Veil, Mulhouse',
+    img: 'assets/evenementiel/groupe-scolaire-simone-veil.webp',
+    alt: 'Cour intérieure du groupe scolaire Simone-Veil à Mulhouse, bâtiment en bois et aire de jeux vide.',
         detail: 'Périscolaire géré par m2A (555 m², 134 enfants), dans le cadre du Plan écoles.',
         links: [
           {
@@ -322,6 +355,8 @@ export const evenementielGroups = [
         date: '25 avril 2025',
         type: 'Inauguration',
         title: 'Multi-Accueil « La Grande Ourse », Illzach',
+    img: 'assets/evenementiel/multi-accueil-grande-ourse.webp',
+    alt: 'Façade colorée du multi-accueil La Grande Ourse à Illzach et sa cour extérieure vide.',
         detail: 'Crèche neuve de ~700 m², 50 places, maîtrise d’ouvrage m2A.',
         links: [
           {
@@ -334,6 +369,8 @@ export const evenementielGroups = [
         date: '24 juin 2025',
         type: 'Inauguration',
         title: 'Périscolaire Lyautey, Riedisheim',
+    img: 'assets/evenementiel/periscolaire-lyautey.webp',
+    alt: 'Salle d’activités vide du périscolaire Lyautey à Riedisheim, tables et chaises près des grandes baies vitrées.',
         detail:
           'Nouveau bâtiment de ~800 m², 112 places le midi et 56 le soir, co-maîtrise d’ouvrage m2A–Riedisheim.',
         links: [
@@ -348,6 +385,8 @@ export const evenementielGroups = [
         date: '28 janvier – 8 février 2026',
         type: 'Événement',
         title: 'Festival Momix 2026 (35e édition)',
+    img: 'assets/evenementiel/festival-momix-2026.webp',
+    alt: 'Sculptures en bois du spectacle La Cité du peuple de bois, installées sur une pelouse, pour le festival Momix 2026.',
         detail: 'Spectacle jeune public, à Kingersheim et dans les communes de l’agglomération.',
         links: [
           {
