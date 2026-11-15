@@ -1,0 +1,464 @@
+// Evenementiel : inaugurations, evenements et lancements conduits par JP chez
+// Mulhouse Alsace Agglomération (m2A), d'octobre 2024 à octobre 2026, en
+// organisation, événementiel et communication.
+//
+// Origine : publications et dossiers de presse de m2A (recherche du 15/11/2026,
+// fichier cv-audit/evenementiel-m2a-2024-2026.md). Chaque entree renvoie vers sa
+// source publique (dossier de presse, communiqué, article m2A le mag, post).
+// Non repris ici : la vidéo CSRA (déjà dans Réalisations), l'inauguration du
+// Lerchenberg du 22/09/2024 (avant son arrivée à m2A) et 3 inaugurations dont
+// les dates ne sont pas confirmées (périscolaire Wittelsheim, terrain du stade
+// de l'Ill, « Horizon Afrique »).
+// `type` : Inauguration, Événement, Lancement, Campagne, Opération.
+
+export const evenementielIntro =
+  'Inaugurations, événements et lancements conduits chez Mulhouse Alsace Agglomération : organisation, événementiel et communication.';
+
+export const evenementielGroups = [
+  {
+    id: 'mobilite',
+    label: 'Mobilité',
+    events: [
+      {
+        date: '26 avril 2025',
+        type: 'Inauguration',
+        title: 'Deux nouvelles voies vertes de Wittenheim',
+        detail:
+          'Voie verte rue du Dr Albert Schweitzer (300 m, portée par m2A) et rue de Soultz (1,3 km, Ville de Wittenheim).',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/04/DP-m2A-Inauguration-des-deux-nouvelles-voies-vertes-de-Wittenheim.pdf',
+          },
+        ],
+      },
+      {
+        date: '4 juillet 2025',
+        type: 'Inauguration',
+        title: 'Voie verte Bollwiller – Feldkirch et extension du parking de la gare SNCF',
+        detail:
+          '750 m de voie verte dont 500 m en peinture photoluminescente, et 49 places de stationnement supplémentaires.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/07/DP-m2A-Inauguration-de-la-voie-verte-reliant-Bollwiller-et-Feldkirch-et-de-lextention-du-parking-de-la-gare-SNCF-de-Bollwiller.pdf',
+          },
+        ],
+      },
+      {
+        date: '7 février 2026',
+        type: 'Inauguration',
+        title: 'Passerelle André Erbland, Brunstatt-Didenheim',
+        detail:
+          'Passerelle de 40,32 m sur l’Ill ; m2A financeur et pilote de la voie verte attenante.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2026/02/DP-m2A-Inauguration-de-la-passerelle-Andre-Erbland-a-Brunstatt-Didenheim.pdf',
+          },
+        ],
+      },
+      {
+        date: '2 avril 2025',
+        type: 'Inauguration',
+        title: 'Nouveau service VéloCité',
+        detail:
+          'Extension intercommunale du vélo en libre-service : 64 stations, 640 vélos à assistance électrique, 8 communes.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/04/DP-m2A-Inauguration-du-nouveau-service-VeloCite.pdf',
+          },
+        ],
+      },
+      {
+        date: '5 mai – 6 juin 2025',
+        type: 'Événement',
+        title: 'Challenge Vélo m2A 2025 (5e édition)',
+        detail:
+          'Près de 150 000 km parcourus ; soirée de remise des prix le 19 juin aux Sheds, à Kingersheim.',
+        links: [
+          {
+            label: 'Communiqué de résultats · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2025-Fete-du-Velo-m2A.pdf',
+          },
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/challenge-velo-m2a-clap-de-fin-pour-ledition-2025/',
+          },
+        ],
+      },
+      {
+        date: '29 juin 2025',
+        type: 'Événement',
+        title: '3e Fête du Vélo m2A',
+        detail: 'Village Vélo et animations ludiques et sportives, Espace Tival, Kingersheim.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/en-route-pour-la-fete-du-velo-m2a-2025/',
+          },
+        ],
+      },
+      {
+        date: '4 mai – 5 juin 2026',
+        type: 'Événement',
+        title: 'Challenge Vélo m2A 2026 (6e édition)',
+        detail:
+          '160 427 km parcourus, un record ; soirée de remise des prix le 25 juin à la Maison du Territoire, à Sausheim.',
+        links: [
+          {
+            label: 'Communiqué de résultats · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2026/06/CP-m2A-Resultats-du-Challenge-Velo-m2A-2026.pdf',
+          },
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/challenge-velo-m2a-2026-bravo-a-lensemble-des-participants/',
+          },
+        ],
+      },
+      {
+        date: 'Mars 2025',
+        type: 'Lancement',
+        title: 'Six bornes de recharge pour véhicules électriques à Riedisheim',
+        detail:
+          'Mise en service des 3 premières bornes, dans un déploiement de 338 points de recharge sur l’agglomération.',
+        links: [
+          {
+            label: 'Communiqué · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/04/CP-m2A-m2A-deploie-six-bornes-de-recharge-pour-vehicules-electriques-a-Riedisheim.pdf',
+          },
+        ],
+      },
+      {
+        date: 'Rentrée 2026',
+        type: 'Lancement',
+        title: '« m2A Mobilités », plateforme numérique des déplacements',
+        detail:
+          'Plateforme des déplacements et paiement sans contact sur toutes les lignes bus, tramway et tram-train.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/mobilites-m2a-innove-et-facilite-tous-vos-deplacements/',
+          },
+        ],
+      },
+      {
+        date: '12 mars 2026',
+        type: 'Lancement',
+        title: 'Covoiturage « BlaBlaCar Daily » soutenu par m2A',
+        detail: 'Lancement du covoiturage du quotidien sur l’agglomération.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/covoiturage-simplifiez-vos-trajets-avec-blablacar-daily/',
+          },
+        ],
+      },
+      {
+        date: '13 février 2025',
+        type: 'Campagne',
+        title: '« Soléa : tous mobilisés pour la sécurité ! »',
+        detail: 'Campagne d’affichage interactive mensuelle sur le réseau Soléa.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/solea-tous-mobilises-pour-la-securite/',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'solea',
+    label: 'Soléa',
+    events: [
+      {
+        date: '12 septembre 2026',
+        type: 'Événement',
+        title: '20 ans du tram de Mulhouse',
+        detail:
+          'Fête d’anniversaire, Square de la Bourse : bus vintage, musiciens, jeux en famille, exposition photos.',
+        links: [
+          {
+            label: 'Post Facebook m2A',
+            url: 'https://www.facebook.com/Mulhouse.Alsace.Agglomeration/posts/pfbid0jdHppkv54iBN1aqtLDc5SxP3PUrGMNpdSbNXDvdGS9FzKTc3TrLhTY1mVWbe1bvsl',
+          },
+        ],
+      },
+      {
+        date: '4 juillet – 26 septembre 2026',
+        type: 'Opération',
+        title: 'Réseau Soléa gratuit tous les samedis de l’été',
+        detail: 'Bus, tram, transport à la demande et parkings-relais offerts chaque samedi.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/profitez-gratuitement-du-reseau-solea-tous-les-samedis-ete-2026/',
+          },
+        ],
+      },
+      {
+        date: 'Septembre 2025 et septembre 2026',
+        type: 'Opération',
+        title: '« Osons Soléa dans l’agglo ! »',
+        detail:
+          'Opération inclusive : des personnes en situation de handicap découvrent lieux culturels et sportifs en empruntant le réseau Soléa ; plus de 200 personnes en 2026.',
+        links: [
+          {
+            label: 'Article m2A le mag (2026)',
+            url: 'https://mag.mulhouse-alsace.fr/osons-solea-dans-lagglo-lacces-aux-mobilites-et-a-la-culture-pour-tous/',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'sport',
+    label: 'Sport',
+    events: [
+      {
+        date: 'Juin 2025',
+        type: 'Événement',
+        title: 'Olympiades scolaires m2A 2025 (3e édition)',
+        detail:
+          'Plus de 1 770 élèves accueillis dans les équipements aquatiques de l’agglomération, autour du savoir-nager, avec l’Éducation nationale.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/olympiades-scolaires-m2a-2025-un-temps-fort-autour-du-savoir-nager/',
+          },
+          {
+            label: 'Communiqué · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/05/CP-m2A-Olympiades-m2A-2025.pdf',
+          },
+        ],
+      },
+      {
+        date: 'Avril – juin 2026',
+        type: 'Événement',
+        title: 'Olympiades scolaires m2A 2026 (4e édition)',
+        detail:
+          'Plus de 1 600 élèves dans 5 équipements aquatiques : piscines de l’Illberg, des Jonquilles, bassin de la Doller, Aquarhin, Île Napoléon.',
+        links: [
+          {
+            label: 'Communiqué · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2026/04/CP-m2A-Olympiades-scolaires-m2A-2026.pdf',
+          },
+        ],
+      },
+      {
+        date: 'Été 2025 et été 2026',
+        type: 'Événement',
+        title: 'Bilan estival des piscines et du plan d’eau',
+        detail: 'Nouveau record d’affluence à l’été 2026 pour les piscines et le plan d’eau de l’agglomération.',
+        links: [
+          {
+            label: 'Communiqué 2026 · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2026/09/CP-m2A-Bilan-estival-Nouveau-record-daffluence-pour-les-piscines-et-le-Plan-deau-de-m2A.pdf',
+          },
+        ],
+      },
+      {
+        date: '1er – 2 novembre 2024',
+        type: 'Événement',
+        title: '« Pack Sport Clubs & m2A », week-end sport élite',
+        detail:
+          'Pass unique pour assister aux matchs des clubs élites de l’agglomération sur un même week-end.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/pack-sport-clubs-m2a/',
+          },
+        ],
+      },
+      {
+        date: '30 mars 2025',
+        type: 'Événement',
+        title: 'Match de gala ASPTT Mulhouse Rixheim (« Les Loups »)',
+        detail: 'Retour du handball au Palais des Sports, face à Tremblay.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/les-loups-de-lasptt-mulhouse-rixheim-au-palais-des-sports/',
+          },
+        ],
+      },
+      {
+        date: '13 décembre 2024',
+        type: 'Événement',
+        title: 'Match de gala MBA vs Le Havre',
+        detail:
+          '100e anniversaire du 1er titre de champion du Mulhouse Basket Agglomération, Palais des Sports « Gilbert Buttazzoni ».',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/match-gala-mulhouse-basket-agglomeration-palais-des-sports-mulhouse/',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'enfance-famille',
+    label: 'Enfance & famille',
+    events: [
+      {
+        date: '21 mars 2025',
+        type: 'Inauguration',
+        title: 'Groupe scolaire et périscolaire Simone Veil, Mulhouse',
+        detail: 'Périscolaire géré par m2A (555 m², 134 enfants), dans le cadre du Plan écoles.',
+        links: [
+          {
+            label: 'Communiqué Ville de Mulhouse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/03/Ville-de-Mulhouse-CP-Inauguration-du-groupe-scolaire-Simone-Veil.pdf',
+          },
+        ],
+      },
+      {
+        date: '25 avril 2025',
+        type: 'Inauguration',
+        title: 'Multi-Accueil « La Grande Ourse », Illzach',
+        detail: 'Crèche neuve de ~700 m², 50 places, maîtrise d’ouvrage m2A.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/04/DP-m2A-Inauguration-du-Multi-Accueil-La-Grande-Ourse-a-Illzach.pdf',
+          },
+        ],
+      },
+      {
+        date: '24 juin 2025',
+        type: 'Inauguration',
+        title: 'Périscolaire Lyautey, Riedisheim',
+        detail:
+          'Nouveau bâtiment de ~800 m², 112 places le midi et 56 le soir, co-maîtrise d’ouvrage m2A–Riedisheim.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2025/06/DP-m2A-Inauguration-du-periscolaire-Lyautey-a-Riedisheim.pdf',
+          },
+        ],
+      },
+      {
+        date: '24 septembre 2026',
+        type: 'Inauguration',
+        title: 'Périscolaire Mélusine, Staffelfelden',
+        detail: 'Bâtiment de 640 m², 148 places ; ruban coupé avec les enfants.',
+        links: [
+          {
+            label: 'Dossier de presse · © m2A',
+            url: 'https://www.m2a.fr/wp-content/uploads/2026/09/DP-m2A-Inauguration-du-periscolaire-Melusine-a-Staffelfelden.pdf',
+          },
+          {
+            label: 'Article JDS',
+            url: 'https://www2.jds.fr/mulhouse/actu/inauguration-du-periscolaire-melusine-a-staffelfelden-un-nouvel-equipement-pour-les-enfants-de-l-agglomeration-1768177_A',
+          },
+        ],
+      },
+      {
+        date: '28 janvier – 8 février 2026',
+        type: 'Événement',
+        title: 'Festival Momix 2026 (35e édition)',
+        detail: 'Spectacle jeune public, à Kingersheim et dans les communes de l’agglomération.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/festival-momix-2026-un-voyage-artistique-culturel/',
+          },
+        ],
+      },
+      {
+        date: '6 – 7 septembre 2025',
+        type: 'Événement',
+        title: 'Kicks Tour, festival de la culture urbaine',
+        detail: 'Motoco, Mulhouse, plus de 60 exposants.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/kicks-tour-2025-le-festival-de-la-culture-urbaine-a-mulhouse/',
+          },
+        ],
+      },
+      {
+        date: '22 juin 2025',
+        type: 'Événement',
+        title: '« Les Crapod’Esch », fête du village d’Eschentzwiller',
+        detail: 'Course de caisses à savon et animations de village.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/crapodesch-2025-une-fete-a-ne-pas-manquer/',
+          },
+        ],
+      },
+      {
+        date: '14 – 15 juin 2025',
+        type: 'Événement',
+        title: 'Festival « Groaaar ! »',
+        detail: 'BD et conservation des espèces, Parc zoologique et botanique de Mulhouse.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/soutenez-la-tortue-rayonnee-au-festival-groaaar-2025/',
+          },
+        ],
+      },
+      {
+        date: '19 novembre 2024',
+        type: 'Lancement',
+        title: 'Appli « MemoFamille »',
+        detail: 'Album photo et vidéo familial privé, développée à Mulhouse.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/memofamille-lappli-de-vos-plus-beaux-souvenirs/',
+          },
+        ],
+      },
+      {
+        date: '7 novembre 2025',
+        type: 'Inauguration',
+        title: 'Festival Décodage, émission de radio participative',
+        detail: 'Inauguration du festival, Lerchenberg, Mulhouse.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/evenement/inauguration-du-festival-decodage-emission-de-radio-participative-a-mulhouse-2025/',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'institutionnel',
+    label: 'Institutionnel',
+    events: [
+      {
+        date: '6 septembre 2025',
+        type: 'Événement',
+        title: 'Portes Ouvertes m2A (1re édition)',
+        detail:
+          'Première ouverture au public du siège de m2A, Maison du Territoire, Sausheim : visites guidées de sites de l’agglomération et animations.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/portes-ouvertes-m2a-2025-decouvrez-lagglo-autrement/',
+          },
+        ],
+      },
+      {
+        date: '29 août 2026',
+        type: 'Événement',
+        title: 'Portes Ouvertes m2A 2026 (2e édition)',
+        detail: 'Deuxième édition des portes ouvertes de l’agglomération.',
+        links: [
+          {
+            label: 'Article m2A le mag',
+            url: 'https://mag.mulhouse-alsace.fr/portes-ouvertes-m2a-2026-plongez-dans-le-quotidien-de-lagglomeration/',
+          },
+        ],
+      },
+    ],
+  },
+];

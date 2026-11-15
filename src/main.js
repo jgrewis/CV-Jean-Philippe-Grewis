@@ -8,6 +8,7 @@ import './styles/page.css';
 import './styles/hero.css';
 import './styles/sections.css';
 import './styles/realisations.css';
+import './styles/evenementiel.css';
 import './styles/intro.css';
 import './styles/intro-logo.css';
 import './styles/intro-lines.css';

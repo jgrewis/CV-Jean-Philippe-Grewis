@@ -15,6 +15,7 @@ import { mountRealisations } from './Realisations.js';
 import { mountBar } from './sections/Bar.js';
 import { mountManifesto } from './sections/Manifesto.js';
 import { mountParcours } from './sections/Parcours.js';
+import { mountEvenementiel } from './sections/Evenementiel.js';
 import { mountMethode } from './sections/Methode.js';
 import { mountCompetences } from './sections/Competences.js';
 import { mountContact } from './sections/Contact.js';
@@ -29,7 +30,8 @@ const SECTIONS = [
   { id: 'methode', tone: 'base', mount: mountMethode },
   { id: 'parcours', tone: 'alt', mount: mountParcours },
   { id: 'realisations', tone: 'base', mount: mountRealisations },
-  { id: 'competences', tone: 'alt', mount: mountCompetences },
+  { id: 'evenementiel', tone: 'alt', mount: mountEvenementiel },
+  { id: 'competences', tone: 'base', mount: mountCompetences },
 ];
 
 function createBackdrop() {
