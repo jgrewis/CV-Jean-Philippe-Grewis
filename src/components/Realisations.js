@@ -145,7 +145,7 @@ function createIntro() {
   });
 }
 
-function createVideoFacade(proof) {
+function createVideoLink(proof) {
   const poster = createEl('img', {
     className: 'realisations__img',
     attrs: {
@@ -157,37 +157,19 @@ function createVideoFacade(proof) {
       decoding: 'async',
     },
   });
-  const button = createEl('button', {
+  return createEl('a', {
     className: 'realisations__video',
-    attrs: { type: 'button', 'aria-label': `Lire la vidéo : ${proof.title}` },
+    attrs: {
+      href: `https://www.youtube.com/watch?v=${proof.videoId}`,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      'aria-label': `Voir la vidéo sur YouTube (nouvel onglet) : ${proof.title}`,
+    },
     children: [
       poster,
       createEl('span', { className: 'realisations__play', attrs: { 'aria-hidden': 'true' } }),
     ],
   });
-  // Ecouteur a usage unique : il se retire apres le clic, rien a nettoyer.
-  button.addEventListener(
-    'click',
-    () => {
-      const frame = button.closest('.realisations__frame');
-      if (!frame) return;
-      frame.replaceChildren(
-        createEl('iframe', {
-          className: 'realisations__player',
-          attrs: {
-            src: `https://www.youtube-nocookie.com/embed/${proof.videoId}?autoplay=1&rel=0`,
-            title: proof.title,
-            allow:
-              'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
-            allowfullscreen: '',
-            loading: 'lazy',
-          },
-        }),
-      );
-    },
-    { once: true },
-  );
-  return button;
 }
 
 function createFigure(proof, supportLabel) {
@@ -205,9 +187,10 @@ function createFigure(proof, supportLabel) {
     ],
   });
 
-  // Video : facade avec l'affiche locale, le lecteur YouTube (nocookie) ne se
-  // charge qu'au clic, pour ne pas charger le lecteur pour chaque visiteur.
-  const media = proof.videoId ? createVideoFacade(proof) : createEl('img', {
+  // Video : simple lien vers YouTube (nouvel onglet), avec l'affiche locale.
+  // Le lecteur integre ne fonctionnait pas sur le site, le lien ne peut pas
+  // echouer : il renvoie vers la video sur la chaine m2A TV.
+  const media = proof.videoId ? createVideoLink(proof) : createEl('img', {
     className: 'realisations__img',
     attrs: {
       src: proof.src,

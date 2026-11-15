@@ -14,8 +14,9 @@
 // personne identifiable, un support et un theme varies. Reversible : deplacer le
 // drapeau d'une entree a l'autre.
 // Video : une entree avec `videoId` (YouTube) et `src` = affiche locale 1280 x 720 ;
-// le lecteur ne se charge qu'au clic (facade), et `copyright` peut etre surcharge
-// par piece (la mention globale parle de graphisme, pas de video).
+// elle renvoie vers la video sur YouTube (nouvel onglet), sans lecteur integre,
+// et `copyright` peut etre surcharge par piece (la mention globale parle de
+// graphisme, pas de video).
 // Retiree le 11/11 : signaletique du CSRA (athlete paralympique identifiable).
 // width / height : dimensions reelles des fichiers, pour reserver la place a l'affichage.
 
