@@ -42,12 +42,14 @@ export const supports = [
 export const realisations = [
   {
     src: 'assets/realisations/mockup-4x3-challenge-velo.webp', width: 1824, height: 1376,
+    featured: true,
     support: 'affichage', theme: 'Mobilité',
     title: 'Affiche 4 × 3 m Challenge vélo 2026',
     alt: 'Affiche du Challenge vélo m2A sur un panneau 4 × 3 m en bord de rue, au crépuscule.',
   },
   {
     src: 'assets/realisations/mockup-mupi-challenge-velo.webp', width: 1328, height: 1904,
+    featured: true,
     support: 'affichage', theme: 'Mobilité',
     title: 'Mupi Challenge vélo m2A « Relevez le défi »',
     alt: 'Affiche du Challenge vélo m2A sur un mupi lumineux en trottoir, au crépuscule.',
