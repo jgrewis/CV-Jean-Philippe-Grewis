@@ -6,9 +6,12 @@
 // fichier cv-audit/evenementiel-m2a-2024-2026.md). Chaque entree renvoie vers sa
 // source publique (dossier de presse, communiqué, article m2A le mag, post).
 // Non repris ici : la vidéo CSRA (déjà dans Réalisations), l'inauguration du
-// Lerchenberg du 22/09/2024 (avant son arrivée à m2A) et 3 inaugurations dont
+// Lerchenberg du 22/09/2024 (avant son arrivée à m2A), 3 inaugurations dont
 // les dates ne sont pas confirmées (périscolaire Wittelsheim, terrain du stade
-// de l'Ill, « Horizon Afrique »).
+// de l'Ill, « Horizon Afrique ») et, à sa demande le 15/11/2026, les Portes
+// Ouvertes m2A 2025 et 2026, le festival Décodage, l'appli MemoFamille, les
+// festivals Groaaar, Crapod'Esch et Kicks Tour, et le périscolaire Mélusine
+// (pas de lui).
 // `type` : Inauguration, Événement, Lancement, Campagne, Opération.
 
 export const evenementielIntro =
@@ -340,22 +343,7 @@ export const evenementielGroups = [
           },
         ],
       },
-      {
-        date: '24 septembre 2026',
-        type: 'Inauguration',
-        title: 'Périscolaire Mélusine, Staffelfelden',
-        detail: 'Bâtiment de 640 m², 148 places ; ruban coupé avec les enfants.',
-        links: [
-          {
-            label: 'Dossier de presse · © m2A',
-            url: 'https://www.m2a.fr/wp-content/uploads/2026/09/DP-m2A-Inauguration-du-periscolaire-Melusine-a-Staffelfelden.pdf',
-          },
-          {
-            label: 'Article JDS',
-            url: 'https://www2.jds.fr/mulhouse/actu/inauguration-du-periscolaire-melusine-a-staffelfelden-un-nouvel-equipement-pour-les-enfants-de-l-agglomeration-1768177_A',
-          },
-        ],
-      },
+
       {
         date: '28 janvier – 8 février 2026',
         type: 'Événement',
@@ -368,97 +356,11 @@ export const evenementielGroups = [
           },
         ],
       },
-      {
-        date: '6 – 7 septembre 2025',
-        type: 'Événement',
-        title: 'Kicks Tour, festival de la culture urbaine',
-        detail: 'Motoco, Mulhouse, plus de 60 exposants.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/kicks-tour-2025-le-festival-de-la-culture-urbaine-a-mulhouse/',
-          },
-        ],
-      },
-      {
-        date: '22 juin 2025',
-        type: 'Événement',
-        title: '« Les Crapod’Esch », fête du village d’Eschentzwiller',
-        detail: 'Course de caisses à savon et animations de village.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/crapodesch-2025-une-fete-a-ne-pas-manquer/',
-          },
-        ],
-      },
-      {
-        date: '14 – 15 juin 2025',
-        type: 'Événement',
-        title: 'Festival « Groaaar ! »',
-        detail: 'BD et conservation des espèces, Parc zoologique et botanique de Mulhouse.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/soutenez-la-tortue-rayonnee-au-festival-groaaar-2025/',
-          },
-        ],
-      },
-      {
-        date: '19 novembre 2024',
-        type: 'Lancement',
-        title: 'Appli « MemoFamille »',
-        detail: 'Album photo et vidéo familial privé, développée à Mulhouse.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/memofamille-lappli-de-vos-plus-beaux-souvenirs/',
-          },
-        ],
-      },
-      {
-        date: '7 novembre 2025',
-        type: 'Inauguration',
-        title: 'Festival Décodage, émission de radio participative',
-        detail: 'Inauguration du festival, Lerchenberg, Mulhouse.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/evenement/inauguration-du-festival-decodage-emission-de-radio-participative-a-mulhouse-2025/',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 'institutionnel',
-    label: 'Institutionnel',
-    events: [
-      {
-        date: '6 septembre 2025',
-        type: 'Événement',
-        title: 'Portes Ouvertes m2A (1re édition)',
-        detail:
-          'Première ouverture au public du siège de m2A, Maison du Territoire, Sausheim : visites guidées de sites de l’agglomération et animations.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/portes-ouvertes-m2a-2025-decouvrez-lagglo-autrement/',
-          },
-        ],
-      },
-      {
-        date: '29 août 2026',
-        type: 'Événement',
-        title: 'Portes Ouvertes m2A 2026 (2e édition)',
-        detail: 'Deuxième édition des portes ouvertes de l’agglomération.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/portes-ouvertes-m2a-2026-plongez-dans-le-quotidien-de-lagglomeration/',
-          },
-        ],
-      },
+
+
+
+
+
     ],
   },
 ];
