@@ -18,6 +18,10 @@
 // et `copyright` peut etre surcharge par piece (la mention globale parle de
 // graphisme, pas de video).
 // Retiree le 11/11 : signaletique du CSRA (athlete paralympique identifiable).
+// Avis de JP dans l'espace « Avis sur les photos du CV » (15/11) : les mockups
+// de l'affiche 4x3, du mupi et des deux magazines (photo partagee) remplacent
+// les visuels plats ; supprimes a sa demande : panneau liaison cyclable
+// Bruebach, drapeau « #ADN Sport », habillage Espace VIP.
 // width / height : dimensions reelles des fichiers, pour reserver la place a l'affichage.
 
 export const credit = 'Réalisations pour Mulhouse Alsace Agglomération';
@@ -36,16 +40,16 @@ export const supports = [
 
 export const realisations = [
   {
-    src: 'assets/realisations/affichage-challenge-velo-2026-4x3.webp', width: 1600, height: 1205,
+    src: 'assets/realisations/mockup-4x3-challenge-velo.webp', width: 1824, height: 1376,
     support: 'affichage', theme: 'Mobilité',
     title: 'Affiche 4 × 3 m Challenge vélo 2026',
-    alt: 'Affiche grand format du Challenge vélo m2A : une femme tient un casque devant un vélo sur fond violet, dates du 4 mai au 5 juin 2026 et QR code d\'inscription.',
+    alt: 'Affiche du Challenge vélo m2A sur un panneau 4 × 3 m en bord de rue, au crépuscule.',
   },
   {
-    src: 'assets/realisations/affichage-mupi-challenge-velo.webp', width: 1117, height: 1600,
+    src: 'assets/realisations/mockup-mupi-challenge-velo.webp', width: 1328, height: 1904,
     support: 'affichage', theme: 'Mobilité',
     title: 'Mupi Challenge vélo m2A « Relevez le défi »',
-    alt: 'Affiche mupi verticale du Challenge vélo m2A : un homme en costume, bras croisés, pose avec son vélo ; slogan « Relevez le défi » et QR code d\'inscription.',
+    alt: 'Affiche du Challenge vélo m2A sur un mupi lumineux en trottoir, au crépuscule.',
   },
   {
     src: 'assets/realisations/affichage-toile-terre-de-tous-les-sports.webp', width: 1600, height: 1238,
@@ -61,17 +65,17 @@ export const realisations = [
     alt: 'Bâche panoramique bleu glacier pour la cryothérapie corps entier du cryocentre IMSSA et de m2A : une sportive dans le froid, les températures des séances et un QR code.',
   },
   {
-    src: 'assets/realisations/print-edition-terre-de-champions.webp', width: 992, height: 1403,
+    src: 'assets/realisations/mockup-magazines-bureau.webp', width: 1920, height: 1280,
     featured: true,
     support: 'print', theme: 'Sport',
     title: 'Couverture « m2A Terre de champions »',
-    alt: 'Couverture d\'édition « m2A Terre de champions » : silhouette d\'un sprinteur au départ, dans une lumière dorée de coucher de soleil.',
+    alt: 'Les deux magazines, Guide des mobilités employeurs et m2A Terre de champions, posés sur un bureau en bois avec une tasse de café.',
   },
   {
-    src: 'assets/realisations/print-guide-des-mobilites-employeurs.webp', width: 699, height: 992,
+    src: 'assets/realisations/mockup-magazines-bureau.webp', width: 1920, height: 1280,
     support: 'print', theme: 'Mobilité',
     title: 'Guide des mobilités employeurs 2026-2027',
-    alt: 'Couverture du Guide des mobilités employeurs 2026-2027 : un homme à vélo devant un tram, un bus et une voiture électrique, sur fond violet.',
+    alt: 'Les deux magazines, Guide des mobilités employeurs et m2A Terre de champions, posés sur un bureau en bois avec une tasse de café.',
   },
   {
     src: 'assets/realisations/print-fiche-rando-circuit-igeltal.webp', width: 1403, height: 992,
@@ -139,23 +143,11 @@ export const realisations = [
     alt: 'Panneau carré du Palais des sports présentant l\'éclairage LED financé par le Fonds vert, avec le coût du projet et la répartition entre l\'État et m2A.',
   },
   {
-    src: 'assets/realisations/signaletique-panneau-piste-cyclable-bruebach.webp', width: 472, height: 591,
-    support: 'signaletique', theme: 'Mobilité',
-    title: 'Panneau de la liaison cyclable Bruebach – hôpital Émile-Muller',
-    alt: 'Panneau de signalétique : liaison cyclable de Bruebach à l\'hôpital Émile-Muller, pictogramme voiture barrée, accès réservé aux cyclistes et aux exploitants agricoles.',
-  },
-  {
     src: 'assets/realisations/signaletique-stickage-velocite-challenge-velo.webp', width: 1600, height: 809,
     featured: true,
     support: 'signaletique', theme: 'Mobilité',
     title: 'Stickage des vélos Vélocité, Challenge vélo 2026',
     alt: 'Autocollant à découpe libre pour les vélos en libre-service Vélocité, aux couleurs du Challenge vélo m2A 2026, avec QR code d\'inscription.',
-  },
-  {
-    src: 'assets/realisations/signaletique-drapeau-adn-sport.webp', width: 1600, height: 1201,
-    support: 'signaletique', theme: 'Sport',
-    title: 'Drapeau « #ADN Sport », stade de l\'Ill',
-    alt: 'Drapeau magenta et violet associant la signature « #ADN Sport » et le logo Mulhouse Alsace Agglomération.',
   },
   {
     src: 'assets/realisations/web-instagram-covoiturage.webp', width: 1600, height: 1600,
@@ -192,12 +184,6 @@ export const realisations = [
     support: 'terrain', theme: 'Sport',
     title: 'Façade habillée du Centre sportif régional Alsace',
     alt: 'Photo de l\'entrée du Centre sportif régional Alsace : fronton et portes habillés en magenta, vitrophanie « #ADN Sport » sur la passerelle.',
-  },
-  {
-    src: 'assets/realisations/situation-espace-vip-palais-des-sports.webp', width: 1600, height: 1200,
-    support: 'terrain', theme: 'Sport',
-    title: 'Habillage de l\'Espace VIP du Palais des sports',
-    alt: 'Photo de l\'accès à l\'Espace VIP du Palais des sports, habillé de panneaux magenta « Bienvenue, Welcome, Willkommen ».',
   },
   {
     src: 'assets/realisations/situation-haut-de-porte-evenements-sportifs.webp', width: 1600, height: 1200,
