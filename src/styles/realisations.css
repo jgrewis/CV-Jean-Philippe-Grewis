@@ -128,6 +128,59 @@
   object-fit: cover;
 }
 
+/* ---------- Video : facade avec affiche, lecteur au clic ---------- */
+
+/* La facade remplit le cadre comme une image ; le lecteur la remplace au clic. */
+.realisations__video {
+  position: relative;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.realisations__video:focus-visible {
+  outline: var(--focus-ring) solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Pastille de lecture centree sur l'affiche : fond clair, triangle en encre. */
+.realisations__play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.realisations__play::before {
+  content: '▶';
+  display: grid;
+  place-items: center;
+  inline-size: 4rem;
+  block-size: 4rem;
+  padding-inline-start: 0.35rem;
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--color-ink);
+  background-color: var(--color-bg);
+  border-radius: 50%;
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 0.35);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.realisations__video:hover .realisations__play::before,
+.realisations__video:focus-visible .realisations__play::before {
+  transform: scale(1.08);
+}
+
+.realisations__player {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+
 /* ---------- Mouvement (classe posee par le JS si les animations sont permises) ---------- */
 
 /* Devoilement de bas en haut, l'image se pose en meme temps (leger zoom arriere). */

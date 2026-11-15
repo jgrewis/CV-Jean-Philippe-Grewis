@@ -13,6 +13,9 @@
 // « Voir plus de realisations ». Choix du 11/11 : supports concus par JP, sans
 // personne identifiable, un support et un theme varies. Reversible : deplacer le
 // drapeau d'une entree a l'autre.
+// Video : une entree avec `videoId` (YouTube) et `src` = affiche locale 1280 x 720 ;
+// le lecteur ne se charge qu'au clic (facade), et `copyright` peut etre surcharge
+// par piece (la mention globale parle de graphisme, pas de video).
 // Retiree le 11/11 : signaletique du CSRA (athlete paralympique identifiable).
 // width / height : dimensions reelles des fichiers, pour reserver la place a l'affichage.
 
@@ -26,6 +29,7 @@ export const supports = [
   { id: 'print', label: 'Print & édition' },
   { id: 'signaletique', label: 'Signalétique & habillage' },
   { id: 'web', label: 'Web & réseaux sociaux' },
+  { id: 'video', label: 'Vidéo' },
   { id: 'terrain', label: 'En situation' },
 ];
 
@@ -164,6 +168,15 @@ export const realisations = [
     support: 'web', theme: 'Sport',
     title: 'Post carré « Baigneurs, ouvrez l’œil », réseaux sociaux',
     alt: 'Visuel carré pour les réseaux sociaux : un grand œil dont l\'iris est une bouée rose et orange, pictogramme d\'un adulte tenant un enfant par la main, message « Un enfant dans l\'eau = un adulte attentif ».',
+  },
+  {
+    src: 'assets/realisations/video-accompagnement-performance-sportive.webp', width: 1280, height: 720,
+    videoId: 'kLwvwemTvZw',
+    featured: true,
+    support: 'video', theme: 'Sport',
+    title: 'Vidéo « Accompagnement à la performance sportive m2A »',
+    alt: 'Image de la vidéo m2A TV : Romain Debord, champion de France de cyclo-cross, en suivi de performance au Centre Sportif Régional Alsace.',
+    copyright: 'Brief et direction : J.-P. Grewis · Production : m2A TV · © m2A',
   },
   {
     src: 'assets/realisations/situation-bus-solea-plan-climat.webp', width: 1600, height: 1066,

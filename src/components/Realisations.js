@@ -34,7 +34,7 @@ import { createSectionHead } from './sections/sectionHead.js';
 const TITLE = 'Réalisations';
 const EYEBROW = 'Preuves de travail';
 const INTRO =
-  'Des supports publiés pour m2A, de l’affiche de 4 × 3 m au post pour les réseaux sociaux : j’en ai rédigé le brief et dirigé la création avec les graphistes de l’équipe.';
+  'Des supports publiés pour m2A, de l’affiche de 4 × 3 m à la vidéo : j’en ai rédigé le brief et dirigé la création avec les équipes de m2A.';
 const META_SEPARATOR = ' · ';
 const MORE_ID = 'realisations-plus';
 const MORE_LABEL = 'Voir plus de réalisations';
@@ -145,21 +145,8 @@ function createIntro() {
   });
 }
 
-function createFigure(proof, supportLabel) {
-  const meta = [supportLabel, proof.theme].filter(Boolean).join(META_SEPARATOR);
-  const caption = createEl('figcaption', {
-    className: 'realisations__caption',
-    attrs: { 'data-reveal': '' },
-    children: [
-      createEl('p', { className: 'caption realisations__meta', text: meta }),
-      createEl('p', { className: 'realisations__title', text: proof.title }),
-      copyright ? createEl('p', { className: 'caption realisations__copyright', text: copyright }) : null,
-    ],
-  });
-
-  // width / height reels : la place est reservee avant le chargement (aucun saut
-  // de mise en page) ; src relatif tel quel, resolu par rapport a la page.
-  const img = createEl('img', {
+function createVideoFacade(proof) {
+  const poster = createEl('img', {
     className: 'realisations__img',
     attrs: {
       src: proof.src,
@@ -170,7 +157,68 @@ function createFigure(proof, supportLabel) {
       decoding: 'async',
     },
   });
-  const frame = createEl('div', { className: 'realisations__frame', children: [img] });
+  const button = createEl('button', {
+    className: 'realisations__video',
+    attrs: { type: 'button', 'aria-label': `Lire la vidéo : ${proof.title}` },
+    children: [
+      poster,
+      createEl('span', { className: 'realisations__play', attrs: { 'aria-hidden': 'true' } }),
+    ],
+  });
+  // Ecouteur a usage unique : il se retire apres le clic, rien a nettoyer.
+  button.addEventListener(
+    'click',
+    () => {
+      const frame = button.closest('.realisations__frame');
+      if (!frame) return;
+      frame.replaceChildren(
+        createEl('iframe', {
+          className: 'realisations__player',
+          attrs: {
+            src: `https://www.youtube-nocookie.com/embed/${proof.videoId}?autoplay=1&rel=0`,
+            title: proof.title,
+            allow:
+              'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+            allowfullscreen: '',
+            loading: 'lazy',
+          },
+        }),
+      );
+    },
+    { once: true },
+  );
+  return button;
+}
+
+function createFigure(proof, supportLabel) {
+  const meta = [supportLabel, proof.theme].filter(Boolean).join(META_SEPARATOR);
+  const caption = createEl('figcaption', {
+    className: 'realisations__caption',
+    attrs: { 'data-reveal': '' },
+    children: [
+      createEl('p', { className: 'caption realisations__meta', text: meta }),
+      createEl('p', { className: 'realisations__title', text: proof.title }),
+      createEl('p', {
+        className: 'caption realisations__copyright',
+        text: proof.copyright ?? copyright,
+      }),
+    ],
+  });
+
+  // Video : facade avec l'affiche locale, le lecteur YouTube (nocookie) ne se
+  // charge qu'au clic, pour ne pas charger le lecteur pour chaque visiteur.
+  const media = proof.videoId ? createVideoFacade(proof) : createEl('img', {
+    className: 'realisations__img',
+    attrs: {
+      src: proof.src,
+      alt: proof.alt ?? '',
+      width: proof.width,
+      height: proof.height,
+      loading: 'lazy',
+      decoding: 'async',
+    },
+  });
+  const frame = createEl('div', { className: 'realisations__frame', children: [media] });
   // Ratio et largeur reelle pour le CSS : le cadre ne depasse ni la taille du
   // fichier (pas d'agrandissement flou) ni une hauteur d'ecran raisonnable.
   frame.style.setProperty('--ratio', (proof.width / proof.height).toFixed(RATIO_DECIMALS));
