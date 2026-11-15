@@ -246,26 +246,12 @@
   color: var(--color-ink-muted);
 }
 
-@media (min-width: 48em) and (min-aspect-ratio: 5/4) {
-  .hero__pitch {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-    align-items: center;
-    gap: var(--space-lg);
-  }
-}
+/* Accroche sous le nom : tagline puis phrase, toujours alignées à gauche,
+   en une seule colonne (mise en page du 15/11, façon landonorris). */
 
 .hero__statement {
   font-size: var(--text-lg);
   line-height: var(--leading-lead);
   max-inline-size: 52ch;
   color: var(--color-ink);
-}
-
-@media (min-width: 48em) and (min-aspect-ratio: 5/4) {
-  .hero__pitch {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-  }
-  .hero__statement {
-    justify-self: end;
-  }
 }

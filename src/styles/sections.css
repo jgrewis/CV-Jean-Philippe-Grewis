@@ -99,7 +99,9 @@
 
 @media (min-width: 56em) {
   /* Grille de 12 colonnes : visuel sur 5, texte sur 6, une colonne d'air entre
-     les deux. Le visuel alterne de cote et descend d'un cran sur deux blocs. */
+     les deux. Le visuel est toujours a gauche, le texte toujours a gauche dans
+     sa colonne : plus d'alternance ni de decalage vertical (mise en page du
+     15/11, façon landonorris). */
   .xp {
     grid-template-columns: repeat(12, minmax(0, 1fr));
     column-gap: var(--space-lg);
@@ -114,14 +116,6 @@
   }
   .xp--media-start .xp__body {
     grid-column: 7 / span 6;
-    padding-block-start: var(--space-3xl);
-  }
-  .xp--media-end .xp__figure {
-    grid-column: 8 / span 5;
-    padding-block-start: var(--space-4xl);
-  }
-  .xp--media-end .xp__body {
-    grid-column: 1 / span 6;
   }
 }
 

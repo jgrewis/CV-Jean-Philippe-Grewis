@@ -70,10 +70,10 @@
   --space-4xl: 8rem; /* 128px */
 
   /* ---------- Mise en page ---------- */
-  --content-max: 1280px;
+  --content-max: 1760px; /* quasi plein ecran (mise en page du 15/11, façon landonorris) */
   --measure: 65ch;
   --measure-narrow: 36ch; /* chapo en grand corps : le ch suit la taille du texte */
-  --gutter: clamp(var(--space-sm), 4vw, var(--space-xl));
+  --gutter: clamp(0.75rem, 1.5vw, 2rem); /* petites marges laterales */
   --section-space: clamp(var(--space-3xl), 12vw, var(--space-4xl));
   --touch-target: 44px;
   --bar-height: var(--space-2xl);

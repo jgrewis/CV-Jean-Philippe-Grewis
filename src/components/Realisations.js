@@ -1,6 +1,6 @@
 // Section #realisations : les preuves de travail (data/realisations.js), une
-// rangee par support, photos disseminees a gauche et a droite d'une grille
-// editoriale de 12 colonnes, chacune sous une micro-legende en capitales.
+// rangee par support, en grille reguliere alignee a gauche de 12 colonnes,
+// chacune sous une micro-legende en capitales.
 //
 // Contrat (pose par Page.js)
 // --------------------------
@@ -15,10 +15,9 @@
 // ------------
 //   La largeur de chaque image (en colonnes) decoule de son ratio : un panoramique
 //   s'etale, un portrait reste etroit, ce qui evite des images demesurement hautes.
-//   Deux images partagent une rangee si elles tiennent avec une colonne d'air,
-//   sinon l'image est seule, alternativement a gauche et a droite. Les positions
-//   sont calculees ici et passees au CSS en variables : sous 48em le CSS les
-//   ignore et tout passe sur une colonne.
+//   Les images se suivent de gauche a droite, une colonne d'air entre elles.
+//   Les positions sont calculees ici et passees au CSS en variables : sous 48em
+//   le CSS les ignore et tout passe sur une colonne.
 //
 // Mouvement (coupe si prefers-reduced-motion ou sans IntersectionObserver)
 // ---------
@@ -46,7 +45,6 @@ const GRID_COLUMNS = 12;
 const MIN_SPAN = 3;
 const MAX_SPAN = 10; // meme un panoramique garde de l'air sur les cotes
 const MIN_AIR_COLUMNS = 1; // ecart minimal entre deux images d'une meme rangee
-// Largeur de base selon le ratio largeur / hauteur (premier palier atteint).
 const SPAN_BY_RATIO = [
   { minRatio: 2.2, span: 10 }, // panoramique (bache 1600 x 496)
   { minRatio: 1.6, span: 7 }, // paysage allonge
@@ -58,8 +56,6 @@ const SPAN_BY_RATIO = [
 // Petit ecart d'une colonne, en cycle : deux images de meme ratio n'ont pas
 // exactement la meme largeur, la grille parait composee et non mecanique.
 const SPAN_NUDGES = [0, 1, -1, 0];
-// Retrait (en colonnes) des images seules sur leur rangee, en cycle.
-const SINGLE_INSETS = [0, 1, 2];
 
 // ---------- Mouvement ----------
 
@@ -89,42 +85,26 @@ function spanFor(ratio, index) {
 }
 
 /**
- * Place les preuves d'un support sur la grille de 12 colonnes.
- * @returns {{ row: number, colStart: number, span: number, end: boolean, drop: boolean }[]}
+ * Place les preuves d'un support sur la grille de 12 colonnes, en flux
+ * régulier aligné à gauche (mise en page du 15/11, façon landonorris) : les
+ * images se suivent de gauche à droite, une colonne d'air entre elles, et
+ * passent à la rangée suivante quand elles ne tiennent plus.
+ * @returns {{ row: number, colStart: number, span: number }[]}
  *   une position par preuve, dans l'ordre des donnees (= ordre de lecture).
  */
 function layoutGroup(items) {
   const spans = items.map((item, index) => spanFor(item.width / item.height, index));
   const places = [];
   let row = 1;
-  let singles = 0;
-  let index = 0;
-
-  while (index < spans.length) {
-    const spanA = spans[index];
-    const spanB = spans[index + 1];
-    const isPair = spanB !== undefined && spanA + spanB + MIN_AIR_COLUMNS <= GRID_COLUMNS;
-    const even = row % 2 === 0;
-
-    if (isPair) {
-      // L'eventuelle colonne libre en trop passe a l'exterieur d'une des deux
-      // images (a tour de role) ; l'autre image de la rangee descend d'un cran.
-      const outer = GRID_COLUMNS - spanA - spanB >= MIN_AIR_COLUMNS + 1 ? 1 : 0;
-      places.push(
-        { row, colStart: 1 + (even ? outer : 0), span: spanA, end: false, drop: !even },
-        { row, colStart: GRID_COLUMNS + 1 - spanB - (even ? 0 : outer), span: spanB, end: true, drop: even },
-      );
-      index += 2;
-    } else {
-      const end = singles % 2 === 1;
-      const inset = Math.min(SINGLE_INSETS[singles % SINGLE_INSETS.length], GRID_COLUMNS - spanA);
-      const colStart = end ? GRID_COLUMNS + 1 - spanA - inset : 1 + inset;
-      places.push({ row, colStart, span: spanA, end, drop: false });
-      singles += 1;
-      index += 1;
+  let col = 1;
+  spans.forEach((span) => {
+    if (col + span - 1 > GRID_COLUMNS) {
+      row += 1;
+      col = 1;
     }
-    row += 1;
-  }
+    places.push({ row, colStart: col, span });
+    col += span + MIN_AIR_COLUMNS;
+  });
   return places;
 }
 
@@ -236,11 +216,8 @@ function createFigure(proof, supportLabel) {
 
 function createItem(proof, place, supportLabel) {
   const { figure, frame } = createFigure(proof, supportLabel);
-  const modifiers = [place.end ? 'realisations__item--end' : '', place.drop ? 'realisations__item--drop' : '']
-    .filter(Boolean)
-    .join(' ');
   const item = createEl('li', {
-    className: modifiers ? `realisations__item ${modifiers}` : 'realisations__item',
+    className: 'realisations__item',
     children: [figure],
   });
   item.style.setProperty('--row', String(place.row));

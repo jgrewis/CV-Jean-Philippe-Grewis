@@ -153,7 +153,7 @@ function createLinks(links, label = LINKS_LABEL) {
   });
 }
 
-function createExperience(leaf, index) {
+function createExperience(leaf) {
   const body = createEl('div', {
     className: 'xp__body',
     attrs: { 'data-reveal': '', 'data-reveal-delay': 1 },
@@ -170,11 +170,10 @@ function createExperience(leaf, index) {
     ],
   });
 
-  // Alternance gauche / droite portee par une classe : le CSS n'a pas a
-  // connaitre la position de l'element dans la liste.
-  const side = index % 2 === 0 ? 'xp--media-start' : 'xp--media-end';
+  // Visuel toujours a gauche, texte toujours a gauche dans sa colonne : plus
+  // d'alternance (mise en page du 15/11, façon landonorris).
   const article = createEl('article', {
-    className: `xp ${side}`,
+    className: 'xp xp--media-start',
     children: [createFigure(leaf), body],
   });
   if (leaf.theme?.accentColor) article.style.setProperty('--xp-accent', leaf.theme.accentColor);
@@ -187,7 +186,7 @@ export function mountParcours(section) {
   const leaves = branch?.leaves ?? [];
 
   const list = createEl('ol', { className: 'parcours__list' });
-  leaves.forEach((leaf, index) => list.append(createExperience(leaf, index)));
+  leaves.forEach((leaf) => list.append(createExperience(leaf)));
 
   const wrap = createEl('div', { className: 'wrap parcours__wrap' });
   wrap.append(createSectionHead(section, { eyebrow: EYEBROW, title: branch?.label ?? EYEBROW }), list);
