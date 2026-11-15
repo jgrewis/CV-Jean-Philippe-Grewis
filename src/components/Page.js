@@ -23,12 +23,21 @@ const MAIN_ID = 'contenu'; // cible du lien d'evitement (index.html)
 // Ordre de la page (reconstruction du 15/11 : chaque chose dite une seule
 // fois). tone : teinte du fond quand la section traverse le milieu de l'ecran ;
 // l'alternance donne le rythme "fond qui change".
+// Le recit m2A est groupe en tete : experience m2A, etude de cas Challenge
+// Velo, puis les visuels m2A (Realisations). Les autres experiences ne
+// viennent qu'apres, en seconde section Parcours.
 const SECTIONS = [
   { id: 'hero', tone: 'base', mount: mountHero },
-  { id: 'parcours', tone: 'alt', mount: mountParcours },
+  { id: 'parcours', tone: 'alt', mount: (element) => mountParcours(element, { ids: ['m2a'] }) },
   { id: 'etude-de-cas', tone: 'base', mount: mountEtudeDeCas },
   { id: 'realisations', tone: 'alt', mount: mountRealisations },
-  { id: 'competences', tone: 'base', mount: mountCompetences },
+  {
+    id: 'parcours-suite',
+    tone: 'base',
+    mount: (element) =>
+      mountParcours(element, { except: ['m2a'], eyebrow: 'Parcours · suite', title: 'Autres expériences' }),
+  },
+  { id: 'competences', tone: 'alt', mount: mountCompetences },
 ];
 
 function createBackdrop() {

@@ -177,15 +177,19 @@ function createExperience(leaf) {
   return createEl('li', { className: 'parcours__item', children: [article] });
 }
 
-export function mountParcours(section) {
+export function mountParcours(section, { ids, except, eyebrow = EYEBROW, title } = {}) {
   section.classList.add('section', 'parcours');
   const branch = getBranch(BRANCH_ID);
-  const leaves = branch?.leaves ?? [];
+  let leaves = branch?.leaves ?? [];
+  // Decoupage (15/11) : m2A se monte seul en tete de page, les autres
+  // experiences forment une seconde section apres les visuels m2A.
+  if (ids) leaves = leaves.filter((leaf) => ids.includes(leaf.id));
+  if (except) leaves = leaves.filter((leaf) => !except.includes(leaf.id));
 
   const list = createEl('ol', { className: 'parcours__list' });
   leaves.forEach((leaf) => list.append(createExperience(leaf)));
 
   const wrap = createEl('div', { className: 'wrap parcours__wrap' });
-  wrap.append(createSectionHead(section, { eyebrow: EYEBROW, title: branch?.label ?? EYEBROW }), list);
+  wrap.append(createSectionHead(section, { eyebrow, title: title ?? branch?.label ?? EYEBROW }), list);
   section.replaceChildren(wrap);
 }
