@@ -68,7 +68,7 @@ export const branches = [
           accentColor: '#d92e84',
         },
         summary:
-          "Communication des opérations Sport, Mobilité et Enfance : 24 inaugurations, événements et lancements conduits entre octobre 2024 et octobre 2026.",
+          "Communication des opérations Sport, Mobilité et Enfance : 18 inaugurations, événements et lancements conduits entre octobre 2024 et octobre 2026.",
         // Resultats contextualises (remplacent la grille de chiffres, 11/11) : chaque
         // chiffre dit de quoi il parle et pourquoi c'est une retombee de la com.
         // Source : communiques de presse officiels de m2A (liens ci-dessous).

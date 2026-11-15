@@ -11,7 +11,9 @@
 // de l'Ill, « Horizon Afrique ») et, à sa demande le 15/11/2026, les Portes
 // Ouvertes m2A 2025 et 2026, le festival Décodage, l'appli MemoFamille, les
 // festivals Groaaar, Crapod'Esch et Kicks Tour, et le périscolaire Mélusine
-// (pas de lui).
+// (pas de lui) ; puis, toujours à sa demande le 15/11/2026, les bornes de
+// recharge de Riedisheim, « m2A Mobilités », les 20 ans du tram, le réseau
+// Soléa gratuit de l'été 2026 et les matchs de gala MBA et ASPTT.
 // Images : quand une photo conforme existe (lieu ou équipement, aucune personne
 // identifiable), l'entrée porte `img` (chemin local) et `alt` ; sinon elle reste
 // en texte seul.
@@ -138,37 +140,11 @@ export const evenementielGroups = [
         ],
       },
       {
-        date: 'Mars 2025',
-        type: 'Lancement',
-        title: 'Six bornes de recharge pour véhicules électriques à Riedisheim',
-        detail:
-          'Mise en service des 3 premières bornes, dans un déploiement de 338 points de recharge sur l’agglomération.',
-        links: [
-          {
-            label: 'Communiqué · © m2A',
-            url: 'https://www.m2a.fr/wp-content/uploads/2025/04/CP-m2A-m2A-deploie-six-bornes-de-recharge-pour-vehicules-electriques-a-Riedisheim.pdf',
-          },
-        ],
-      },
-      {
-        date: 'Rentrée 2026',
-        type: 'Lancement',
-        title: '« m2A Mobilités », plateforme numérique des déplacements',
-    img: 'assets/evenementiel/m2a-mobilites.webp',
-    alt: 'Tramway jaune Soléa en circulation dans le centre de Mulhouse.',
-        detail:
-          'Plateforme des déplacements et paiement sans contact sur toutes les lignes bus, tramway et tram-train.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/mobilites-m2a-innove-et-facilite-tous-vos-deplacements/',
-          },
-        ],
-      },
-      {
         date: '12 mars 2026',
         type: 'Lancement',
         title: 'Covoiturage « BlaBlaCar Daily » soutenu par m2A',
+    img: 'assets/evenementiel/covoiturage-blablacar-daily.webp',
+    alt: 'Smartphone affichant l’application BlaBlaCar Daily, covoitureurs favoris et planning des trajets.',
         detail: 'Lancement du covoiturage du quotidien sur l’agglomération.',
         links: [
           {
@@ -197,35 +173,6 @@ export const evenementielGroups = [
     id: 'solea',
     label: 'Soléa',
     events: [
-      {
-        date: '12 septembre 2026',
-        type: 'Événement',
-        title: '20 ans du tram de Mulhouse',
-    img: 'assets/evenementiel/20-ans-tram.webp',
-    alt: 'Rame de tramway Soléa habillée aux couleurs des 20 ans du tram, avec l’inscription "20 ans du tram" sur la vitre.',
-        detail:
-          'Fête d’anniversaire, Square de la Bourse : bus vintage, musiciens, jeux en famille, exposition photos.',
-        links: [
-          {
-            label: 'Post Facebook m2A',
-            url: 'https://www.facebook.com/Mulhouse.Alsace.Agglomeration/posts/pfbid0jdHppkv54iBN1aqtLDc5SxP3PUrGMNpdSbNXDvdGS9FzKTc3TrLhTY1mVWbe1bvsl',
-          },
-        ],
-      },
-      {
-        date: '4 juillet – 26 septembre 2026',
-        type: 'Opération',
-        title: 'Réseau Soléa gratuit tous les samedis de l’été',
-    img: 'assets/evenementiel/solea-gratuit-ete-2026.webp',
-    alt: 'Rame de tramway Soléa aux couleurs de l’offre d’été, avec l’inscription "Tous les samedis de l’été gratuits".',
-        detail: 'Bus, tram, transport à la demande et parkings-relais offerts chaque samedi.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/profitez-gratuitement-du-reseau-solea-tous-les-samedis-ete-2026/',
-          },
-        ],
-      },
       {
         date: 'Septembre 2025 et septembre 2026',
         type: 'Opération',
@@ -303,31 +250,6 @@ export const evenementielGroups = [
           {
             label: 'Article m2A le mag',
             url: 'https://mag.mulhouse-alsace.fr/pack-sport-clubs-m2a/',
-          },
-        ],
-      },
-      {
-        date: '30 mars 2025',
-        type: 'Événement',
-        title: 'Match de gala ASPTT Mulhouse Rixheim (« Les Loups »)',
-        detail: 'Retour du handball au Palais des Sports, face à Tremblay.',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/les-loups-de-lasptt-mulhouse-rixheim-au-palais-des-sports/',
-          },
-        ],
-      },
-      {
-        date: '13 décembre 2024',
-        type: 'Événement',
-        title: 'Match de gala MBA vs Le Havre',
-        detail:
-          '100e anniversaire du 1er titre de champion du Mulhouse Basket Agglomération, Palais des Sports « Gilbert Buttazzoni ».',
-        links: [
-          {
-            label: 'Article m2A le mag',
-            url: 'https://mag.mulhouse-alsace.fr/match-gala-mulhouse-basket-agglomeration-palais-des-sports-mulhouse/',
           },
         ],
       },
