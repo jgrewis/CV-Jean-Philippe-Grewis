@@ -26,6 +26,25 @@
   --color-topo: rgba(20, 20, 20, 0.08); /* lignes de fond : topographie de la page et traces de l'intro */
   --color-line-on-ink: rgba(237, 235, 230, 0.18);
 
+  /* Halos du fond (page.css, .backdrop__orb) : voiles derives de l'accent et du fond.
+     Halo accent = accent eclairci au blanc (1/6 d'accent, 5/6 de blanc), pose a
+     60 % : au coeur, 10 % d'accent + 50 % de blanc sur le fond. Le blanc compense
+     l'assombrissement : un accent pur ne tient AA qu'en dessous de ~9 % cumules
+     sur le fond de base (10 % pur -> 4.45:1), deux halos superposes echoueraient.
+     Contraste WCAG (composition sRGB), coeur du halo et pire cas = deux halos
+     accent superposes a leur coeur (60 % + 60 % -> 84 %) :
+       fond, 1 halo   (231,228,244) : accent 4.89:1, encre douce 5.74:1
+       fond, 2 halos  (229,225,250) : accent 4.79:1, encre douce 5.63:1
+       alt,  2 halos sans attenuation (228,223,247) : accent 4.73:1, encre douce 5.56:1
+     La couleur du halo (luminance 0.762) est plus claire que le fond alt (0.746) :
+     sur alt elle ne peut qu'eclaircir, les contrastes restent >= 4.64:1 / 5.45:1.
+     L'attenuation sur alt est donc un choix de rendu (le halo clair y prend le
+     relais), pas une contrainte de contraste.
+     Le halo clair ne fait qu'eclaircir : il ne peut qu'augmenter les contrastes. */
+  --color-halo-accent: rgba(228, 223, 253, 0.6); /* accent 1/6 + blanc 5/6 a 60 % : 10 % d'accent au coeur */
+  --color-halo-light: rgba(237, 235, 230, 0.85); /* --color-bg : visible sur la teinte alt seulement */
+  --halo-alt-dim: 0.2; /* attenuation des halos accent quand la teinte alt est posee */
+
   /* ---------- Typographie ---------- */
   --font-sans: 'Inter Tight Variable', 'Inter Tight', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --font-serif: 'Instrument Serif', 'Times New Roman', Georgia, serif;
@@ -92,9 +111,15 @@
   --dur-reveal: 900ms;
   --reveal-distance: var(--space-lg);
   --reveal-stagger: 90ms;
+  /* Derive des halos de fond : tres lente, periodes premieres entre elles pour que
+     les trois mouvements ne se recalent jamais (aucune boucle perceptible). */
+  --dur-drift-a: 67s;
+  --dur-drift-b: 83s;
+  --dur-drift-c: 101s;
+  --halo-scroll-shift: -14vh; /* parallaxe du champ de halos sur toute la page */
 
   /* ---------- Plans (z-index) ---------- */
-  --z-backdrop: 0; /* teinte et lignes topographiques de fond */
+  --z-backdrop: 0; /* teinte, halos et lignes topographiques de fond */
   --z-content: 1;
   --z-bar: 20;
   --z-intro: 30; /* calque d'intro : au-dessus de tout, retire du DOM a la fin */

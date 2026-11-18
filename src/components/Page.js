@@ -1,4 +1,4 @@
-// Monte la page qui defile dans #app : calque de fond (teinte + lignes
+// Monte la page qui defile dans #app : calque de fond (teinte, halos et lignes
 // topographiques), barre fixe, <main> et ses sections, pied de page Contact.
 //
 // Chaque section est creee VIDE ici (id, data-tone), inseree dans le DOM, puis
@@ -40,11 +40,25 @@ const SECTIONS = [
   { id: 'competences', tone: 'alt', mount: mountCompetences },
 ];
 
+// Halos du fond : trois voiles organiques tres diffus (deux d'accent, un clair)
+// qui derivent lentement entre la teinte et les lignes topographiques. Tout le
+// mouvement est en CSS (page.css) : transform seulement, aucun script par image.
+const HALO_VARIANTS = ['accent-a', 'accent-b', 'light'];
+
+function createHalos() {
+  return createEl('div', {
+    className: 'backdrop__halos',
+    children: HALO_VARIANTS.map((variant) =>
+      createEl('div', { className: `backdrop__orb backdrop__orb--${variant}` }),
+    ),
+  });
+}
+
 function createBackdrop() {
   return createEl('div', {
     className: 'backdrop',
     attrs: { 'aria-hidden': 'true' },
-    children: [createEl('div', { className: 'backdrop__tone' }), createTopoSvg('backdrop__topo')],
+    children: [createEl('div', { className: 'backdrop__tone' }), createHalos(), createTopoSvg('backdrop__topo')],
   });
 }
 

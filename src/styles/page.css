@@ -2,12 +2,16 @@
    sections et motifs typographiques partages (micro-legendes, mots-cles,
    etiquettes, puces), apparition au defilement. */
 
-/* ---------- Calque de fond : teinte + lignes topographiques ---------- */
+/* ---------- Calque de fond : teinte + halos + lignes topographiques ---------- */
 
+/* overflow + contain : les halos, plus grands que l'ecran, ne debordent jamais
+   (aucun defilement horizontal) et leurs repeints restent confines au calque. */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: var(--z-backdrop);
+  overflow: hidden;
+  contain: layout paint;
   pointer-events: none;
 }
 
@@ -28,6 +32,110 @@
    fond clair, c'est ce leger ecart de teinte qui dessine le trait puis l'octogone
    qui s'ouvre (le calque et la page auraient sinon exactement la meme couleur).
    La teinte revient au fond de base en fondu des que l'intro se termine. */
+
+/* Halos : voiles organiques tres diffus, entre la teinte et les lignes. Chaque
+   orbe est un degrade radial (bord naturellement flou : aucun filtre blur) que
+   l'on fait seulement deriver, tourner et respirer en transform, sur son propre
+   calque compose. Ellipses tournantes de tailles inegales : la superposition
+   change de forme en permanence, sans jamais rien qui clignote. */
+.backdrop__halos {
+  position: absolute;
+  inset: 0;
+}
+
+.backdrop__orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+  animation: var(--orb-drift) var(--orb-dur) var(--ease-in-out) infinite alternate;
+  transition: opacity var(--dur-slow) var(--ease-in-out);
+}
+
+/* Accent, grand, en haut a gauche : derive vers le centre. */
+.backdrop__orb--accent-a {
+  --orb-drift: halo-drift-a;
+  --orb-dur: var(--dur-drift-a);
+  inset-block-start: -28vmax;
+  inset-inline-start: -22vmax;
+  inline-size: 78vmax;
+  block-size: 62vmax;
+  background-image: radial-gradient(closest-side, var(--color-halo-accent), transparent);
+}
+
+/* Accent, plus petit, en bas a droite : remonte en sens inverse. */
+.backdrop__orb--accent-b {
+  --orb-drift: halo-drift-b;
+  --orb-dur: var(--dur-drift-b);
+  inset-block-end: -24vmax;
+  inset-inline-end: -18vmax;
+  inline-size: 64vmax;
+  block-size: 52vmax;
+  background-image: radial-gradient(closest-side, var(--color-halo-accent), transparent);
+}
+
+/* Clair : invisible sur le fond de base (meme couleur), il donne du relief a la
+   teinte alt en l'eclaircissant par endroits, comme une lumiere qui passe. */
+.backdrop__orb--light {
+  --orb-drift: halo-drift-c;
+  --orb-dur: var(--dur-drift-c);
+  inset-block-start: 18vh;
+  inset-inline-start: 30vw;
+  inline-size: 70vmax;
+  block-size: 56vmax;
+  background-image: radial-gradient(closest-side, var(--color-halo-light), transparent);
+}
+
+/* Sur la teinte alt, les halos accent s'effacent presque (choix de rendu : le
+   halo clair y prend le relais). Fondu a la meme vitesse que la teinte. */
+:root[data-tone='alt'] .backdrop__orb--accent-a,
+:root[data-tone='alt'] .backdrop__orb--accent-b,
+:root.is-intro-playing .backdrop__orb--accent-a,
+:root.is-intro-playing .backdrop__orb--accent-b {
+  opacity: var(--halo-alt-dim);
+}
+
+/* Etat de depart = transform nul (pose statique ci-dessus) : en mouvement reduit
+   ou a l'impression, c'est cette premiere image qui reste figee. */
+@keyframes halo-drift-a {
+  to {
+    transform: translate3d(24vw, 18vh, 0) rotate(28deg) scale(1.12);
+  }
+}
+@keyframes halo-drift-b {
+  to {
+    transform: translate3d(-20vw, -22vh, 0) rotate(-22deg) scale(0.9);
+  }
+}
+@keyframes halo-drift-c {
+  to {
+    transform: translate3d(-26vw, 24vh, 0) rotate(36deg) scale(1.18);
+  }
+}
+
+/* Profondeur au defilement : le champ de halos remonte un peu moins vite que la
+   page (parallaxe), pilote par le defilement lui-meme, sans script. Navigateurs
+   sans animations liees au defilement : halos simplement fixes. */
+@supports (animation-timeline: scroll()) {
+  .backdrop__halos {
+    animation: halo-scroll linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes halo-scroll {
+  to {
+    transform: translate3d(0, var(--halo-scroll-shift), 0);
+  }
+}
+
+/* Mouvement reduit : aucune animation, ni derive ni parallaxe (premiere image
+   figee). La media query est reevaluee en direct par le navigateur. */
+@media (prefers-reduced-motion: reduce) {
+  .backdrop__halos,
+  .backdrop__orb {
+    animation: none;
+    will-change: auto;
+  }
+}
 
 .backdrop__topo {
   position: absolute;
@@ -280,5 +388,52 @@
   }
   .bar__pdf-short {
     display: none;
+  }
+}
+
+/* ---------- Impression ---------- */
+
+/* Minimum pour une impression propre : fond uni, aucun decor ni mouvement, tout
+   le contenu visible (meme ce qui n'est pas encore apparu a l'ecran), barre qui
+   ne se repete pas sur chaque page. La mise en page reste celle de l'ecran.
+   Prefixe html : realisations.css est charge apres ce fichier, a specificite
+   egale ses regles l'emporteraient. */
+@media print {
+  .backdrop,
+  .intro {
+    display: none;
+  }
+
+  html.is-intro-playing {
+    overflow: visible;
+  }
+
+  body {
+    background-color: var(--color-bg);
+  }
+
+  .bar {
+    position: absolute;
+  }
+
+  /* !important legitime : l'impression doit l'emporter sur toute animation
+     declaree ailleurs, quelle que soit sa specificite. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html.has-reveal [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  html .realisations--motion .realisations__frame {
+    clip-path: none;
+  }
+  html .realisations--motion .realisations__img {
+    filter: none;
+    transform: none;
   }
 }
