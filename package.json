@@ -6,6 +6,7 @@
   "description": "CV web de Jean-Philippe Grewis — page éditoriale claire qui défile",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm i --no-save --no-audit --no-fund playwright-core@1 && node scripts/generer-pdf-og.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },
