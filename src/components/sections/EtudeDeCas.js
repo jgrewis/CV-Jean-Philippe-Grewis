@@ -60,6 +60,15 @@ export function mountEtudeDeCas(section) {
       className: 'etude__case',
       attrs: { 'data-reveal': '' },
       children: [
+        cs.highlight
+          ? createEl('p', {
+              className: 'etude__highlight',
+              children: [
+                createEl('span', { className: 'etude__highlight-value', text: cs.highlight.value }),
+                createEl('span', { className: 'etude__highlight-label', text: cs.highlight.label }),
+              ],
+            })
+          : null,
         createEl('ol', {
           className: 'etude__case-blocks',
           children: cs.blocks.map((block) =>

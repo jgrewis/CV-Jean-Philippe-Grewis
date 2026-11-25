@@ -78,7 +78,8 @@
      et elargissait la page a 320 px. La cesure reste un filet de securite.
      Titres monumentaux (mise en page du 15/11, façon landonorris) : jusqu'a
      8rem sur grand ecran. */
-  font-size: min(clamp(2.75rem, 1rem + 6.5vw, 8rem), 11vw);
+  /* Lot 1 (25/11/2026) : taille divisee par deux, le contenu passe devant. */
+  font-size: min(clamp(2rem, 0.9rem + 3.4vw, 4.25rem), 11vw);
   hyphens: auto;
   font-weight: var(--weight-black);
   line-height: var(--leading-display);
@@ -280,5 +281,20 @@
   }
   .bar__pdf-short {
     display: none;
+  }
+}
+
+/* ---------- Ancres de navigation (lot 1) ---------- */
+
+.bar__anchor {
+  display: none;
+}
+.bar__anchor[aria-current='true'] {
+  border-color: var(--color-ink);
+  background-color: var(--color-bg);
+}
+@media (min-width: 64em) {
+  .bar__anchor {
+    display: inline-flex;
   }
 }

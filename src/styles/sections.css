@@ -459,6 +459,35 @@
   outline-color: var(--color-accent-on-ink);
 }
 
+.etude__highlight {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2xs) var(--space-sm);
+}
+.etude__highlight-value {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-black);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-accent-on-ink);
+}
+.etude__highlight-label {
+  font-size: var(--text-lg);
+  line-height: var(--leading-heading);
+}
+
+/* Liens vers les communiques : pastilles visibles (lot 1). */
+.etude__links .xp__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--touch-target);
+  padding-inline: var(--space-sm);
+  border: var(--border-thin) solid var(--color-line-on-ink);
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+}
+
 .etude__case-blocks {
   display: grid;
   gap: var(--space-md);

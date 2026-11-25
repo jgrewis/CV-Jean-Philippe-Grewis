@@ -42,21 +42,11 @@ const LESS_LABEL = 'Masquer les réalisations supplémentaires';
 // ---------- Grille ----------
 
 const GRID_COLUMNS = 12;
-const MIN_SPAN = 3;
-const MAX_SPAN = 10; // meme un panoramique garde de l'air sur les cotes
-const MIN_AIR_COLUMNS = 1; // ecart minimal entre deux images d'une meme rangee
-const SPAN_BY_RATIO = [
-  { minRatio: 2.2, span: 10 }, // panoramique (bache 1600 x 496)
-  { minRatio: 1.6, span: 7 }, // paysage allonge
-  { minRatio: 1.15, span: 6 }, // paysage
-  { minRatio: 0.85, span: 5 }, // carre
-  { minRatio: 0.6, span: 4 }, // portrait
-  { minRatio: 0, span: 3 }, // tres haut (drapeaux, kakemonos)
-];
-// Petit ecart d'une colonne, en cycle : deux images de meme ratio n'ont pas
-// exactement la meme largeur, la grille parait composee et non mecanique.
-const SPAN_NUDGES = [0, 1, -1, 0];
-
+// Grille reguliere (lot 1, 25/11/2026) : trois preuves par rangee, une
+// panoramique sur toute la largeur. Plus de demi-ecrans vides.
+const COLUMN_SPAN = 4;
+const PANORAMIC_RATIO = 2.2;
+const PANORAMIC_SPAN = 12;
 // ---------- Mouvement ----------
 
 // Facteur de profondeur par preuve, en cycle : negatif = l'image passe devant
@@ -78,32 +68,28 @@ const RATIO_DECIMALS = 4;
 
 // ---------- Mise en page (calcul pur) ----------
 
-function spanFor(ratio, index) {
-  const tier = SPAN_BY_RATIO.find(({ minRatio }) => ratio >= minRatio) ?? SPAN_BY_RATIO.at(-1);
-  const nudged = tier.span + SPAN_NUDGES[index % SPAN_NUDGES.length];
-  return Math.min(MAX_SPAN, Math.max(MIN_SPAN, nudged));
+function spanFor(ratio) {
+  return ratio >= PANORAMIC_RATIO ? PANORAMIC_SPAN : COLUMN_SPAN;
 }
 
 /**
- * Place les preuves d'un support sur la grille de 12 colonnes, en flux
- * régulier aligné à gauche (mise en page du 15/11, façon landonorris) : les
- * images se suivent de gauche à droite, une colonne d'air entre elles, et
- * passent à la rangée suivante quand elles ne tiennent plus.
+ * Place les preuves d'un support sur la grille de 12 colonnes : trois par
+ * rangee, de gauche a droite ; une panoramique prend la rangee entiere.
  * @returns {{ row: number, colStart: number, span: number }[]}
  *   une position par preuve, dans l'ordre des donnees (= ordre de lecture).
  */
 function layoutGroup(items) {
-  const spans = items.map((item, index) => spanFor(item.width / item.height, index));
   const places = [];
   let row = 1;
   let col = 1;
-  spans.forEach((span) => {
+  items.forEach((item) => {
+    const span = spanFor(item.width / item.height);
     if (col + span - 1 > GRID_COLUMNS) {
       row += 1;
       col = 1;
     }
     places.push({ row, colStart: col, span });
-    col += span + MIN_AIR_COLUMNS;
+    col += span;
   });
   return places;
 }
@@ -171,7 +157,7 @@ function createVideoFacade(proof) {
 }
 
 function createFigure(proof, supportLabel) {
-  const meta = [supportLabel, proof.theme].filter(Boolean).join(META_SEPARATOR);
+  const meta = [supportLabel, proof.theme, proof.date].filter(Boolean).join(META_SEPARATOR);
   // Le crédit commun n'est plus répété sous chaque pièce : il est dans l'intro
   // de la section. Seule la vidéo porte son propre crédit (production, pas
   // graphisme) : il s'affiche sous sa légende.
@@ -179,6 +165,19 @@ function createFigure(proof, supportLabel) {
     createEl('p', { className: 'caption realisations__meta', text: meta }),
     createEl('p', { className: 'realisations__title', text: proof.title }),
   ];
+  // Legende structuree (lot 1) : contexte en une phrase, puis role reel de JP,
+  // seulement quand il a ete confirme (data/realisations.js).
+  if (proof.context) {
+    captionChildren.push(createEl('p', { className: 'realisations__context', text: proof.context }));
+  }
+  if (proof.role) {
+    captionChildren.push(
+      createEl('p', {
+        className: 'realisations__role',
+        children: [createEl('span', { className: 'realisations__role-label', text: 'Mon rôle : ' }), document.createTextNode(proof.role)],
+      }),
+    );
+  }
   if (proof.copyright) {
     captionChildren.push(
       createEl('p', { className: 'caption realisations__copyright', text: proof.copyright }),
