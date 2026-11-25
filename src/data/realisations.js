@@ -19,6 +19,9 @@
 // `copyright` peut etre surcharge par piece (la mention globale parle de
 // graphisme, pas de video).
 // Retiree le 11/11 : signaletique du CSRA (athlete paralympique identifiable).
+// Retirees le 25/11 (lot 0) : toile « Terre de tous les sports » (pas de JP),
+// panneau de chantier du stade de l'Ill et panneau transition energetique
+// (juges sans interet par JP). Mockups legendes « mise en situation ».
 // Avis de JP dans l'espace « Avis sur les photos du CV » (15/11) : les mockups
 // de l'affiche 4x3, du mupi et des deux magazines (photo partagee) remplacent
 // les visuels plats ; supprimes a sa demande : panneau liaison cyclable
@@ -44,22 +47,15 @@ export const realisations = [
     src: 'assets/realisations/mockup-4x3-challenge-velo.webp', width: 1824, height: 1376,
     featured: true,
     support: 'affichage', theme: 'Mobilité',
-    title: 'Affiche 4 × 3 m Challenge vélo 2026',
+    title: 'Affiche 4 × 3 m Challenge vélo 2026 (mise en situation)',
     alt: 'Affiche du Challenge vélo m2A sur un panneau 4 × 3 m en bord de rue, au crépuscule.',
   },
   {
     src: 'assets/realisations/mockup-mupi-challenge-velo.webp', width: 1328, height: 1904,
     featured: true,
     support: 'affichage', theme: 'Mobilité',
-    title: 'Mupi Challenge vélo m2A « Relevez le défi »',
+    title: 'Mupi Challenge vélo m2A 2025 « Relevez le défi » (mise en situation)',
     alt: 'Affiche du Challenge vélo m2A sur un mupi lumineux en trottoir, au crépuscule.',
-  },
-  {
-    src: 'assets/realisations/affichage-toile-terre-de-tous-les-sports.webp', width: 1600, height: 1238,
-    featured: true,
-    support: 'affichage', theme: 'Sport',
-    title: 'Toile tendue « Terre de tous les sports », Palais des sports',
-    alt: 'Toile tendue magenta et violette aux motifs de pistes concentriques, avec le slogan « Terre de tous les sports » et le logo Mulhouse Alsace Agglomération.',
   },
   {
     src: 'assets/realisations/affichage-bache-cryotherapie.webp', width: 1600, height: 496,
@@ -131,19 +127,6 @@ export const realisations = [
     support: 'signaletique', theme: 'Sport',
     title: 'Panneau de réglementation de la baignade, plan d\'eau de Reiningue',
     alt: 'Panneau d\'information du plan d\'eau de Reiningue : code couleur des drapeaux de baignade, plan illustré des zones et horaires de surveillance de 11 h à 19 h.',
-  },
-  {
-    src: 'assets/realisations/signaletique-panneau-chantier-stade-de-l-ill.webp', width: 689, height: 984,
-    support: 'signaletique', theme: 'Sport',
-    title: 'Panneau de chantier « m2A investit pour le sport de demain »',
-    alt: 'Panneau de chantier pour la réfection du terrain synthétique du stade de l\'Ill à Mulhouse : maître d\'ouvrage, entreprises, budget et calendrier.',
-  },
-  {
-    src: 'assets/realisations/signaletique-panneau-transition-energetique.webp', width: 1600, height: 1600,
-    featured: true,
-    support: 'signaletique', theme: 'Territoire',
-    title: 'Panneau « m2A s\'engage pour la transition énergétique »',
-    alt: 'Panneau carré du Palais des sports présentant l\'éclairage LED financé par le Fonds vert, avec le coût du projet et la répartition entre l\'État et m2A.',
   },
   {
     src: 'assets/realisations/signaletique-stickage-velocite-challenge-velo.webp', width: 1600, height: 809,

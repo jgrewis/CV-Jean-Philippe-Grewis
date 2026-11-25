@@ -2,19 +2,21 @@
 // (1200 x 630, theme clair) a partir de src/data/cv.js et src/data/hero.js : le PDF
 // reprend donc exactement le contenu (et les interdits) du site.
 //
-// Usage : node scripts/generer-pdf-og.mjs
-// Prerequis : Playwright + Chromium (hors dependances du site), par exemple
-//   npm i -g playwright && npx playwright install chromium
-// ou PLAYWRIGHT_MODULE=/chemin/vers/playwright et CHROME_PATH=/chemin/vers/chrome.
+// Usage : node scripts/generer-pdf-og.mjs (lance automatiquement avant chaque
+// `npm run build`, donc a chaque deploiement : le PDF ne peut plus diverger du site).
+// Prerequis : playwright-core (installe par le script prebuild) et Google Chrome,
+// trouve automatiquement (GitHub Actions, Mac, Linux) ou via CHROME_PATH.
+// Sans navigateur, le script s'arrete en avertissant, sauf en integration
+// continue (CI) ou il echoue pour ne jamais deployer un PDF perime.
 import { createRequire } from 'node:module';
-import { writeFileSync, mkdtempSync } from 'node:fs';
+import { writeFileSync, mkdtempSync, existsSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execSync } from 'node:child_process';
 import { profile, contact, branches } from '../src/data/cv.js';
 import { pitch } from '../src/data/hero.js';
-import { methode } from '../src/data/methode.js';
+import { etudeDeCas } from '../src/data/etude-de-cas.js';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PUBLIC = join(ROOT, 'public');
@@ -22,7 +24,7 @@ const SITE_URL = 'https://jgrewis.github.io/CV-Jean-Philippe-Grewis/';
 
 function loadPlaywright() {
   const require = createRequire(import.meta.url);
-  const candidates = [process.env.PLAYWRIGHT_MODULE, 'playwright'];
+  const candidates = [process.env.PLAYWRIGHT_MODULE, 'playwright-core', 'playwright'];
   try {
     candidates.push(join(execSync('npm root -g').toString().trim(), 'playwright'));
   } catch {
@@ -35,7 +37,19 @@ function loadPlaywright() {
       /* piste suivante */
     }
   }
-  throw new Error('Playwright introuvable (voir l\'en-tete du script).');
+  return null;
+}
+
+function findChrome() {
+  const candidates = [
+    process.env.CHROME_PATH,
+    '/usr/bin/google-chrome',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  ];
+  return candidates.filter(Boolean).find((p) => existsSync(p)) ?? null;
 }
 
 const esc = (value) =>
@@ -82,7 +96,10 @@ function experienceHtml(xp) {
 }
 
 function cvHtml() {
-  const about = leaf('profil', 'apropos');
+  // Ordre lisible par les logiciels de tri (ATS) : identité, profil, expériences,
+  // étude de cas, compétences, formations. Une seule colonne, titres sans
+  // espacement de lettres ni capitales forcées (sinon l'extraction donne
+  // « F O R M A T I O N S »).
   const soft = leaf('profil', 'soft-skills');
   const interests = leaf('profil', 'interets');
   const skills = leaves('competences');
@@ -95,93 +112,75 @@ function cvHtml() {
     esc(contact.driving),
     `<a href="${esc(profile.linkedin)}">linkedin.com/in/grewis</a>`,
     `<a href="${SITE_URL}">CV en ligne</a>`,
-  ].join('<span class="sep">·</span>');
+  ].join(' · ');
 
   const skillRows = skills
     .map((s) => {
-      const content = s.tags?.length ? s.tags.map(esc).join(' · ') : (s.bullets ?? []).map(esc).join(' ');
-      return `<div class="skill"><h4>${esc(s.title)}</h4><p>${content}</p></div>`;
+      const content = s.tags?.length ? s.tags.map(esc).join(', ') : (s.bullets ?? []).map(esc).join(' ');
+      return `<p class="line"><b>${esc(s.title)} :</b> ${content}</p>`;
     })
     .join('');
   const formationRows = formations
     .map((f) =>
       f.tags?.length
-        ? `<div class="formation"><h4>${esc(f.title)}</h4><p>${f.tags.map(esc).join(' · ')}</p></div>`
-        : `<div class="formation"><h4>${esc(f.title)}</h4><p>${esc(f.org)} · ${esc(f.period)}${f.summary ? ` · ${esc(f.summary)}` : ''}</p></div>`,
+        ? `<p class="line"><b>${esc(f.title)} :</b> ${f.tags.map(esc).join(', ')}</p>`
+        : `<p class="line"><b>${esc(f.title)}</b>, ${esc(f.org)}, ${esc(f.period)}${f.summary ? `. ${esc(f.summary)}` : ''}</p>`,
     )
     .join('');
+  const caseStudy = `<div class="case"><h3>${esc(etudeDeCas.title)}</h3>
+${etudeDeCas.blocks.map((bl) => `<p><b>${esc(bl.label)} :</b> ${esc(bl.text)}</p>`).join('')}
+<p class="small">Source : <a href="${esc(etudeDeCas.links[0].url)}">${esc(etudeDeCas.links[0].label)}</a></p></div>`;
   const proofs = proofLeaf
-    ? `<p class="proofs"><b>Preuves</b> : communiqués de presse officiels de m2A (© m2A), liens cliquables sur le CV en ligne : ${proofLeaf.links
+    ? `<p class="small">Sources des résultats m2A, communiqués officiels (© m2A) : ${proofLeaf.links
         .filter((l) => /\.pdf$/i.test(l.url))
-        .map((l) => `<a href="${esc(l.url)}">${esc(l.label.replace(/\s*·\s*© m2A/, ''))}</a>`)
+        .map((l) => `<a href="${esc(l.url)}">${esc(l.label.replace(/\s*·\s*© m2A/, '').replace(/^CP /, ''))}</a>`)
         .join(', ')}.</p>`
     : '';
 
-  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>CV — ${esc(profile.name)}</title><style>
+  return `<!doctype html><html lang="fr"><head><meta charset="utf-8"><title>CV ${esc(profile.name)}</title><style>
 ${FONTS}
-@page { size: A4; margin: 12mm 13mm 12mm; }
+@page { size: A4; margin: 12mm 14mm 12mm; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Inter Tight Variable', Arial, sans-serif; color: ${INK}; font-size: 8.9pt; line-height: 1.38; }
+body { font-family: 'Inter Tight Variable', Arial, sans-serif; color: ${INK}; font-size: 9.4pt; line-height: 1.4; }
 a { color: inherit; text-decoration: none; }
-.top { display: grid; grid-template-columns: 1fr auto; gap: 4mm; align-items: end; border-bottom: 2px solid ${INK}; padding-bottom: 3mm; }
-h1 { font-size: 25pt; font-weight: 800; letter-spacing: -.03em; text-transform: uppercase; line-height: 1; }
-.tagline { font-size: 11.5pt; font-weight: 500; margin-top: 1.5mm; }
-.tagline em { font-family: 'Instrument Serif', serif; color: ${ACCENT}; font-size: 13pt; }
-.contact { font-size: 8.2pt; color: ${MUTED}; margin-top: 2mm; }
-.sep { margin: 0 1.6mm; color: ${ACCENT}; }
-.about { margin-top: 2.5mm; font-size: 9pt; color: ${MUTED}; }
-.statement { margin-top: 3mm; font-size: 11pt; font-weight: 500; line-height: 1.35; border-left: 2px solid ${ACCENT}; padding-left: 3mm; }
-.steps { list-style: none; display: grid; gap: .9mm; }
-.steps b { color: ${ACCENT}; font-weight: 700; margin-right: 1mm; }
-.case { margin-top: 2.5mm; padding: 2.5mm 3mm; background: ${BG}; display: grid; gap: .9mm; break-inside: avoid; }
-.case-title { font-weight: 800; text-transform: uppercase; letter-spacing: .04em; font-size: 8.6pt; }
-.case-link a { color: ${ACCENT}; }
-.res-label { margin-top: 1.4mm; font-size: 7.8pt; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: ${MUTED}; }
-.results { margin: .8mm 0 0 3.6mm; }
-.results li { margin-bottom: .5mm; }
-h2 { font-size: 8pt; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: ${MUTED}; margin: 4.5mm 0 2mm; padding-bottom: 1mm; border-bottom: 1px solid ${LINE}; }
-.xp { margin-bottom: 3.2mm; break-inside: avoid; }
+h1 { font-size: 22pt; font-weight: 800; line-height: 1.1; }
+.title { font-size: 12pt; font-weight: 600; margin-top: 1mm; }
+.contact { font-size: 8.8pt; color: ${MUTED}; margin-top: 1.5mm; }
+.summary-top { margin-top: 3mm; padding-top: 2.5mm; border-top: 2px solid ${INK}; }
+h2 { font-size: 11pt; font-weight: 800; color: ${INK}; margin: 4.5mm 0 1.8mm; padding-bottom: 1mm; border-bottom: 1px solid ${LINE}; }
+h3 { font-size: 10pt; font-weight: 800; }
+.xp { margin-bottom: 3mm; break-inside: avoid; }
 .xp header { display: flex; justify-content: space-between; gap: 4mm; align-items: baseline; }
-h3 { font-size: 10.6pt; font-weight: 800; letter-spacing: -.01em; }
-.period { font-size: 8pt; color: ${MUTED}; white-space: nowrap; text-transform: uppercase; letter-spacing: .06em; }
-.org { font-weight: 600; color: ${ACCENT}; font-size: 8.8pt; }
+.period { font-size: 8.8pt; color: ${MUTED}; white-space: nowrap; }
+.org { font-weight: 600; color: ${ACCENT}; font-size: 9pt; }
 .summary { margin-top: .8mm; }
-.kpis { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: .6mm 4mm; margin: 1.4mm 0; }
-.kpis li { font-size: 8.3pt; }
-.kpis b { font-weight: 800; }
-.bullets { margin: .8mm 0 0 3.6mm; }
-.bullets li { margin-bottom: .5mm; }
-.cols { display: grid; grid-template-columns: 1.25fr 1fr; gap: 7mm; }
-h4 { font-size: 8.8pt; font-weight: 700; }
-.skill, .formation { margin-bottom: 2mm; break-inside: avoid; }
-.skill p, .formation p { color: ${INK}; }
-.proofs { margin-top: 4mm; font-size: 7.6pt; color: ${MUTED}; }
-.proofs a { color: ${ACCENT}; }
-.foot { margin-top: 2mm; font-size: 7.6pt; color: ${MUTED}; }
+.res-label { margin-top: 1.2mm; font-size: 8.8pt; font-weight: 700; color: ${MUTED}; }
+.results, .bullets { margin: .6mm 0 0 4mm; }
+.results li, .bullets li { margin-bottom: .4mm; }
+.kpis { margin: 1mm 0 0 4mm; }
+.case { padding: 2.5mm 3mm; background: ${BG}; display: grid; gap: .8mm; break-inside: avoid; }
+.line { margin-bottom: 1mm; }
+.small { margin-top: 2mm; font-size: 8pt; color: ${MUTED}; }
+.small a, .case a { color: ${ACCENT}; }
+.proofs { margin-top: .8mm; font-size: 8pt; color: ${MUTED}; }
 </style></head><body>
-<header class="top"><div>
+<header>
   <h1>${esc(profile.name)}</h1>
-  <p class="tagline">${esc(pitch.text)}</p>
+  <p class="title">${esc(profile.title)} · Disponible · Mulhouse / Colmar</p>
   <p class="contact">${contactBits}</p>
-</div></header>
-<p class="statement">${esc(pitch.statement)}</p>
-<h2>${esc(methode.title)}</h2>
-<ol class="steps">${methode.steps.map((st, i) => `<li><b>${String(i + 1).padStart(2, '0')} · ${esc(st.title)}</b> ${esc(st.role)}</li>`).join('')}</ol>
-<div class="case"><p class="case-title">${esc(methode.caseStudy.eyebrow)} · ${esc(methode.caseStudy.title)}</p>
-${methode.caseStudy.blocks.map((b) => `<p><b>${esc(b.label)} :</b> ${esc(b.text)}</p>`).join('')}
-<p class="case-link">Preuve : <a href="${esc(methode.caseStudy.links[0].url)}">${esc(methode.caseStudy.links[0].label)}</a></p></div>
-<p class="about">${esc(about?.summary)}</p>
-<h2>Expériences professionnelles</h2>
-${leaves('experiences').map(experienceHtml).join('')}
-<div class="cols">
-  <section><h2>Compétences</h2>${skillRows}</section>
-  <section><h2>Formations</h2>${formationRows}
-    <h2>Savoir-être</h2><p>${(soft?.tags ?? []).map(esc).join(' · ')}</p>
-    <h2>Centres d'intérêt</h2><p>${(interests?.tags ?? []).map(esc).join(' · ')}</p>
-  </section>
-</div>
+</header>
+<section class="summary-top"><h2 style="margin-top:0">Profil</h2><p>${esc(profile.summary)}</p></section>
+<section><h2>Expériences professionnelles</h2>
+${leaves('experiences').map(experienceHtml).join('')}</section>
+<section><h2>Étude de cas</h2>${caseStudy}</section>
+<section><h2>Compétences</h2>${skillRows}</section>
+<section><h2>Formations et certifications</h2>${formationRows}</section>
+<section><h2>Savoir-être et centres d'intérêt</h2>
+  <p class="line"><b>Savoir-être :</b> ${(soft?.tags ?? []).map(esc).join(', ')}</p>
+  <p class="line"><b>Centres d'intérêt :</b> ${(interests?.tags ?? []).map(esc).join(', ')}</p>
+</section>
 ${proofs}
-<p class="foot">Réalisations visibles sur le CV en ligne : ${SITE_URL}</p>
+<p class="small">Réalisations et vidéos sur le CV en ligne : <a href="${SITE_URL}">${SITE_URL}</a></p>
 </body></html>`;
 }
 
@@ -213,8 +212,15 @@ h1 { font-size: 92px; font-weight: 800; letter-spacing: -.035em; line-height: .9
 </body></html>`;
 }
 
-const { chromium } = loadPlaywright();
-const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
+const pw = loadPlaywright();
+const chromePath = findChrome();
+if (!pw || !chromePath) {
+  const msg = `PDF non regenere : ${!pw ? 'playwright-core introuvable' : 'Google Chrome introuvable (CHROME_PATH)'}.`;
+  if (process.env.CI) throw new Error(msg);
+  console.warn(msg);
+  process.exit(0);
+}
+const browser = await pw.chromium.launch({ executablePath: chromePath });
 const dir = mkdtempSync(join(tmpdir(), 'cv-pdf-'));
 try {
   const page = await browser.newPage();
