@@ -4,7 +4,10 @@
 
 export const profile = {
   name: 'Jean-Philippe Grewis',
-  title: 'Chef de projet — Responsable communication',
+  title: 'Chef de projet, Responsable communication',
+  // Accroche de profil (bloc Validé JP de la Bibliothèque CV), utilisée par le PDF.
+  summary:
+    "Responsable communication et chef de projet depuis plus de 10 ans, expert en supports multi-formats (print, digital, événementiel), pilotage d'agences et déploiement de chartes graphiques multi-enseignes.",
   photo: 'assets/photo-jp.png',
   linkedin: 'https://www.linkedin.com/in/grewis/',
 };
@@ -18,7 +21,7 @@ export const contact = {
   pdf: { url: 'CV-Jean-Philippe-Grewis.pdf', label: 'Télécharger mon CV (PDF)', shortLabel: 'CV (PDF)' },
   links: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/grewis/', icon: 'linkedin' },
-    { label: 'Sites web — jgrewis.github.io', url: 'https://jgrewis.github.io/', icon: 'world' },
+    { label: 'Sites web : jgrewis.github.io', url: 'https://jgrewis.github.io/', icon: 'world' },
   ],
 };
 
@@ -60,8 +63,8 @@ export const branches = [
     leaves: [
       {
         id: 'm2a',
-        title: 'Chef de projets communication · CDD',
-        org: 'Mulhouse Alsace Agglomération (m2A) — Mulhouse',
+        title: 'Chargé de projet communication externe · CDD',
+        org: 'Mulhouse Alsace Agglomération (m2A), Mulhouse',
         period: 'Oct. 2024 – Oct. 2026',
         theme: {
           background: 'assets/m2a-bg.jpg',
@@ -74,19 +77,15 @@ export const branches = [
         // Source : communiques de presse officiels de m2A (liens ci-dessous).
         // Le Challenge Vélo n'est pas ici : ses chiffres sont dits une seule fois,
         // dans l'étude de cas (reconstruction du 15/11).
-        resultsLabel: 'Retombées de ma communication',
+        resultsLabel: 'Résultats des opérations dont j’ai piloté la communication',
         results: [
           {
             title: 'Piscines et Plan d’eau, été 2026',
             text: '236 384 entrées, près de +17 % et un record d’affluence, une saison accompagnée par la campagne de prévention « Baigneurs, ouvrez l’œil ».',
           },
           {
-            title: 'Camp d’entraînement Paris 2024',
-            text: 'Plus de 135 athlètes de 31 pays accueillis sur le territoire : j’en ai porté la communication institutionnelle.',
-          },
-          {
-            title: 'Olympiades scolaires et Semaine olympique',
-            text: 'Jusqu’à 2 700 élèves aux Olympiades m2A et 1 200 élèves à la Semaine olympique et paralympique, en 2024.',
+            title: 'Covoiturage BlaBlaCar Daily, mars 2025',
+            text: 'Près de 1 900 trajets sur BlaBlaCar Daily pendant le Printemps du covoiturage, un record pour le territoire.',
           },
         ],
         bullets: [
@@ -103,9 +102,7 @@ export const branches = [
         // seule fois, dans l'étude de cas (reconstruction du 15/11).
         linksLabel: 'Preuves des résultats · communiqués officiels de m2A',
         links: [
-          { label: 'CP Olympiades scolaires 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/05/CP-m2A-Olympiades-m2A.pdf', icon: 'external' },
-          { label: 'CP Semaine olympique et paralympique 2024 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2024/03/CP-m2A-Semaine-Olympique-et-Paralympique-du-02-au-09-avril-2024.pdf', icon: 'external' },
-          { label: "CP Camp d'entraînement Paris 2024 · © m2A", url: 'https://www.m2a.fr/wp-content/uploads/2024/07/CP-m2A-Des-medailles-olympiques-mondiaux-et-panamericains-se-preparent-aux-Jeux-de-Paris-2024-au-Camp-dentrainement-de-PSO-m2A.pdf', icon: 'external' },
+          { label: 'CP Covoiturage, rentrée 2025 (bilan de mars) · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2025/08/CP-m2A-Le-covoiturage-fait-sa-rentree-dans-lAgglo.pdf', icon: 'external' },
           { label: 'CP Bilan estival piscines 2026 · © m2A', url: 'https://www.m2a.fr/wp-content/uploads/2026/09/CP-m2A-Bilan-estival-Nouveau-record-daffluence-pour-les-piscines-et-le-Plan-deau-de-m2A.pdf', icon: 'external' },
           { label: 'Espace presse m2A', url: 'https://www.m2a.fr/outils/espace-presse/', icon: 'world' },
         ],
@@ -113,17 +110,16 @@ export const branches = [
       {
         id: 'gr-strategie',
         title: 'Gérant',
-        org: 'GR Stratégie (SARL) — entreprise cédée en 2024',
+        org: 'GR Stratégie (SARL), entreprise cédée en 2024',
         period: '2018 – 2024',
         theme: {
           background: 'assets/gr-strategie-bg.png',
           accentColor: '#e8453c',
         },
         summary:
-          "Création et gestion d'une structure pendant 6 ans, en parallèle de mon activité salariée, jusqu'à sa cession en 2024.",
+          "Conception de la communication de plusieurs marques clientes, création de leurs sites internet et d'outils sur mesure, jusqu'à la cession de l'entreprise en 2024.",
         // Chiffres isoles retires (11/11) : le resume dit deja 6 ans et la cession.
         bullets: [
-          'Conception de la communication de plusieurs marques clientes, création de leurs sites internet et d\'outils sur mesure.',
           'Intégration de contenus optimisés pour le référencement naturel (SEO) sur les sites clients.',
           'Automatisation de processus métier (production, gestion client) avec n8n.',
           "Développement d'un système informatique complet de diffusion et d'administration d'écrans dynamiques en réseau.",
@@ -190,12 +186,12 @@ export const branches = [
       {
         id: 'outils',
         title: 'Outils',
-        tags: ['InDesign', 'Illustrator', 'Photoshop', 'Premiere Pro', 'Canva', 'n8n'],
+        tags: ['InDesign', 'Illustrator', 'Photoshop', 'Premiere Pro', 'CapCut', 'Canva', 'WordPress', 'Meta Business Suite', 'Excel et Suite Office', 'n8n'],
       },
       {
         id: 'communication',
         title: 'Communication',
-        tags: ['Plans 360°', 'Plans médias', 'Image de marque', 'Social media', 'Emailing', 'Événementiel'],
+        tags: ['Plans 360°', 'Plans médias', 'Image de marque', 'Social media', 'Community management', 'Rédaction de contenus', 'Relations presse', 'Emailing', 'Événementiel'],
       },
       {
         id: 'pilotage',
@@ -222,16 +218,16 @@ export const branches = [
     leaves: [
       {
         id: 'bac5',
-        title: 'BAC+5 — Manager de la stratégie et de la politique commerciale',
+        title: 'BAC+5, Manager de la stratégie et de la politique commerciale',
         org: 'ESGM Mulhouse',
-        period: '2015',
+        period: '2014 – 2016',
         summary: 'Alternance Coopérative U Centrale Est.',
       },
       {
         id: 'bac3',
-        title: 'BAC+3 — Chargé(e) de développement marketing et vente',
+        title: 'BAC+3, Chargé(e) de développement marketing et vente',
         org: 'ESGM Mulhouse',
-        period: '2013',
+        period: '2012 – 2014',
         summary: 'Alternance Super U Riedisheim.',
       },
       // Choix reversible (11/11/2026) : le Bachelor RH (Studi, en cours, fin dec. 2026)

@@ -11,7 +11,7 @@ const CP_CHALLENGE_2024 = 'https://www.m2a.fr/wp-content/uploads/2024/06/CP-m2A-
 
 export const etudeDeCas = {
   eyebrow: 'Étude de cas',
-  title: 'Challenge Vélo m2A, 2024 – 2026',
+  title: 'Challenge Vélo m2A, 2025 et 2026',
   blocks: [
     {
       label: 'Le besoin',
@@ -23,12 +23,12 @@ export const etudeDeCas = {
     },
     {
       label: 'Le résultat',
-      text: 'De 893 à 1 125 participants (+26 %) et de 136 à 148 structures inscrites entre 2024 et 2026, avec 71 classes engagées en 2026 : la mobilisation que la campagne devait produire.',
+      text: '1 125 participants, 148 structures et 71 classes en 2026, contre 893 participants et 136 structures en 2024, l’édition qui a précédé mon arrivée (+26 % de participants).',
     },
   ],
   visuals: ['mockup-4x3-challenge-velo', 'mockup-mupi-challenge-velo', 'print-trophee-challenge-velo'],
   links: [
     { label: 'Communiqué : résultats du Challenge Vélo 2026 · © m2A', url: CP_CHALLENGE_2026 },
-    { label: 'Communiqué : résultats du Challenge Vélo 2024 · © m2A', url: CP_CHALLENGE_2024 },
+    { label: 'Communiqué : résultats du Challenge Vélo 2024, référence avant mon arrivée · © m2A', url: CP_CHALLENGE_2024 },
   ],
 };
