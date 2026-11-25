@@ -102,7 +102,7 @@ function createEvents() {
   return createEl('div', {
     className: 'xp__events',
     children: [
-      createEl('p', { className: 'caption', text: 'Opérations menées · octobre 2024 — octobre 2026' }),
+      createEl('p', { className: 'caption', text: 'Opérations menées · octobre 2024 à octobre 2026' }),
       ...evenementielGroups.map((group) =>
         createEl('div', {
           className: 'xp__events-group',

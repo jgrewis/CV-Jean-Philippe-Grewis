@@ -53,7 +53,13 @@ export const pitch = {
   text: 'Chef de projet communication · Disponible · Mulhouse / Colmar',
   statement:
     'Je mène une communication de A à Z : stratégie, briefs et direction des graphistes, contenus web et réseaux, événements, jusqu’aux résultats.',
-  kpis: [],
+  // Trois chiffres au premier ecran (choix de JP, 25/11/2026). Sources :
+  // CP resultats Challenge Velo 2026 (893 -> 1 125), data/evenementiel.js (18).
+  kpis: [
+    { value: '+26 %', label: 'de participants au Challenge Vélo' },
+    { value: '18', label: 'opérations conduites chez m2A' },
+    { value: '10 ans', label: 'en communication' },
+  ],
 };
 
 export const portrait = {

@@ -255,3 +255,9 @@
   max-inline-size: 52ch;
   color: var(--color-ink);
 }
+
+/* Lot 1 : sur 375 px, les legendes des chiffres passent a la ligne sans deborder. */
+.hero__kpi-label {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}

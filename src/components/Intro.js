@@ -158,9 +158,15 @@ export class Intro {
     document.addEventListener('keydown', this._onKeydown);
     // Phase de capture : un clic n'importe ou (y compris a travers la decoupe) passe l'intro.
     document.addEventListener('click', this._onClick, true);
+    // Lot 1 (25/11/2026) : un geste de defilement (molette, pave, doigt) passe
+    // aussi l'intro, pour qu'un recruteur presse ne la subisse jamais.
+    window.addEventListener('wheel', this._onClick, { passive: true });
+    window.addEventListener('touchmove', this._onClick, { passive: true });
   }
 
   _unbind() {
+    window.removeEventListener('wheel', this._onClick);
+    window.removeEventListener('touchmove', this._onClick);
     document.removeEventListener('keydown', this._onKeydown);
     document.removeEventListener('click', this._onClick, true);
   }

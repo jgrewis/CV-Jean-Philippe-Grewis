@@ -15,7 +15,7 @@
   --color-bg-alt: #e3e0d8; /* teinte des sections alternees */
   --color-bg-veil: rgba(237, 235, 230, 0.9); /* pastilles de la barre fixe */
   --color-ink: #141414;
-  --color-ink-muted: #5a5752;
+  --color-ink-muted: #4a4740; /* lot 1 : plus fonce, petits textes mieux contrastes */
   --color-ink-faint: rgba(20, 20, 20, 0.4); /* decor uniquement (fantome du glitch) */
   --color-accent: #5b3df5;
   --color-accent-on-ink: #9d8cff;

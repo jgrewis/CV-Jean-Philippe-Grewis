@@ -13,7 +13,7 @@
   /* Hauteur maximale d'une image : un drapeau de 484 x 1600 reste lisible en
      entier sans faire defiler un ecran et demi. Ramenee de 80 a 60svh pour que
      les 26 preuves ne demandent pas 16 ecrans de defilement. */
-  --realisations-frame-max: 50svh; /* 11/11 : 60 -> 50svh, page plus courte */
+  --realisations-frame-max: 42svh; /* lot 1 : grille de trois, cadres plus compacts */
 }
 
 .realisations__wrap {
@@ -109,6 +109,18 @@
 .realisations__title {
   font-weight: var(--weight-medium);
   line-height: var(--leading-body);
+}
+
+/* Legende structuree (lot 1) : contexte puis role reel. */
+.realisations__context,
+.realisations__role {
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  color: var(--color-ink-muted);
+}
+.realisations__role-label {
+  font-weight: var(--weight-bold);
+  color: var(--color-ink);
 }
 
 /* Cadre au ratio exact de l'image : place reservee avant le chargement. Sa

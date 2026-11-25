@@ -26,6 +26,8 @@ export const etudeDeCas = {
       text: '1 125 participants, 148 structures et 71 classes en 2026, contre 893 participants et 136 structures en 2024, l’édition qui a précédé mon arrivée (+26 % de participants).',
     },
   ],
+  // Chiffre mis en avant au-dessus des trois temps (lot 1, 25/11/2026).
+  highlight: { value: '1 125', label: 'participants en 2026, +26 % par rapport à 2024' },
   visuals: ['mockup-4x3-challenge-velo', 'mockup-mupi-challenge-velo', 'print-trophee-challenge-velo'],
   links: [
     { label: 'Communiqué : résultats du Challenge Vélo 2026 · © m2A', url: CP_CHALLENGE_2026 },
