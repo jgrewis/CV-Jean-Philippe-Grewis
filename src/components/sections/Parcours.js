@@ -157,7 +157,7 @@ function createExperience(leaf) {
     className: 'xp__body',
     attrs: { 'data-reveal': '', 'data-reveal-delay': 1 },
     children: [
-      leaf.period ? createEl('p', { className: 'caption xp__period', text: leaf.period }) : null,
+      leaf.period ? createEl('p', { className: 'caption xp__period', text: leaf.period, attrs: { 'data-wipe': '' } }) : null,
       createEl('h3', { className: 'xp__title', text: leaf.title }),
       leaf.summary ? createEl('p', { className: 'xp__summary', text: leaf.summary }) : null,
       createKpis(leaf.kpis),

@@ -1,0 +1,113 @@
+/* Animations du lot 3 (utils/motion.js, components/Marquee.js).
+   Les etats caches n'existent que sous html.has-motion, pose par motion.js
+   quand les animations sont permises : sans JS ou avec prefers-reduced-motion,
+   tout est visible d'emblee. */
+
+/* ---------- Revelation par bloc de couleur ---------- */
+
+[data-wipe] {
+  position: relative;
+}
+
+.has-motion [data-wipe]:not(.is-done) {
+  -webkit-text-fill-color: transparent;
+}
+
+.has-motion [data-wipe].is-playing {
+  animation: wipe-text 700ms steps(1, end) forwards;
+}
+
+.has-motion [data-wipe].is-playing::after {
+  content: '';
+  position: absolute;
+  inset: -0.08em -0.12em;
+  background-color: var(--color-accent);
+  transform-origin: left center;
+  animation: wipe-block 700ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes wipe-block {
+  0% { transform: scaleX(0); transform-origin: left center; }
+  50% { transform: scaleX(1); transform-origin: left center; }
+  50.01% { transform: scaleX(1); transform-origin: right center; }
+  100% { transform: scaleX(0); transform-origin: right center; }
+}
+
+@keyframes wipe-text {
+  0% { -webkit-text-fill-color: transparent; }
+  50% { -webkit-text-fill-color: currentColor; }
+  100% { -webkit-text-fill-color: currentColor; }
+}
+
+/* Sur fond encre (etude de cas), l'aplat prend l'accent clair. */
+.etude__case [data-wipe].is-playing::after {
+  background-color: var(--color-accent-on-ink);
+}
+
+/* ---------- Bandeau defilant en double ligne ---------- */
+
+.marquee {
+  overflow: hidden;
+  padding-block: var(--space-xl);
+  border-block: var(--border-thin) solid var(--color-line-strong);
+  user-select: none;
+}
+
+.marquee__line {
+  display: flex;
+  inline-size: max-content;
+  white-space: nowrap;
+}
+
+.marquee__track {
+  display: flex;
+  flex: none;
+}
+
+.marquee__item {
+  padding-inline-end: 0.6em;
+}
+
+.marquee__line--serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(2rem, 1rem + 4vw, 5rem);
+  line-height: 1.05;
+  color: var(--color-accent);
+}
+
+.marquee__line--sans {
+  font-size: clamp(1.75rem, 0.8rem + 3.6vw, 4.5rem);
+  font-weight: var(--weight-black);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+}
+
+.has-motion .marquee__line {
+  animation: marquee-left 45s linear infinite;
+}
+.has-motion .marquee__line--sans {
+  animation-name: marquee-right;
+}
+/* Pause hors ecran (classe posee par Marquee.js) et au survol. */
+.marquee.is-paused .marquee__line,
+.marquee:hover .marquee__line {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__line {
+    animation: none !important;
+  }
+}

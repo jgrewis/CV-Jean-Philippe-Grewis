@@ -64,7 +64,7 @@ export function mountEtudeDeCas(section) {
           ? createEl('p', {
               className: 'etude__highlight',
               children: [
-                createEl('span', { className: 'etude__highlight-value', text: cs.highlight.value }),
+                createEl('span', { className: 'etude__highlight-value', text: cs.highlight.value, attrs: { 'data-count': '', 'data-wipe': '' } }),
                 createEl('span', { className: 'etude__highlight-label', text: cs.highlight.label }),
               ],
             })

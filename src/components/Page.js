@@ -17,6 +17,8 @@ import { mountParcours } from './sections/Parcours.js';
 import { mountEtudeDeCas } from './sections/EtudeDeCas.js';
 import { mountCompetences } from './sections/Competences.js';
 import { mountContact } from './sections/Contact.js';
+import { createMarquee } from './Marquee.js';
+import { observeMotion } from '../utils/motion.js';
 
 const MAIN_ID = 'contenu'; // cible du lien d'evitement (index.html)
 
@@ -64,6 +66,10 @@ export function mountPage(root) {
   const main = createEl('main', { className: 'page__main', attrs: { id: MAIN_ID, tabindex: '-1' } });
   const sections = SECTIONS.map(({ id, tone }) => createEl('section', { attrs: { id, 'data-tone': tone } }));
   main.append(...sections);
+  // Bandeau defilant (lot 3) entre les visuels m2A et les autres experiences.
+  const marquee = createMarquee();
+  main.insertBefore(marquee.element, main.querySelector('#parcours-suite'));
+  cleanups.push(marquee.cleanup);
   const footer = createEl('footer', { attrs: { id: 'contact' } });
 
   root.replaceChildren(createBackdrop(), bar, main, footer);
@@ -72,7 +78,7 @@ export function mountPage(root) {
   SECTIONS.forEach(({ mount }, index) => run(mount, sections[index], cleanups));
   run(mountContact, footer, cleanups);
 
-  cleanups.push(observeReveal(root), watchTones(sections), disconnectReveal);
+  cleanups.push(observeReveal(root), watchTones(sections), disconnectReveal, observeMotion(root));
 
   return () => {
     cleanups.forEach((cleanup) => cleanup());

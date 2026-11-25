@@ -367,7 +367,7 @@ function createPitch() {
           createEl('li', {
             className: 'hero__kpi',
             children: [
-              createEl('span', { className: 'hero__kpi-value', text: value }),
+              createEl('span', { className: 'hero__kpi-value', text: value, attrs: { 'data-count': '' } }),
               createEl('span', { className: 'hero__kpi-label caption', text: label }),
             ],
           }),
